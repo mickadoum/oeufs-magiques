@@ -1,0 +1,17 @@
+{
+  "name": "Les Œufs Magiques",
+  "short_name": "Œufs Magiques",
+  "description": "Tables de multiplication, additions et soustractions pour le CE1.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#D3ECFF",
+  "theme_color": "#D3ECFF",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
