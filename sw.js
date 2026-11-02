@@ -1,6 +1,6 @@
 /* Les Œufs Magiques : fonctionnement hors ligne.
    Les fichiers sont servis depuis la tablette, puis mis à jour en arrière-plan quand internet est là. */
-const CACHE = 'oeufs-magiques-v1';
+const CACHE = 'oeufs-magiques-v2';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest',
   'icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png',
