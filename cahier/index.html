@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Le Cahier Magique</title>
+<meta name="description" content="Fiches de révision du programme de CE1 : géométrie, calcul, temps et mesures.">
+<meta name="theme-color" content="#D3ECFF">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cahier Magique">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<style>
+/* Même carnet que Les Œufs Magiques : jour = ciel bleu, nuit = ciel étoilé. */
+@font-face{font-family:"Andika";src:url("fonts/andika-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Andika";src:url("fonts/andika-latin-700-normal.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Grandstander";src:url("fonts/grandstander-latin-700-normal.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Grandstander";src:url("fonts/grandstander-latin-800-normal.woff2") format("woff2");font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:"Grandstander";src:url("fonts/grandstander-latin-900-normal.woff2") format("woff2");font-weight:900;font-style:normal;font-display:swap}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation}
+button,input{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+body{margin:0}
+[hidden]{display:none!important}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{
+  color-scheme:light;
+  --sky:#D3ECFF;
+  --deco:radial-gradient(200px 80px at 8% 4%,rgba(255,255,255,.9),transparent 70%),radial-gradient(240px 90px at 92% 14%,rgba(255,255,255,.75),transparent 70%),radial-gradient(220px 80px at 20% 96%,rgba(255,255,255,.7),transparent 70%);
+  --paper:#FFFFFF;
+  --paper-2:#EDF6FF;
+  --ink:#1F2A4D;
+  --ink-soft:#4B5B80;
+  --edge:#1F2A4D;
+  --line:#BCD6F0;
+  --coral:#E4552A;
+  --coral-ink:#FFFFFF;
+  --sun:#FFB81C;
+  --sun-ink:#3A2600;
+  --sun-soft:#FFF3CC;
+  --leaf:#1E8C52;
+  --leaf-bg:#DAF4E5;
+  --oops:#B04A14;
+  --oops-bg:#FFE6D3;
+  --geo:#7151D8;
+  --cal:#E4552A;
+  --mes:#2A78D0;
+  --op-ink:#FFFFFF;
+  --font-display:"Grandstander","Trebuchet MS",system-ui,sans-serif;
+  --font-body:"Andika","Trebuchet MS",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --sky:#0D1936;
+    --deco:radial-gradient(2px 2px at 8% 12%,#FFFFFF 50%,transparent 51%),radial-gradient(1.5px 1.5px at 22% 30%,#DCE6FF 50%,transparent 51%),radial-gradient(2px 2px at 40% 8%,#FFF4C2 50%,transparent 51%),radial-gradient(1.5px 1.5px at 63% 22%,#FFFFFF 50%,transparent 51%),radial-gradient(2.5px 2.5px at 82% 10%,#FFE9A8 50%,transparent 51%),radial-gradient(1.5px 1.5px at 93% 40%,#FFFFFF 50%,transparent 51%),radial-gradient(2px 2px at 5% 62%,#DCE6FF 50%,transparent 51%),radial-gradient(1.5px 1.5px at 96% 70%,#FFFFFF 50%,transparent 51%),radial-gradient(2px 2px at 35% 94%,#FFF4C2 50%,transparent 51%),radial-gradient(1.5px 1.5px at 88% 92%,#FFFFFF 50%,transparent 51%);
+    --paper:#1A2B57;
+    --paper-2:#22386B;
+    --ink:#F2F5FF;
+    --ink-soft:#B3C3E8;
+    --edge:#060E24;
+    --line:#2F4B86;
+    --coral:#FF8259;
+    --coral-ink:#24102A;
+    --sun:#FFC43D;
+    --sun-ink:#3A2600;
+    --sun-soft:#3A3217;
+    --leaf:#5BD892;
+    --leaf-bg:#12382B;
+    --oops:#FFA567;
+    --oops-bg:#43281A;
+    --geo:#A98CF2;
+    --cal:#FF8259;
+    --mes:#6BB4FF;
+    --op-ink:#1A1030;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --sky:#0D1936;
+  --deco:radial-gradient(2px 2px at 8% 12%,#FFFFFF 50%,transparent 51%),radial-gradient(1.5px 1.5px at 22% 30%,#DCE6FF 50%,transparent 51%),radial-gradient(2px 2px at 40% 8%,#FFF4C2 50%,transparent 51%),radial-gradient(1.5px 1.5px at 63% 22%,#FFFFFF 50%,transparent 51%),radial-gradient(2.5px 2.5px at 82% 10%,#FFE9A8 50%,transparent 51%),radial-gradient(1.5px 1.5px at 93% 40%,#FFFFFF 50%,transparent 51%),radial-gradient(2px 2px at 5% 62%,#DCE6FF 50%,transparent 51%),radial-gradient(1.5px 1.5px at 96% 70%,#FFFFFF 50%,transparent 51%),radial-gradient(2px 2px at 35% 94%,#FFF4C2 50%,transparent 51%),radial-gradient(1.5px 1.5px at 88% 92%,#FFFFFF 50%,transparent 51%);
+  --paper:#1A2B57;
+  --paper-2:#22386B;
+  --ink:#F2F5FF;
+  --ink-soft:#B3C3E8;
+  --edge:#060E24;
+  --line:#2F4B86;
+  --coral:#FF8259;
+  --coral-ink:#24102A;
+  --sun:#FFC43D;
+  --sun-ink:#3A2600;
+  --sun-soft:#3A3217;
+  --leaf:#5BD892;
+  --leaf-bg:#12382B;
+  --oops:#FFA567;
+  --oops-bg:#43281A;
+  --geo:#A98CF2;
+  --cal:#FF8259;
+  --mes:#6BB4FF;
+  --op-ink:#1A1030;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{background:var(--deco),var(--sky);background-attachment:fixed;color:var(--ink);font-family:var(--font-body);font-size:18px;line-height:1.45;min-height:100%}
+h1,h2,h3,h4{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.1}
+p{margin:0}
+button,input{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Structure ---------- */
+.shell{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 48px;display:flex;flex-direction:column;gap:16px}
+.top{display:flex;flex-direction:column;gap:12px}
+.content>section{display:flex;flex-direction:column;gap:16px}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand svg{width:44px;height:50px;flex:none}
+.logo-page{fill:var(--paper);stroke:var(--edge);stroke-width:3;stroke-linejoin:round}
+.logo-line{stroke:var(--line);stroke-width:3;stroke-linecap:round}
+.logo-ring{stroke:var(--edge);stroke-width:2.6;fill:none;stroke-linecap:round}
+.logo-star{fill:var(--sun);stroke:var(--edge);stroke-width:1.5;stroke-linejoin:round}
+.brand h1{font-weight:900;font-size:clamp(1.5rem,5vw,2.2rem)}
+.sub{font-family:var(--font-display);font-weight:800;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft)}
+.icon-btn{width:46px;height:46px;flex:none;display:grid;place-items:center;background:var(--paper);border:3px solid var(--edge);border-radius:14px;box-shadow:0 3px 0 var(--edge);cursor:pointer;padding:0}
+.icon-btn svg{width:24px;height:24px}
+.icon-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--edge)}
+.i-line{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.i-dot{fill:currentColor}
+.i-star path{fill:var(--sun);stroke:var(--edge);stroke-width:1.6;stroke-linejoin:round}
+
+/* ---------- Cartes et boutons ---------- */
+.card{background:var(--paper);border:3px solid var(--line);border-radius:24px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.card h2{font-weight:900;font-size:1.8rem}
+.card h3{font-weight:800;font-size:1.3rem}
+.lead{max-width:62ch}
+.muted{color:var(--ink-soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:3px solid var(--edge);border-radius:18px;box-shadow:0 5px 0 var(--edge);padding:10px 20px;font-family:var(--font-display);font-weight:800;font-size:1.15rem;cursor:pointer;background:var(--paper);color:var(--ink)}
+.btn:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 var(--edge)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn svg{width:24px;height:24px;flex:none}
+.btn-primary{background:var(--coral);color:var(--coral-ink)}
+.btn-help{background:var(--sun);color:var(--sun-ink)}
+.btn-small{font-size:1rem;padding:6px 14px;border-radius:14px;box-shadow:0 3px 0 var(--edge)}
+.btn-big{font-size:1.45rem;padding:12px 30px}
+.link-btn{background:none;border:0;padding:0;text-decoration:underline;cursor:pointer;color:var(--ink-soft);font-weight:700;font-size:.92rem}
+
+/* ---------- Accueil ---------- */
+.welcome{align-items:center;text-align:center;border:4px solid var(--edge);box-shadow:0 8px 0 var(--edge);padding:24px 20px;gap:14px}
+.welcome h2{font-size:2.2rem}
+.welcome-art svg{width:96px;height:auto}
+.name-form{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;width:100%}
+.name-input{flex:1 1 220px;max-width:340px;font-size:1.4rem;font-family:var(--font-display);font-weight:800;padding:10px 16px;border-radius:16px;border:3px solid var(--edge);background:var(--paper-2);text-align:center;-webkit-user-select:auto;user-select:auto}
+.hello{font-weight:900;font-size:clamp(1.5rem,4.5vw,2.1rem)}
+.hello-row{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px}
+.side-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.sstat{background:var(--paper);border:3px solid var(--line);border-radius:18px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+.sstat svg{width:26px;height:26px}
+.sstat b{font-family:var(--font-display);font-weight:900;font-size:1.3rem;font-variant-numeric:tabular-nums;line-height:1}
+.sstat span{font-size:.78rem;color:var(--ink-soft)}
+.sstat.bump{animation:bump .5s ease}
+.picks{display:grid;gap:12px}
+.pick{position:relative;display:flex;align-items:center;gap:14px;text-align:left;background:var(--paper-2);border:3px solid var(--edge);border-radius:20px;box-shadow:0 5px 0 var(--edge);padding:12px 14px;cursor:pointer;width:100%}
+.pick:active{transform:translateY(3px);box-shadow:0 2px 0 var(--edge)}
+.pick-sign{font-family:var(--font-display);font-weight:900;font-size:2.2rem;line-height:1;width:48px;text-align:center;flex:none}
+.pick-txt{min-width:0;flex:1}
+.pick-txt b{display:block;font-family:var(--font-display);font-weight:800;font-size:1.2rem;line-height:1.15}
+.pick-txt span{display:block;font-size:.92rem;color:var(--ink-soft)}
+.pick.geo .pick-sign{color:var(--geo)}
+.pick.cal .pick-sign{color:var(--cal)}
+.pick.mes .pick-sign{color:var(--mes)}
+.pick.jour{background:var(--sun-soft);border-color:var(--sun)}
+.pick.jour .pick-sign{color:var(--sun-ink)}
+.stamp{flex:none;width:46px;height:46px}
+.stamp svg{width:100%;height:100%;display:block}
+
+/* ---------- Partie ---------- */
+.game-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;background:var(--paper);border:3px solid var(--line);border-radius:20px;padding:10px 14px}
+.gb-left{flex:1 1 170px;min-width:0;display:flex;flex-direction:column}
+.ex-label{font-family:var(--font-display);font-weight:800;font-size:1.05rem}
+.qcount{font-size:.95rem;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.progress{height:14px;border-radius:999px;background:var(--paper);border:3px solid var(--edge);overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:var(--sun);transition:width .4s}
+.fix-banner{background:var(--sun-soft);border:3px dashed var(--sun);border-radius:16px;padding:8px 14px;font-family:var(--font-display);font-weight:800;font-size:1.05rem;text-align:center}
+.q-card{background:var(--paper);border:4px solid var(--edge);border-radius:28px;box-shadow:0 8px 0 var(--edge);padding:16px 18px 22px;display:flex;flex-direction:column;gap:14px}
+.q-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.chip-btn{display:inline-flex;align-items:center;gap:6px;background:var(--paper-2);border:2px solid var(--line);border-radius:999px;padding:6px 14px 6px 10px;font-family:var(--font-display);font-weight:800;font-size:1rem;cursor:pointer}
+.chip-btn svg{width:22px;height:22px}
+.streak{font-family:var(--font-display);font-weight:800;color:var(--leaf);background:var(--leaf-bg);border-radius:999px;padding:4px 12px;font-size:.95rem}
+.question{font-family:var(--font-display);font-weight:900;text-align:center;line-height:1.15;font-variant-numeric:tabular-nums}
+.question.calc{font-size:clamp(2.6rem,11vw,4.6rem);white-space:nowrap;line-height:1.05}
+.question.texte{font-size:clamp(1.35rem,5.2vw,1.9rem)}
+.q-op{color:var(--ink-soft)}
+.q-mark{display:inline-block;min-width:1.3em;color:var(--coral)}
+.consigne{text-align:center;color:var(--ink-soft);font-size:1rem;margin-top:-6px}
+.figure{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+.figure svg{width:148px;height:auto;display:block}
+.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.answers.trio{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (min-width:600px){.answers.quatre{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.ans,.key{background:var(--paper-2);border:3px solid var(--edge);border-radius:20px;box-shadow:0 5px 0 var(--edge);font-family:var(--font-display);font-weight:900;line-height:1;cursor:pointer;font-variant-numeric:tabular-nums;color:var(--ink)}
+.ans{padding:14px 10px;font-size:1.5rem;min-height:62px;display:flex;align-items:center;justify-content:center;text-align:center}
+.ans.gros{font-size:2.2rem}
+.ans.fig{padding:8px}
+.ans.fig svg{width:100%;max-width:104px;height:auto;display:block;margin:0 auto;pointer-events:none}
+@media (hover:hover){.ans:hover:not(:disabled),.key:hover:not(:disabled){background:var(--sun-soft)}}
+.ans:active:not(:disabled),.key:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 var(--edge)}
+.ans:disabled,.key:disabled{cursor:default}
+.ans:disabled:not(.good):not(.bad){opacity:.4}
+.ans.good{background:var(--leaf-bg);color:var(--leaf);border-color:var(--leaf);box-shadow:0 5px 0 var(--leaf)}
+.ans.bad{background:var(--oops-bg);color:var(--oops);animation:nudge .35s ease}
+.typepad{display:flex;flex-direction:column;align-items:center;gap:12px}
+.type-input{width:170px;max-width:100%;text-align:center;font-family:var(--font-display);font-weight:900;font-size:2.6rem;line-height:1;padding:8px 12px;border-radius:18px;border:3px solid var(--edge);background:var(--paper-2);font-variant-numeric:tabular-nums}
+.type-input::placeholder{color:var(--ink-soft);opacity:.55}
+.type-input.good{border-color:var(--leaf);color:var(--leaf);background:var(--leaf-bg)}
+.type-input.bad{border-color:var(--oops);color:var(--oops);background:var(--oops-bg)}
+.type-input.empty{animation:nudge .35s ease}
+.keys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;max-width:340px}
+.key{padding:10px 0;font-size:1.9rem}
+.key-small{font-size:1.05rem}
+.key-ok{background:var(--coral);color:var(--coral-ink)}
+.key:disabled{opacity:.45}
+.feedback{min-height:1.8em;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.fb-title{font-family:var(--font-display);font-weight:900;font-size:1.6rem}
+.feedback.ok .fb-title{color:var(--leaf)}
+.feedback.oops .fb-title{color:var(--oops)}
+.fb-sub{font-size:1.05rem;color:var(--ink-soft)}
+
+/* ---------- Aide ---------- */
+.help{background:var(--sun-soft);border:3px dashed var(--sun);border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.help h4{font-weight:800;font-size:1.15rem}
+.hops{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.hop{min-width:44px;height:44px;padding:0 8px;display:grid;place-items:center;border-radius:999px;background:var(--paper);border:3px solid var(--edge);font-family:var(--font-display);font-weight:900;font-size:1.1rem;font-variant-numeric:tabular-nums}
+.hop.ask{background:var(--coral);color:var(--coral-ink)}
+
+/* ---------- Résultats ---------- */
+.results{align-items:center;text-align:center;border:4px solid var(--edge);box-shadow:0 8px 0 var(--edge);padding:22px 18px}
+.eyebrow{font-family:var(--font-display);font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.85rem;color:var(--coral)}
+.res-score{font-family:var(--font-display);font-weight:900;font-size:clamp(3.4rem,14vw,5rem);line-height:1;font-variant-numeric:tabular-nums}
+.res-of{font-size:.45em;color:var(--ink-soft)}
+.res-first{font-size:1rem;color:var(--ink-soft);font-weight:700;margin-top:-6px}
+.res-stars{display:flex;gap:6px}
+.res-stars svg{width:46px;height:46px}
+.res-stamp{width:110px;height:110px}
+.res-stamp svg{width:100%;height:100%;display:block}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;width:100%}
+.tile{background:var(--paper-2);border-radius:16px;padding:10px 12px;text-align:left}
+.tile b{display:block;font-family:var(--font-display);font-weight:900;font-size:1.5rem;font-variant-numeric:tabular-nums;line-height:1.15}
+.tile span{font-size:.9rem;color:var(--ink-soft)}
+.record{background:var(--sun);color:var(--sun-ink);border-radius:999px;padding:6px 16px;font-family:var(--font-display);font-weight:800}
+.mist{list-style:none;margin:0;padding:0;display:grid;gap:6px;width:100%;text-align:left}
+.mist li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;background:var(--oops-bg);border-radius:12px;padding:8px 12px;font-size:.98rem}
+.mist li.done{background:var(--leaf-bg)}
+.mist .f{font-family:var(--font-display);font-weight:800}
+.actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+
+@keyframes pop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes bump{0%,100%{transform:scale(1)}40%{transform:scale(1.15)}}
+@keyframes nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .5s cubic-bezier(.2,1.6,.4,1) both}
+@media (max-height:820px){
+  body.in-game .sub{display:none}
+  body.in-game .shell{padding-block:8px 24px;gap:10px}
+  body.in-game .content>section{gap:10px}
+  body.in-game .q-card{padding:12px 16px 16px;gap:10px}
+  body.in-game .question.calc{font-size:clamp(2.4rem,8vw,3.8rem)}
+  .key{padding:8px 0;font-size:1.65rem}
+  .type-input{font-size:2.2rem;padding:6px 12px}
+}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <header class="top">
+    <div class="top-row">
+      <div class="brand">
+        <svg viewBox="0 0 46 52" aria-hidden="true">
+          <path class="logo-page" d="M9 9h28a3 3 0 013 3v34a3 3 0 01-3 3H9z"/>
+          <path class="logo-line" d="M16 20h14M16 27h14M16 34h9"/>
+          <path class="logo-ring" d="M12 7v7M20 7v7M28 7v7M36 7v7"/>
+          <path class="logo-star" d="M31 29l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z"/>
+        </svg>
+        <div>
+          <h1>Le Cahier Magique</h1>
+          <p class="sub">Les fiches du CE1</p>
+        </div>
+      </div>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Changer le fond">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle class="i-line" cx="12" cy="12" r="4.4"/><path class="i-line" d="M12 2.6v2.4M12 19v2.4M2.6 12H5M19 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="content">
+    <!-- ACCUEIL -->
+    <section id="vAccueil"></section>
+    <!-- FICHE EN COURS -->
+    <section id="vFiche" hidden></section>
+    <!-- RÉSULTATS -->
+    <section id="vResultats" hidden></section>
+  </main>
+</div>
+
+<script>
+"use strict";
+/* =========================================================
+   Le Cahier Magique — fiches de révision du CE1
+   Programme de référence : cycle 2, BO n°41 du 31 octobre 2024
+   (français et mathématiques en vigueur depuis la rentrée 2025).
+   Même carnet graphique que Les Œufs Magiques.
+   ========================================================= */
+
+/* ---------- Mémoire de l'appareil ---------- */
+var LS_KEY = "cahier-magique-v1";
+var DB = { prenom: "", etoiles: 0, fiches: {} };
+try {
+  var brut = JSON.parse(localStorage.getItem(LS_KEY) || "null");
+  if (brut && typeof brut === "object") {
+    DB.prenom = brut.prenom || "";
+    DB.etoiles = brut.etoiles || 0;
+    DB.fiches = brut.fiches || {};
+  }
+} catch (e) {}
+function sauver(){ try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); } catch (e) {} }
+
+var THEME_KEY = "cahier-magique-theme";
+try {
+  var th = localStorage.getItem(THEME_KEY);
+  if (th === "dark" || th === "light") document.documentElement.setAttribute("data-theme", th);
+} catch (e) {}
+
+/* ---------- Outils ---------- */
+var $ = function(id){ return document.getElementById(id); };
+function alea(a, b){ return a + Math.floor(Math.random() * (b - a + 1)); }
+function melange(t, rnd){
+  var c = t.slice(), i, j, tmp;
+  for (i = c.length - 1; i > 0; i--){
+    j = Math.floor((rnd ? rnd() : Math.random()) * (i + 1));
+    tmp = c[i]; c[i] = c[j]; c[j] = tmp;
+  }
+  return c;
+}
+function piocher(t, n, rnd){ return melange(t, rnd).slice(0, n); }
+function echappe(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* Générateur du jour : la même fiche toute la journée. */
+function graineDuJour(){
+  var d = new Date();
+  var n = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  return function(){
+    n |= 0; n = n + 0x6D2B79F5 | 0;
+    var t = Math.imul(n ^ n >>> 15, 1 | n);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+/* ---------- Questions ---------- */
+function qChoix(enonce, options, aide, opts){
+  opts = opts || {};
+  return {
+    type: "choix", q: enonce, consigne: opts.consigne || "Touche la bonne réponse.",
+    opts: melange(options), aide: aide, fig: opts.fig || "", gros: !!opts.gros, calc: !!opts.calc
+  };
+}
+function qNombre(enonce, rep, aide, opts){
+  opts = opts || {};
+  return {
+    type: "nombre", q: enonce, consigne: opts.consigne || "Écris ta réponse, puis touche OK.",
+    rep: String(rep), aide: aide, fig: opts.fig || "", calc: !!opts.calc
+  };
+}
+
+/* ---------- Dessins ---------- */
+var FORMES = {
+  triangle:  { pts:"50,10 90,88 10,88", cotes:3 },
+  carre:     { pts:"16,16 84,16 84,84 16,84", cotes:4 },
+  rectangle: { pts:"8,26 92,26 92,74 8,74", cotes:4 },
+  quad:      { pts:"14,24 86,10 94,78 24,92", cotes:4 },
+  losange:   { pts:"50,8 90,50 50,92 10,50", cotes:4 },
+  pentagone: { pts:"50,7 93,38 77,89 23,89 7,38", cotes:5 },
+  hexagone:  { pts:"50,6 89,28 89,72 50,94 11,72 11,28", cotes:6 },
+  triRect:   { pts:"16,16 16,86 88,86", cotes:3, droit:true }
+};
+function svgForme(cle, couleur, opts){
+  opts = opts || {};
+  var f = FORMES[cle], sommets = "", code = "";
+  if (opts.sommets){
+    sommets = f.pts.split(" ").map(function(p){
+      var xy = p.split(",");
+      return '<circle cx="' + xy[0] + '" cy="' + xy[1] + '" r="4.5" fill="var(--paper)" stroke="var(--edge)" stroke-width="3"/>';
+    }).join("");
+  }
+  if (f.droit) code = '<path d="M16,72 L30,72 L30,86" fill="none" stroke="var(--edge)" stroke-width="3"/>';
+  return '<svg viewBox="-6 -6 112 112" aria-hidden="true">'
+    + '<polygon points="' + f.pts + '" fill="' + couleur + '" fill-opacity=".3" stroke="var(--edge)" stroke-width="4" stroke-linejoin="round"/>'
+    + code + sommets + '</svg>';
+}
+function svgCercle(couleur){
+  return '<svg viewBox="-6 -6 112 112" aria-hidden="true"><circle cx="50" cy="50" r="42" fill="' + couleur
+    + '" fill-opacity=".3" stroke="var(--edge)" stroke-width="4"/></svg>';
+}
+function svgLigneOuverte(){
+  return '<svg viewBox="-6 -6 112 112" aria-hidden="true"><polyline points="10,84 28,16 58,80 90,20" fill="none" stroke="var(--edge)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+}
+function svgHorloge(h, m){
+  var ah = ((h % 12) + m / 60) * 30 - 90, am = m * 6 - 90, traits = "", chiffres = "", i, a, x1, y1, x2, y2;
+  function aiguille(ang, len, w, col){
+    var x = 50 + len * Math.cos(ang * Math.PI / 180), y = 50 + len * Math.sin(ang * Math.PI / 180);
+    return '<line x1="50" y1="50" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="' + col + '" stroke-width="' + w + '" stroke-linecap="round"/>';
+  }
+  for (i = 0; i < 12; i++){
+    a = i * 30 - 90;
+    x1 = 50 + 40 * Math.cos(a * Math.PI / 180); y1 = 50 + 40 * Math.sin(a * Math.PI / 180);
+    x2 = 50 + 45 * Math.cos(a * Math.PI / 180); y2 = 50 + 45 * Math.sin(a * Math.PI / 180);
+    traits += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="var(--edge)" stroke-width="2.5"/>';
+  }
+  [[12, 50, 20], [3, 80, 53], [6, 50, 87], [9, 20, 53]].forEach(function(c){
+    chiffres += '<text x="' + c[1] + '" y="' + c[2] + '" text-anchor="middle" font-size="14" font-family="Grandstander,sans-serif" font-weight="800" fill="var(--ink)">' + c[0] + '</text>';
+  });
+  return '<svg viewBox="0 0 100 100" aria-hidden="true">'
+    + '<circle cx="50" cy="50" r="47" fill="var(--paper)" stroke="var(--edge)" stroke-width="4"/>'
+    + traits + chiffres
+    + aiguille(ah, 23, 6, "var(--geo)")
+    + aiguille(am, 36, 4, "var(--coral)")
+    + '<circle cx="50" cy="50" r="4" fill="var(--edge)"/></svg>';
+}
+function svgEtoile(pleine){
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.6l-5.4 2.9 1.1-6.1L3.2 9.2l6.1-.8z" fill="'
+    + (pleine ? "var(--sun)" : "var(--line)") + '" stroke="var(--edge)" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+}
+var TAMPONS = {
+  or:     { fond:"var(--sun)",   txt:"OR",     ink:"var(--sun-ink)" },
+  argent: { fond:"#C9D2DE",      txt:"ARGENT", ink:"#2A3550" },
+  bronze: { fond:"#D8915A",      txt:"BRONZE", ink:"#3A2000" }
+};
+function svgTampon(niveau){
+  var t = TAMPONS[niveau];
+  if (!t) return '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" fill="none" stroke="var(--line)" stroke-width="4" stroke-dasharray="7 6"/></svg>';
+  return '<svg viewBox="0 0 100 100" aria-hidden="true">'
+    + '<circle cx="50" cy="50" r="44" fill="' + t.fond + '" stroke="var(--edge)" stroke-width="4"/>'
+    + '<circle cx="50" cy="50" r="35" fill="none" stroke="' + t.ink + '" stroke-width="2.5" stroke-dasharray="6 5" opacity=".8"/>'
+    + '<path d="M50 24l5.1 10.4 11.5 1.7-8.3 8.1 2 11.4L50 50.2 39.7 55.6l2-11.4-8.3-8.1 11.5-1.7z" fill="' + t.ink + '" opacity=".9"/>'
+    + '<text x="50" y="76" text-anchor="middle" font-size="14" font-family="Grandstander,sans-serif" font-weight="900" fill="' + t.ink + '">' + t.txt + '</text></svg>';
+}
+
+/* =========================================================
+   FICHE — Géométrie : les polygones
+   Attendus CE1 : reconnaître, nommer et décrire le carré, le
+   rectangle, le triangle, le triangle rectangle et le cercle ;
+   côtés, sommets, angle droit et son codage.
+   ========================================================= */
+function fabGeo(){
+  var b = [], f1, f2;
+
+  b.push(qChoix("Lequel est un polygone ?", [
+    { h: svgForme("hexagone", "var(--leaf)"), ok: true },
+    { h: svgCercle("var(--geo)"), ok: false },
+    { h: svgLigneOuverte(), ok: false }
+  ], "Un polygone est une figure fermée dont tous les côtés sont droits.", { consigne: "Touche la bonne figure." }));
+
+  f1 = piocher(["triangle", "quad", "pentagone", "hexagone"], 1)[0];
+  b.push(qNombre("Combien de côtés ?", FORMES[f1].cotes,
+    "Suis le contour avec ton doigt et compte les traits droits.",
+    { fig: svgForme(f1, "var(--geo)") }));
+
+  f2 = piocher(["triangle", "carre", "pentagone", "hexagone"], 1)[0];
+  b.push(qNombre("Combien de sommets ?", FORMES[f2].cotes,
+    "Les sommets sont les coins, là où deux côtés se rejoignent.",
+    { fig: svgForme(f2, "var(--mes)", { sommets: true }) }));
+
+  b.push(qChoix("Une figure à 4 côtés s'appelle...", [
+    { h: "un quadrilatère", ok: true }, { h: "un triangle", ok: false },
+    { h: "un pentagone", ok: false }, { h: "un hexagone", ok: false }
+  ], "Quadri veut dire quatre."));
+
+  b.push(qChoix("Comment s'appelle cette figure ?", [
+    { h: "un pentagone", ok: true }, { h: "un hexagone", ok: false }, { h: "un quadrilatère", ok: false }
+  ], "Elle a 5 côtés, et penta veut dire cinq.", { fig: svgForme("pentagone", "var(--cal)") }));
+
+  b.push(qChoix("Comment s'appelle cette figure ?", [
+    { h: "un hexagone", ok: true }, { h: "un pentagone", ok: false }, { h: "un triangle", ok: false }
+  ], "Compte ses côtés : il y en a 6. Hexa veut dire six.", { fig: svgForme("hexagone", "var(--mes)") }));
+
+  b.push(qChoix("Touche le carré.", [
+    { h: svgForme("carre", "var(--leaf)"), ok: true },
+    { h: svgForme("rectangle", "var(--cal)"), ok: false },
+    { h: svgForme("losange", "var(--geo)"), ok: false }
+  ], "Le carré a 4 côtés de la même longueur et 4 angles droits.", { consigne: "Touche la bonne figure." }));
+
+  b.push(qChoix("Touche le rectangle.", [
+    { h: svgForme("rectangle", "var(--mes)"), ok: true },
+    { h: svgForme("triangle", "var(--cal)"), ok: false },
+    { h: svgForme("pentagone", "var(--geo)"), ok: false }
+  ], "Le rectangle a 4 angles droits, et ses côtés opposés sont égaux.", { consigne: "Touche la bonne figure." }));
+
+  b.push(qChoix("Touche le triangle rectangle.", [
+    { h: svgForme("triRect", "var(--cal)"), ok: true },
+    { h: svgForme("triangle", "var(--leaf)"), ok: false }
+  ], "Cherche le petit carré dessiné dans le coin : c'est le code de l'angle droit.", { consigne: "Touche la bonne figure." }));
+
+  b.push(qChoix("Le carré a 4 côtés de la même longueur.", [
+    { h: "Vrai", ok: true }, { h: "Faux", ok: false }
+  ], "Ses 4 côtés mesurent tous pareil.", { consigne: "Vrai ou faux ?", gros: true }));
+
+  b.push(qChoix("Le cercle est un polygone.", [
+    { h: "Faux", ok: true }, { h: "Vrai", ok: false }
+  ], "Le cercle est une ligne courbe : il n'a ni côté droit ni sommet.", { consigne: "Vrai ou faux ?", gros: true }));
+
+  b.push(qNombre("Combien d'angles droits dans un rectangle ?", 4,
+    "Regarde chacun des 4 coins : ils sont tous droits.",
+    { fig: svgForme("rectangle", "var(--mes)") }));
+
+  b.push(qChoix("Quelle figure n'est pas un polygone ?", [
+    { h: svgCercle("var(--geo)"), ok: true },
+    { h: svgForme("triangle", "var(--leaf)"), ok: false },
+    { h: svgForme("carre", "var(--cal)"), ok: false }
+  ], "Un polygone n'a que des côtés droits.", { consigne: "Touche la bonne figure." }));
+
+  b.push(qChoix("Combien de côtés a un triangle ?", [
+    { h: "3", ok: true }, { h: "4", ok: false }, { h: "5", ok: false }, { h: "6", ok: false }
+  ], "Tri veut dire trois.", { gros: true }));
+
+  return b;
+}
+
+/* =========================================================
+   FICHE — Calcul malin
+   Attendus CE1 : nombres jusqu'à 1 000, addition et soustraction,
+   tables de 2, 3, 4, 5 et 10, doubles et moitiés, problèmes.
+   ========================================================= */
+function fabCalcul(){
+  var b = [], a, c, d, e, f, g, h, i, j, k, l, m, n, p, q, r;
+
+  a = alea(21, 64); c = alea(11, 30);
+  b.push(qNombre(a + " + " + c, a + c, "Ajoute d'abord les dizaines, puis les unités.", { calc: true }));
+
+  d = alea(26, 58); e = alea(16, 38);
+  b.push(qNombre(d + " + " + e, d + e, "Il y a une retenue : n'oublie pas de la garder.", { calc: true }));
+
+  f = alea(45, 98); g = alea(12, 33);
+  b.push(qNombre(f + " − " + g, f - g, "Recule de " + g + " en partant de " + f + ", dizaines d'abord.", { calc: true }));
+
+  h = alea(2, 9);
+  b.push(qNombre(h + " + ? = 10", 10 - h, "Les paires de 10 : 1 et 9, 2 et 8, 3 et 7, 4 et 6, 5 et 5.", { calc: true }));
+
+  i = alea(1, 9) * 10;
+  b.push(qNombre(i + " + ? = 100", 100 - i, "Compte de dizaine en dizaine jusqu'à 100.", { calc: true }));
+
+  j = alea(6, 25);
+  b.push(qNombre("Le double de " + j, j * 2, "Le double, c'est deux fois le même nombre : " + j + " + " + j + ".", { calc: true }));
+
+  k = alea(6, 24) * 2;
+  b.push(qNombre("La moitié de " + k, k / 2, "Partage " + k + " en deux parts égales.", { calc: true }));
+
+  l = alea(2, 9);
+  b.push(qNombre("5 × " + l, 5 * l, "Compte de 5 en 5 : 5, 10, 15, 20...", { calc: true }));
+
+  m = alea(2, 9);
+  b.push(qNombre("3 × " + m, 3 * m, "Compte de 3 en 3 : 3, 6, 9, 12...", { calc: true }));
+
+  n = alea(2, 9);
+  b.push(qNombre("4 × " + n, 4 * n, "4 fois un nombre, c'est le double de son double.", { calc: true }));
+
+  p = alea(3, 9);
+  b.push(qNombre("10 × " + p, 10 * p, "Multiplier par 10, c'est ajouter un zéro.", { calc: true }));
+
+  q = alea(197, 899);
+  b.push(qNombre("Quel nombre vient juste après " + q + " ?", q + 1, "Ajoute 1. Attention au passage à la dizaine.", { calc: true }));
+
+  r = alea(204, 906);
+  b.push(qNombre("Quel nombre vient juste avant " + r + " ?", r - 1, "Enlève 1.", { calc: true }));
+
+  var cent = alea(120, 480), diz = alea(2, 6) * 10;
+  b.push(qNombre(cent + " + " + diz, cent + diz, "Tu n'ajoutes que des dizaines : le chiffre des unités ne bouge pas.", { calc: true }));
+
+  var bil = alea(4, 9) * 10, don = alea(3, 8);
+  b.push(qNombre("Léa a " + bil + " billes. Elle en donne " + don + ". Combien lui en reste-t-il ?", bil - don,
+    "Elle en donne, donc il y en a moins : c'est une soustraction.", { calc: false }));
+
+  var pq = alea(3, 6), pp = alea(3, 8);
+  b.push(qNombre("Il y a " + pq + " paquets de " + pp + " gâteaux. Combien de gâteaux en tout ?", pq * pp,
+    "Des paquets tous pareils : c'est une multiplication, " + pq + " × " + pp + ".", { calc: false }));
+
+  var t1 = alea(150, 480), t2 = t1 + alea(30, 300);
+  b.push(qChoix("Quel est le plus grand nombre ?", [
+    { h: String(t2), ok: true }, { h: String(t1), ok: false }
+  ], "Compare d'abord les centaines, puis les dizaines.", { consigne: "Touche le plus grand.", gros: true }));
+
+  var u = alea(2, 8), u2 = alea(1, 9);
+  b.push(qNombre((u * 10) + " + " + u2, u * 10 + u2, "Les dizaines ne changent pas, tu ajoutes seulement des unités.", { calc: true }));
+
+  return b;
+}
+
+/* =========================================================
+   FICHE — Le temps et les unités
+   Attendus CE1 : heures entières (y compris après 12 h),
+   demi-heures et quarts d'heure ; unités de durée ; longueur,
+   masse et contenance.
+   ========================================================= */
+function libHeure(h, m){ return m === 0 ? h + " h" : h + " h " + m; }
+function fabTemps(){
+  var b = [], h1, m1, faux, h2, m2, deb;
+
+  h1 = alea(1, 12); m1 = piocher([0, 15, 30, 45], 1)[0];
+  faux = [];
+  [libHeure(h1 === 12 ? 1 : h1 + 1, m1), libHeure(h1, (m1 + 30) % 60), libHeure(h1 === 1 ? 12 : h1 - 1, m1)]
+    .forEach(function(v){ if (v !== libHeure(h1, m1) && faux.indexOf(v) === -1) faux.push(v); });
+  b.push(qChoix("Quelle heure est-il ?",
+    [{ h: libHeure(h1, m1), ok: true }].concat(faux.slice(0, 3).map(function(v){ return { h: v, ok: false }; })),
+    "La petite aiguille violette montre les heures, la grande aiguille rouge montre les minutes.",
+    { fig: svgHorloge(h1, m1), gros: true }));
+
+  h2 = alea(2, 11); m2 = piocher([0, 30], 1)[0];
+  b.push(qChoix("Touche l'horloge qui montre " + libHeure(h2, m2) + ".", [
+    { h: svgHorloge(h2, m2), ok: true },
+    { h: svgHorloge(h2, m2 === 0 ? 30 : 0), ok: false },
+    { h: svgHorloge(h2 + 1, m2), ok: false }
+  ], "Regarde d'abord la petite aiguille : elle doit être vers le " + h2 + ".", { consigne: "Touche la bonne horloge." }));
+
+  b.push(qNombre("Combien de minutes dans 1 heure ?", 60, "Un tour complet de la grande aiguille.", { calc: true }));
+  b.push(qNombre("Combien de minutes dans une demi-heure ?", 30, "C'est la moitié de 60 minutes.", { calc: true }));
+  b.push(qNombre("Combien de minutes dans un quart d'heure ?", 15, "Un quart, c'est 60 partagé en 4.", { calc: true }));
+  b.push(qNombre("Combien de jours dans une semaine ?", 7, "De lundi à dimanche.", { calc: true }));
+  b.push(qNombre("Combien de mois dans une année ?", 12, "De janvier à décembre.", { calc: true }));
+  b.push(qNombre("Combien d'heures dans une journée ?", 24, "Le jour et la nuit réunis.", { calc: true }));
+
+  b.push(qChoix("Quel mois vient juste après mars ?", [
+    { h: "avril", ok: true }, { h: "février", ok: false }, { h: "mai", ok: false }, { h: "juin", ok: false }
+  ], "Janvier, février, mars, puis..."));
+
+  b.push(qChoix("Quel jour vient juste après mercredi ?", [
+    { h: "jeudi", ok: true }, { h: "mardi", ok: false }, { h: "vendredi", ok: false }, { h: "dimanche", ok: false }
+  ], "Lundi, mardi, mercredi, puis..."));
+
+  deb = alea(13, 18);
+  b.push(qChoix("Le film commence à " + deb + " h et se termine à " + (deb + 1) + " h 30. Combien de temps dure-t-il ?", [
+    { h: "1 h 30", ok: true }, { h: "30 min", ok: false }, { h: "2 h", ok: false }, { h: "1 h", ok: false }
+  ], "De " + deb + " h à " + (deb + 1) + " h, cela fait 1 heure. Puis encore 30 minutes.", { gros: true }));
+
+  b.push(qChoix("Qu'est-ce qui dure le plus longtemps ?", [
+    { h: "une année", ok: true }, { h: "une semaine", ok: false },
+    { h: "une journée", ok: false }, { h: "une heure", ok: false }
+  ], "Range-les du plus court au plus long."));
+
+  b.push(qChoix("On mesure la durée d'un dessin animé en...", [
+    { h: "minutes", ok: true }, { h: "jours", ok: false }, { h: "mois", ok: false }
+  ], "Un dessin animé est court : environ 20 de ces unités.", { gros: true }));
+
+  b.push(qChoix("On mesure la longueur d'un crayon en...", [
+    { h: "centimètres", ok: true }, { h: "mètres", ok: false }, { h: "kilogrammes", ok: false }
+  ], "Un crayon mesure à peu près 17 de ces unités."));
+
+  b.push(qChoix("On mesure la masse d'un cartable en...", [
+    { h: "kilogrammes", ok: true }, { h: "litres", ok: false }, { h: "centimètres", ok: false }
+  ], "La masse, c'est ce qu'on lit sur la balance."));
+
+  b.push(qChoix("Une bouteille de lait contient 1...", [
+    { h: "litre", ok: true }, { h: "mètre", ok: false }, { h: "heure", ok: false }
+  ], "Pour les liquides, on mesure la contenance.", { gros: true }));
+
+  b.push(qChoix("On mesure la longueur de la cour de récréation en...", [
+    { h: "mètres", ok: true }, { h: "centimètres", ok: false }, { h: "litres", ok: false }
+  ], "La cour est bien plus grande qu'une règle."));
+
+  return b;
+}
+
+/* ---------- Les fiches ---------- */
+var FICHES = [
+  { id:"jour", classe:"jour", sign:"★", titre:"Le défi du jour", matiere:"Un peu de tout",
+    detail:"6 questions, nouvelles chaque jour", n:6, fab:function(){
+      var rnd = graineDuJour();
+      var tout = piocher(fabGeo(), 2, rnd).concat(piocher(fabCalcul(), 2, rnd), piocher(fabTemps(), 2, rnd));
+      return melange(tout, rnd);
+    } },
+  { id:"geo", classe:"geo", sign:"▲", titre:"Les polygones", matiere:"Géométrie",
+    detail:"Côtés, sommets, carré, rectangle, triangle", n:10, fab:fabGeo },
+  { id:"calcul", classe:"cal", sign:"+", titre:"Calcul malin", matiere:"Nombres et calculs",
+    detail:"Additions, doubles, tables, problèmes", n:10, fab:fabCalcul },
+  { id:"temps", classe:"mes", sign:"◷", titre:"Le temps et les unités", matiere:"Grandeurs et mesures",
+    detail:"Lire l'heure, durées, longueurs, masses", n:10, fab:fabTemps }
+];
+function fichePar(id){
+  for (var i = 0; i < FICHES.length; i++) if (FICHES[i].id === id) return FICHES[i];
+  return null;
+}
+
+/* ---------- Partie en cours ---------- */
+var P = null;
+
+function lancer(id){
+  var f = fichePar(id);
+  var qs = f.id === "jour" ? f.fab() : piocher(f.fab(), f.n);
+  P = {
+    fiche: f, qs: qs, total: qs.length, i: 0,
+    file: qs.slice(), rattrapage: [], tour: 1,
+    premier: 0, rattrapes: 0, erreurs: [], serie: 0, essai: 0,
+    saisie: "", aide: false, bloque: false, fini: 0
+  };
+  document.body.classList.add("in-game");
+  montrer("fiche");
+  rendreFiche();
+}
+
+function montrer(vue){
+  $("vAccueil").hidden = vue !== "accueil";
+  $("vFiche").hidden = vue !== "fiche";
+  $("vResultats").hidden = vue !== "resultats";
+  if (vue !== "fiche") document.body.classList.remove("in-game");
+  window.scrollTo(0, 0);
+}
+
+/* ---------- Accueil ---------- */
+function rendreAccueil(){
+  var h = "";
+  if (!DB.prenom){
+    h += '<div class="card welcome">'
+      + '<div class="welcome-art"><svg viewBox="0 0 46 52" aria-hidden="true">'
+      + '<path class="logo-page" d="M9 9h28a3 3 0 013 3v34a3 3 0 01-3 3H9z"/>'
+      + '<path class="logo-line" d="M16 20h14M16 27h14M16 34h9"/>'
+      + '<path class="logo-ring" d="M12 7v7M20 7v7M28 7v7M36 7v7"/>'
+      + '<path class="logo-star" d="M31 29l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z"/></svg></div>'
+      + '<h2>Bonjour !</h2>'
+      + '<p class="lead">Ici, on révise les fiches du CE1 : les formes, le calcul, le temps et les mesures.</p>'
+      + '<form class="name-form" id="formPrenom">'
+      + '<input class="name-input" id="inPrenom" type="text" maxlength="14" autocomplete="off" placeholder="Ton prénom" aria-label="Ton prénom">'
+      + '<button class="btn btn-primary" type="submit">C\'est parti</button></form></div>';
+    $("vAccueil").innerHTML = h;
+    var form = $("formPrenom");
+    form.onsubmit = function(ev){
+      ev.preventDefault();
+      var v = $("inPrenom").value.trim();
+      if (!v) { $("inPrenom").focus(); return; }
+      DB.prenom = v.charAt(0).toUpperCase() + v.slice(1);
+      sauver(); rendreAccueil();
+    };
+    return;
+  }
+
+  var faites = 0, tampons = 0, id;
+  for (id in DB.fiches){
+    if (DB.fiches[id] && DB.fiches[id].parties) faites += DB.fiches[id].parties;
+    if (DB.fiches[id] && DB.fiches[id].tampon) tampons++;
+  }
+
+  h += '<div class="hello-row"><p class="hello">Salut ' + echappe(DB.prenom) + ' !</p>'
+    + '<button class="link-btn" type="button" id="btnChanger">Changer de prénom</button></div>';
+
+  h += '<div class="side-stats">'
+    + '<div class="sstat" id="statEtoiles"><svg viewBox="0 0 24 24" class="i-star" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.6l-5.4 2.9 1.1-6.1L3.2 9.2l6.1-.8z"/></svg>'
+    + '<b>' + DB.etoiles + '</b><span>étoiles</span></div>'
+    + '<div class="sstat"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="i-line" cx="12" cy="12" r="8"/><path class="i-line" d="M8.5 12.2l2.4 2.4 4.6-5"/></svg>'
+    + '<b>' + tampons + '/3</b><span>tampons</span></div>'
+    + '<div class="sstat"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-line" d="M5 4.5h11l3 3V19.5H5z"/><path class="i-line" d="M8.5 10h7M8.5 14h5"/></svg>'
+    + '<b>' + faites + '</b><span>fiches faites</span></div></div>';
+
+  h += '<div class="picks">';
+  FICHES.forEach(function(f){
+    var d = DB.fiches[f.id] || {};
+    var tampon = f.id === "jour" ? "" : '<span class="stamp">' + svgTampon(d.tampon) + '</span>';
+    var det = f.detail;
+    if (d.record) det = "Record : " + d.record + "/" + f.n + " du premier coup";
+    h += '<button class="pick ' + f.classe + '" type="button" data-fiche="' + f.id + '">'
+      + '<span class="pick-sign">' + f.sign + '</span>'
+      + '<span class="pick-txt"><b>' + f.titre + '</b><span>' + f.matiere + ' · ' + det + '</span></span>'
+      + tampon + '</button>';
+  });
+  h += '</div>';
+
+  h += '<div class="card"><h3>Comment ça marche</h3>'
+    + '<p class="muted">Chaque fiche pose 10 questions, 6 pour le défi du jour. Quand une réponse est fausse, la question revient en rattrapage à la fin : la fiche se termine toujours à 100 %. Le score affiché est celui du premier coup.</p>'
+    + '<p class="muted">Programme officiel du CE1 — cycle 2, BO du 31 octobre 2024.</p></div>';
+
+  $("vAccueil").innerHTML = h;
+  $("btnChanger").onclick = function(){ DB.prenom = ""; sauver(); rendreAccueil(); };
+  Array.prototype.forEach.call(document.querySelectorAll("[data-fiche]"), function(btn){
+    btn.onclick = function(){ lancer(btn.getAttribute("data-fiche")); };
+  });
+}
+
+/* ---------- Fiche en cours ---------- */
+function questionCourante(){ return P.tour === 1 ? P.file[P.i] : P.rattrapage[P.i]; }
+
+function rendreFiche(){
+  var q = questionCourante();
+  var pct = Math.round(P.fini / P.total * 100);
+  var h = "";
+
+  h += '<div class="game-bar">'
+    + '<div class="gb-left"><span class="ex-label">' + P.fiche.titre + '</span>'
+    + '<span class="qcount">' + (P.tour === 1
+        ? "Question " + Math.min(P.fini + 1, P.total) + " sur " + P.total
+        : "Rattrapage : " + P.rattrapage.length + " à reprendre") + '</span></div>'
+    + '<button class="chip-btn" type="button" id="btnQuitter">'
+    + '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-line" d="M14 6l-6 6 6 6"/></svg>Les fiches</button>'
+    + '</div>';
+
+  h += '<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><span style="width:' + pct + '%"></span></div>';
+
+  if (P.tour === 2) h += '<p class="fix-banner">Rattrapage : on reprend les calculs ratés.</p>';
+
+  h += '<div class="q-card">';
+  h += '<div class="q-tools"><button class="chip-btn" type="button" id="btnAide">'
+    + '<svg viewBox="0 0 24 24" aria-hidden="true"><circle class="i-line" cx="12" cy="12" r="8.5"/><path class="i-line" d="M9.8 9.6a2.3 2.3 0 114 1.6c-.9.8-1.8 1.2-1.8 2.4"/><circle class="i-dot" cx="12" cy="17" r="1.1"/></svg>Aide</button>'
+    + (P.serie >= 3 ? '<span class="streak">' + P.serie + ' de suite !</span>' : '<span></span>') + '</div>';
+
+  h += '<p class="question ' + (q.calc ? "calc" : "texte") + '">' + q.q + '</p>';
+  if (q.consigne) h += '<p class="consigne">' + q.consigne + '</p>';
+  if (q.fig) h += '<div class="figure">' + q.fig + '</div>';
+
+  if (q.type === "choix"){
+    var graphique = q.opts[0].h.indexOf("<svg") === 0;
+    var cls = "answers" + (graphique
+      ? (q.opts.length >= 3 ? " trio" : "")
+      : (q.opts.length === 4 ? " quatre" : ""));
+    h += '<div class="' + cls + '">';
+    q.opts.forEach(function(o, idx){
+      h += '<button class="ans' + (graphique ? " fig" : (q.gros ? " gros" : "")) + '" type="button" data-rep="' + idx + '">' + o.h + '</button>';
+    });
+    h += '</div>';
+  } else {
+    h += '<div class="typepad">'
+      + '<input class="type-input" id="inRep" type="text" inputmode="none" readonly value="' + echappe(P.saisie) + '" placeholder="?" aria-label="Ta réponse">'
+      + '<div class="keys">';
+    [1,2,3,4,5,6,7,8,9].forEach(function(n){ h += '<button class="key" type="button" data-num="' + n + '">' + n + '</button>'; });
+    h += '<button class="key key-small" type="button" data-eff="1" aria-label="Effacer">←</button>'
+      + '<button class="key" type="button" data-num="0">0</button>'
+      + '<button class="key key-ok" type="button" data-ok="1">OK</button>'
+      + '</div></div>';
+  }
+
+  h += '<div class="feedback" id="fb" aria-live="polite"></div>';
+  if (P.aide) h += '<div class="help"><h4>Un coup de pouce</h4><p>' + q.aide + '</p></div>';
+  h += '</div>';
+
+  $("vFiche").innerHTML = h;
+
+  $("btnQuitter").onclick = function(){ P = null; montrer("accueil"); rendreAccueil(); };
+  $("btnAide").onclick = function(){ P.aide = !P.aide; rendreFiche(); };
+  Array.prototype.forEach.call(document.querySelectorAll("[data-rep]"), function(btn){
+    btn.onclick = function(){ repondre(parseInt(btn.getAttribute("data-rep"), 10)); };
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-num]"), function(btn){
+    btn.onclick = function(){
+      if (P.bloque || P.saisie.length >= 4) return;
+      P.saisie += btn.getAttribute("data-num");
+      $("inRep").value = P.saisie;
+    };
+  });
+  var eff = document.querySelector("[data-eff]");
+  if (eff) eff.onclick = function(){
+    if (P.bloque) return;
+    P.saisie = P.saisie.slice(0, -1);
+    $("inRep").value = P.saisie;
+  };
+  var ok = document.querySelector("[data-ok]");
+  if (ok) ok.onclick = function(){
+    if (P.bloque) return;
+    if (P.saisie === ""){
+      var inp = $("inRep");
+      inp.classList.remove("empty"); void inp.offsetWidth; inp.classList.add("empty");
+      return;
+    }
+    repondre(null);
+  };
+}
+
+function feedback(etat, titre, sous){
+  var fb = $("fb");
+  if (!fb) return;
+  fb.className = "feedback " + etat;
+  fb.innerHTML = '<p class="fb-title">' + titre + '</p>' + (sous ? '<p class="fb-sub">' + sous + '</p>' : "");
+}
+
+var BRAVOS = ["Bravo !", "Parfait !", "Bien joué !", "Tout juste !", "Excellent !"];
+
+function repondre(idx){
+  if (!P || P.bloque) return;
+  var q = questionCourante(), juste;
+
+  if (q.type === "choix"){
+    juste = q.opts[idx].ok;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-rep]"), function(btn){
+      var i = parseInt(btn.getAttribute("data-rep"), 10);
+      btn.disabled = true;
+      if (q.opts[i].ok) btn.classList.add("good");
+      else if (i === idx) btn.classList.add("bad");
+    });
+  } else {
+    juste = P.saisie === q.rep;
+    var inp = $("inRep");
+    inp.classList.add(juste ? "good" : "bad");
+    if (!juste) inp.value = P.saisie + " → " + q.rep;
+    Array.prototype.forEach.call(document.querySelectorAll(".key"), function(k){ k.disabled = true; });
+  }
+
+  P.bloque = true;
+
+  if (juste){
+    P.serie++;
+    if (P.tour === 1){
+      P.premier++;
+      DB.etoiles++; sauver();
+      feedback("ok", BRAVOS[alea(0, BRAVOS.length - 1)], "Tu gagnes une étoile.");
+    } else {
+      P.rattrapes++;
+      feedback("ok", "Rattrapé !", "Cette question est acquise.");
+    }
+    setTimeout(suivant, 1000);
+  } else {
+    P.serie = 0;
+    if (P.tour === 1){
+      P.erreurs.push(q);
+      P.rattrapage.push(q);
+      feedback("oops", "Presque !", q.aide);
+    } else {
+      feedback("oops", "Pas encore.", q.aide);
+      P.rattrapage.push(q);
+    }
+    setTimeout(suivant, 2600);
+  }
+}
+
+function suivant(){
+  if (!P) return; // la fiche a été quittée pendant le petit temps d'attente
+  P.bloque = false; P.saisie = ""; P.aide = false;
+
+  if (P.tour === 1){
+    P.fini = Math.min(P.fini + 1, P.total);
+    P.i++;
+    if (P.i < P.file.length){ rendreFiche(); return; }
+    if (P.rattrapage.length){ P.tour = 2; P.i = 0; rendreFiche(); return; }
+    terminer(); return;
+  }
+
+  // Tour de rattrapage : la question ratée a été remise au bout de la file.
+  P.rattrapage.shift();
+  if (P.rattrapage.length){ P.i = 0; rendreFiche(); return; }
+  terminer();
+}
+
+/* ---------- Résultats ---------- */
+function niveauTampon(premier, total){
+  var p = premier / total;
+  if (p >= .9) return "or";
+  if (p >= .7) return "argent";
+  return "bronze";
+}
+var ORDRE_TAMPON = { bronze: 1, argent: 2, or: 3 };
+
+function terminer(){
+  var f = P.fiche, premier = P.premier, total = P.total;
+  var niveau = niveauTampon(premier, total);
+  var d = DB.fiches[f.id] || { parties: 0, record: 0, tampon: "" };
+  var record = premier > (d.record || 0);
+  d.parties = (d.parties || 0) + 1;
+  if (record) d.record = premier;
+  if (f.id !== "jour" && (!d.tampon || ORDRE_TAMPON[niveau] > ORDRE_TAMPON[d.tampon])) d.tampon = niveau;
+  DB.fiches[f.id] = d;
+  sauver();
+
+  var etoiles = premier === total ? 3 : (premier >= Math.ceil(total * .7) ? 2 : 1);
+  var mot = premier === total ? "Sans faute, du premier coup !"
+    : (premier >= Math.ceil(total * .7) ? "Très bon travail." : "Tu progresses, refais la fiche pour t'entraîner.");
+
+  var h = '<div class="card results">'
+    + '<p class="eyebrow">' + f.matiere + '</p>'
+    + '<h2>' + f.titre + '</h2>'
+    + '<p class="res-score">' + premier + '<span class="res-of">/' + total + '</span></p>'
+    + '<p class="res-first">du premier coup</p>'
+    + '<div class="res-stars">' + svgEtoile(etoiles >= 1) + svgEtoile(etoiles >= 2) + svgEtoile(etoiles >= 3) + '</div>'
+    + '<p>' + mot + '</p>';
+
+  if (record && d.parties > 1) h += '<p class="record">Nouveau record !</p>';
+  if (f.id !== "jour") h += '<div class="res-stamp pop">' + svgTampon(d.tampon) + '</div>';
+
+  h += '<div class="tiles">'
+    + '<div class="tile"><b>' + premier + '</b><span>justes du premier coup</span></div>'
+    + '<div class="tile"><b>' + P.rattrapes + '</b><span>rattrapés ensuite</span></div>'
+    + '<div class="tile"><b>' + DB.etoiles + '</b><span>étoiles en tout</span></div>'
+    + '</div>';
+
+  if (P.erreurs.length){
+    h += '<h3>À revoir</h3><ul class="mist">';
+    P.erreurs.forEach(function(q){
+      var bonne = q.type === "nombre" ? q.rep : (function(){
+        var r = "";
+        q.opts.forEach(function(o){ if (o.ok) r = o.h.indexOf("<svg") === 0 ? "la figure en vert" : o.h; });
+        return r;
+      })();
+      h += '<li class="done"><span class="f">' + q.q + '</span><span>' + bonne + '</span></li>';
+    });
+    h += '</ul><p class="muted">Toutes ont été rattrapées à la fin de la fiche.</p>';
+  }
+
+  h += '<div class="actions">'
+    + '<button class="btn btn-primary btn-big" type="button" id="btnRejouer">Refaire la fiche</button>'
+    + '<button class="btn" type="button" id="btnRetour">Les fiches</button>'
+    + '</div></div>';
+
+  $("vResultats").innerHTML = h;
+  montrer("resultats");
+  $("btnRejouer").onclick = function(){ lancer(f.id); };
+  $("btnRetour").onclick = function(){ P = null; montrer("accueil"); rendreAccueil(); };
+}
+
+/* ---------- Fond jour / nuit ---------- */
+$("themeBtn").onclick = function(){
+  var r = document.documentElement;
+  var sombre = r.getAttribute("data-theme") === "dark"
+    || (!r.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  var neuf = sombre ? "light" : "dark";
+  r.setAttribute("data-theme", neuf);
+  try { localStorage.setItem(THEME_KEY, neuf); } catch (e) {}
+};
+
+/* ---------- Démarrage ---------- */
+rendreAccueil();
+montrer("accueil");
+
+if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
+  window.addEventListener("load", function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); });
+}
+</script>
+</body>
+</html>
