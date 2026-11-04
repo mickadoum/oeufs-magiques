@@ -486,6 +486,53 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
 @keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-7deg)}75%{transform:rotate(7deg)}}
 @keyframes nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 @keyframes fall{to{transform:translateY(105vh) rotate(540deg)}}
+/* ---------- Cartes ---------- */
+.tcard{position:relative;display:flex;flex-direction:column;gap:6px;width:100%;background:#FFFFFF;color:#1F2A4D;border:5px solid var(--fc);border-radius:18px;padding:8px 8px 10px;box-shadow:0 5px 0 rgba(31,42,77,.35);text-align:left;font-family:var(--font-body);overflow:hidden}
+.tc-head{display:flex;justify-content:space-between;align-items:baseline;gap:6px;background:var(--fl);border-radius:10px;padding:4px 10px}
+.tc-name{font-family:var(--font-display);font-weight:900;font-size:1.3rem;line-height:1.1;overflow-wrap:anywhere;min-width:0}
+.tc-num{font-family:var(--font-display);font-weight:800;font-size:.8rem;color:#4B5B80;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tc-art{background:var(--fl);border-radius:12px;padding:4px}
+.tc-art svg{width:100%;height:auto;display:block}
+.tc-fam{display:flex;align-items:center;gap:6px;font-family:var(--font-display);font-weight:800;font-size:.92rem}
+.fam-ic{width:18px;height:18px;flex:none}
+.tc-rar{margin-left:auto;color:#9A6A00;white-space:nowrap}
+.tc-desc{font-size:.95rem;line-height:1.35}
+.tc-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:2px dashed var(--fl);padding-top:6px;font-size:.85rem;color:#4B5B80}
+.tc-foot b{font-family:var(--font-display);font-size:1.15rem;color:#1F2A4D;font-variant-numeric:tabular-nums}
+.tcard.rar-r{box-shadow:inset 0 0 0 2px #C9D2DE,0 5px 0 rgba(31,42,77,.35)}
+.tcard.rar-tr{box-shadow:inset 0 0 0 3px #FFC83D,0 5px 0 rgba(31,42,77,.35)}
+.tcard.rar-l{border-color:transparent;background:linear-gradient(#FFFFFF,#FFFFFF) padding-box,linear-gradient(135deg,#FF6B6B,#FFB347,#FFE066,#6CD07A,#4BA3F5,#A98CF2,#FF86B4) border-box}
+.tcard.rar-l::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.32) 50%,transparent 58%);background-size:260% 100%;animation:shine 3.2s linear infinite}
+.tcard.pop{animation:pop .6s cubic-bezier(.2,1.6,.4,1) both}
+.tcard.mini{padding:5px 5px 6px;border-width:4px;border-radius:14px;gap:4px;height:100%}
+.tcard.mini .tc-head{padding:2px 6px;justify-content:center}
+.tcard.mini .tc-name{font-size:.84rem;text-align:center}
+.tc-mini-foot{display:flex;justify-content:space-between;gap:4px;font-size:.72rem;font-family:var(--font-display);font-weight:800;color:#4B5B80;padding:0 2px}
+.tc-stars{color:#9A6A00;letter-spacing:-.05em}
+.tcard.back{background:repeating-linear-gradient(45deg,var(--fl) 0 8px,#FFFFFF 8px 16px);box-shadow:none;justify-content:center}
+.tc-back-in{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex:1;min-height:120px;font-family:var(--font-display);font-weight:800;font-size:.8rem;color:#4B5B80}
+.tc-back-in b{font-size:2.2rem;color:var(--fc);line-height:1}
+.tcard .fam-ic,.fchip .fam-ic{width:18px;height:18px;display:inline-block}
+.tcard .tc-back-in .fam-ic{width:24px;height:24px}
+.cgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:14px 12px}
+@media (max-width:420px){.cgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cgrid li{display:flex;min-width:0}
+.cgrid .grid-empty{grid-column:1/-1;color:var(--ink-soft)}
+.cbtn{display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:pointer;border-radius:16px;position:relative}
+.tc-count{position:absolute;top:-7px;right:-6px;z-index:1;background:#FFB81C;color:#3A2600;border:2px solid #1F2A4D;border-radius:999px;padding:0 8px;font-family:var(--font-display);font-weight:900;font-size:.9rem}
+.coll-filters{display:flex;flex-direction:column;gap:10px}
+.fchips{display:flex;flex-wrap:wrap;gap:8px}
+.fchip{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:2px solid var(--line);border-radius:999px;padding:6px 12px;font-family:var(--font-display);font-weight:800;font-size:.95rem;cursor:pointer;color:var(--ink)}
+.fchip small{font-family:var(--font-body);font-weight:700;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.fchip[aria-pressed="true"]{border-color:var(--edge);background:var(--sun-soft)}
+.exchange{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:var(--paper-2);border-radius:16px;padding:10px 14px}
+.exchange p{flex:1 1 220px;min-width:0}
+.hatch-art.is-card{width:270px;max-width:100%}
+.card-view{position:relative;z-index:1;width:100%;max-width:300px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.card-count{background:var(--paper);color:var(--ink);border:3px solid var(--edge);border-radius:999px;padding:4px 16px;font-family:var(--font-display);font-weight:800;text-align:center}
+.voice-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.vsel{flex:1 1 240px;min-width:0;max-width:100%;font:inherit;font-size:1rem;padding:8px 12px;border-radius:12px;border:3px solid var(--edge);background:var(--paper-2);color:var(--ink)}
+@keyframes shine{from{background-position:130% 0}to{background-position:-130% 0}}
 @media (max-height:820px){
   body.in-game .tabs,body.in-game .sub{display:none}
   body.in-game .shell{padding-block:8px 24px;gap:10px}
@@ -534,7 +581,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
     </div>
     <div class="side-stats">
       <div class="sstat" id="sstatStars"><svg viewBox="0 0 24 24" class="i-star" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.6l-5.4 2.9 1.1-6.1L3.2 9.2l6.1-.8z"/></svg><b id="sideStars">0</b><span>étoiles</span></div>
-      <div class="sstat"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-line" d="M5 15c0-5 3-9 7-9s7 4 7 9c0 3-3 5-7 5s-7-2-7-5z"/><circle class="i-dot" cx="9.5" cy="12.5" r="1.3"/><circle class="i-dot" cx="14.5" cy="12.5" r="1.3"/><path class="i-line" d="M8 7L6.5 3.5M16 7l1.5-3.5"/></svg><b id="sideCreatures">0/30</b><span>créatures</span></div>
+      <div class="sstat"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-line" d="M5 15c0-5 3-9 7-9s7 4 7 9c0 3-3 5-7 5s-7-2-7-5z"/><circle class="i-dot" cx="9.5" cy="12.5" r="1.3"/><circle class="i-dot" cx="14.5" cy="12.5" r="1.3"/><path class="i-line" d="M8 7L6.5 3.5M16 7l1.5-3.5"/></svg><b id="sideCreatures">0/150</b><span>cartes</span></div>
       <div class="sstat"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-line" d="M8 3l3 7M16 3l-3 7"/><circle class="i-line" cx="12" cy="15" r="5.5"/></svg><b id="sideMedals">0</b><span>médailles</span></div>
     </div>
     <div class="side-card egg-card">
@@ -546,7 +593,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
       </div>
     </div>
     <div class="side-card side-detail">
-      <p class="side-label">Mes créatures</p>
+      <p class="side-label">Mes dernières cartes</p>
       <div class="thumbs" id="sideThumbs"></div>
     </div>
     <div class="side-card side-detail">
@@ -717,16 +764,26 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
     <!-- COLLECTION -->
     <section id="screen-collection" aria-label="Collection" hidden>
       <div class="card">
-        <h2>Ma collection</h2>
+        <h2>Mes cartes</h2>
         <p id="collText"></p>
-        <div class="bar" role="img" id="collBarWrap" aria-label="0 sur 30"><span id="collBar"></span></div>
+        <div class="bar" role="img" id="collBarWrap" aria-label="0 sur 150"><span id="collBar"></span></div>
+        <div class="exchange"><p id="exText"></p><button class="btn btn-help btn-small" type="button" id="exBtn">Échanger 3 doubles</button></div>
       </div>
       <div class="diploma" id="diploma" hidden>
         <div class="stars"><svg viewBox="0 0 24 24" class="i-star" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.6l-5.4 2.9 1.1-6.1L3.2 9.2l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="i-star" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.6l-5.4 2.9 1.1-6.1L3.2 9.2l6.1-.8z"/></svg><svg viewBox="0 0 24 24" class="i-star" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.6l-5.4 2.9 1.1-6.1L3.2 9.2l6.1-.8z"/></svg></div>
-        <h2>Diplôme de grand éleveur</h2>
-        <p id="dipText">Les 30 œufs ont éclos !</p>
+        <h2>Diplôme de grand collectionneur</h2>
+        <p id="dipText"></p>
       </div>
-      <ul class="grid" id="grid"></ul>
+      <div class="coll-filters">
+        <div class="fchips" id="famChips" role="group" aria-label="Familles"></div>
+        <div><div class="seg" role="group" aria-label="Quelles cartes montrer ?">
+          <button type="button" data-show="all" aria-pressed="true">Toutes</button>
+          <button type="button" data-show="got" aria-pressed="false">Trouvées</button>
+          <button type="button" data-show="dup" aria-pressed="false">Doubles</button>
+          <button type="button" data-show="miss" aria-pressed="false">Manquantes</button>
+        </div></div>
+      </div>
+      <ul class="cgrid" id="grid"></ul>
     </section>
 
     <!-- STATISTIQUES -->
@@ -764,9 +821,24 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
         <h3>Historique</h3>
         <div class="table-wrap" id="historyWrap"></div>
       </div>
+      <div class="card" id="voiceBox">
+        <h3>La voix de lecture</h3>
+        <p class="muted" id="voiceNow"></p>
+        <div class="voice-row">
+          <label class="sr" for="voiceSel">Voix</label>
+          <select class="vsel" id="voiceSel"></select>
+          <button class="btn btn-small" type="button" id="voiceTry">Écouter un exemple</button>
+        </div>
+        <div class="voice-row"><span>Vitesse</span><div class="seg" role="group" aria-label="Vitesse de la voix">
+          <button type="button" data-rate="lente" aria-pressed="false">Lente</button>
+          <button type="button" data-rate="normale" aria-pressed="true">Normale</button>
+          <button type="button" data-rate="rapide" aria-pressed="false">Rapide</button>
+        </div></div>
+        <p class="muted" id="voiceTip"></p>
+      </div>
       <div class="card" id="backupBox" hidden>
         <h3>Sauvegarde des progrès</h3>
-        <p class="lead">Enregistre tous les progrès (joueurs, créatures, statistiques) dans un fichier. Tu pourras le recharger plus tard, sur cet ordinateur ou sur un autre.</p>
+        <p class="lead">Enregistre tous les progrès (joueurs, cartes, statistiques) dans un fichier. Tu pourras le recharger plus tard, sur cet ordinateur ou sur un autre.</p>
         <div class="actions"><button class="btn btn-small" type="button" id="exportBtn">Enregistrer une sauvegarde</button><label class="btn btn-small" for="importFile">Charger une sauvegarde</label></div>
         <p class="muted backup-msg" hidden></p>
       </div>
@@ -784,6 +856,15 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
 </div>
 
 <input type="file" id="importFile" class="sr" accept=".json,application/json" tabindex="-1" aria-hidden="true">
+
+<div class="overlay" id="cardOverlay" hidden>
+  <div class="card-view" role="dialog" aria-modal="true" aria-labelledby="cardViewTitle">
+    <h2 class="sr" id="cardViewTitle">Carte</h2>
+    <div id="cardBig" style="width:100%"></div>
+    <p class="card-count" id="cardCount"></p>
+    <div class="actions"><button class="btn" type="button" id="cardSay">Écouter</button><button class="btn btn-primary" type="button" id="cardClose">Fermer</button></div>
+  </div>
+</div>
 
 <div class="overlay" id="overlay" hidden>
   <div class="confetti" id="confetti"></div>
@@ -852,12 +933,12 @@ const CREATURES = [
     art:() => feet('#4AAE5A') + `<path d="M60 49 L60 32" stroke="${OUT}" stroke-width="3" stroke-linecap="round"/><path d="M60 34 C50 20 36 22 32 28 C40 40 54 40 60 34 Z" fill="#2E9E5B" ${S}/><path d="M60 32 C68 16 84 16 89 21 C83 33 68 37 60 32 Z" fill="#3FBF6E" ${S}/>` + bod('#6CD07A','#D4F5C9') + face(70) },
   { id:'etoilou', nom:'Étoilou', egg:'#ECE4FF', spot:'#A98CF2', tint:'#F1ECFF', desc:'Son antenne s’allume quand tu comptes bien.',
     art:() => `<path d="M60 48 C57 38 64 32 61 26" fill="none" stroke="${OUT}" stroke-width="3" stroke-linecap="round"/><polygon points="${starPts(61,18,10,4.5)}" fill="#FFC83D" ${S}/>` + feet('#8F70E0') + bod('#A98CF2','#E6DCFF') + `<polygon points="${starPts(53,90,4.5,2)}" fill="#FFC83D"/><polygon points="${starPts(68,88,3.5,1.6)}" fill="#FFC83D"/>` + face(70) },
-  { id:'rocaillou', nom:'Rocaillou', egg:'#E7EAF0', spot:'#8D96AA', tint:'#EEF1F6', desc:'Solide comme un caillou, il n’oublie jamais un calcul.',
+  { id:'rocaillou', nom:'Gravillon', egg:'#E7EAF0', spot:'#8D96AA', tint:'#EEF1F6', desc:'Solide comme un caillou, il n’oublie jamais un calcul.',
     art:() => feet('#7F889B') + `<polygon points="55,48 60,24 66,48" fill="#7FE0E0" ${S}/><polygon points="64,48 74,32 77,50" fill="#B4F1F1" ${S}/><polygon points="34,58 50,45 72,44 90,58 93,88 80,105 41,105 27,88" fill="#9AA3B5" ${S}/><path d="M33 93 l8 -6 l4 6 M86 64 l-7 4 l2 6" fill="none" stroke="#6E7790" stroke-width="2.5" stroke-linecap="round"/>` + face(70) },
   { id:'nuagette', nom:'Nuagette', egg:'#FFEAF4', spot:'#F7A8CB', tint:'#FCE0EE', desc:'Toute douce, elle fait la sieste sur les nuages.',
     art:() => { const p=[[40,74,18],[60,62,23],[80,74,18],[48,90,17],[72,90,17]]; return feet('#F4D9E8',106) + p.map(c=>`<circle cx="${c[0]}" cy="${c[1]}" r="${c[2]}" fill="#FFF6FA" stroke="${OUT}" stroke-width="6"/>`).join('') + p.map(c=>`<circle cx="${c[0]}" cy="${c[1]}" r="${c[2]}" fill="#FFF6FA"/>`).join('') + face(68); } },
-  { id:'ronflon', nom:'Ronflon', egg:'#D8F4F1', spot:'#3FB8AF', tint:'#E3F7F5', desc:'Il dort beaucoup, mais il connaît toutes ses tables !',
-    art:() => feet('#2E9C94') + `<circle cx="37" cy="51" r="11" fill="#3FB8AF" ${S}/><circle cx="83" cy="51" r="11" fill="#3FB8AF" ${S}/><circle cx="37" cy="51" r="5" fill="#FF9FB5"/><circle cx="83" cy="51" r="5" fill="#FF9FB5"/><ellipse cx="60" cy="76" rx="33" ry="30" fill="#3FB8AF" ${S}/><ellipse cx="60" cy="90" rx="18" ry="11" fill="#C9F1EC"/>` + face(70,'sleepy') + `<text x="90" y="40" font-family="Grandstander, sans-serif" font-weight="800" font-size="16" fill="${OUT}">z</text><text x="101" y="28" font-family="Grandstander, sans-serif" font-weight="800" font-size="12" fill="${OUT}">z</text>` },
+  { id:'ronflon', nom:'Siestou', egg:'#EEE8FF', spot:'#B49BE6', tint:'#F3EEFF', desc:'Il dort beaucoup, mais il connaît toutes ses tables !',
+    art:() => feet('#9C82D6') + `<ellipse cx="60" cy="76" rx="33" ry="30" fill="#B49BE6" ${S}/><ellipse cx="60" cy="90" rx="18" ry="11" fill="#EFE6FF"/>` + face(70,'sleepy') + `<path d="M37 54 Q46 30 76 32 Q90 34 96 48 Q86 43 80 51 Z" fill="#7FB8F0" ${S}/><path d="M34 51 Q60 43 86 51 L86 58 Q60 50 34 58 Z" fill="#FFFFFF" ${S}/><circle cx="97" cy="49" r="5.5" fill="#FFFFFF" ${S}/><text x="14" y="46" font-family="Grandstander, sans-serif" font-weight="800" font-size="16" fill="${OUT}">z</text><text x="6" y="33" font-family="Grandstander, sans-serif" font-weight="800" font-size="12" fill="${OUT}">z</text>` },
   { id:'petalou', nom:'Pétalou', egg:'#FFE1EC', spot:'#FF86B4', tint:'#FFECF3', desc:'Elle sent bon les fleurs du printemps.',
     art:() => [-90,-45,0,45,90].map(a=>`<ellipse cx="60" cy="40" rx="11" ry="16" fill="#FFB3CF" ${S} transform="rotate(${a} 60 70)"/>`).join('') + feet('#F06A9E') + `<ellipse cx="60" cy="74" rx="29" ry="28" fill="#FF86B4" ${S}/><ellipse cx="60" cy="88" rx="16" ry="10" fill="#FFE0EC"/>` + face(68) },
   { id:'givrou', nom:'Givrou', egg:'#E3F7FF', spot:'#5BB7E0', tint:'#EAF8FF', desc:'Quand il éternue, il fait des flocons de neige.',
@@ -896,7 +977,7 @@ const CREATURES = [
     art:() => dbl('M36 78 H28 Q22 78 22 70 V60','#5DBB63',7) + dbl('M84 86 H92 Q98 86 98 78 V68','#5DBB63',7) + `<rect x="36" y="36" width="48" height="70" rx="24" fill="#5DBB63" ${S}/><g fill="#2E8B57"><circle cx="44" cy="92" r="1.8"/><circle cx="76" cy="90" r="1.8"/><circle cx="60" cy="98" r="1.8"/><circle cx="44" cy="52" r="1.8"/><circle cx="77" cy="54" r="1.8"/></g><ellipse cx="60" cy="106" rx="30" ry="6" fill="#E3B46B" ${S}/><circle cx="54" cy="34" r="5" fill="#FF8FB8" ${S}/><circle cx="66" cy="34" r="5" fill="#FF8FB8" ${S}/><circle cx="60" cy="28" r="5" fill="#FF8FB8" ${S}/><circle cx="60" cy="34" r="3.5" fill="#FFE066"/>` + face(64) },
   { id:'cubiglace', nom:'Cubiglace', egg:'#E2F8FF', spot:'#7FD3EE', tint:'#EAFAFF', desc:'Il garde les nombres bien au frais.',
     art:() => feet('#9ADFF2') + `<rect x="30" y="44" width="60" height="60" rx="14" fill="#BFEFFF" ${S}/><path d="M38 56 V66 M38 72 V76" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M36 48 q4 6 8 0 t8 0 t8 0 t8 0 t8 0 t8 0" fill="none" stroke="#FFFFFF" stroke-width="3"/>` + face(72) },
-  { id:'nounourson', nom:'Nounourson', egg:'#F3E3D3', spot:'#C68B59', tint:'#F8EEE4', desc:'Il adore les câlins et le miel.',
+  { id:'nounourson', nom:'Câlinou', egg:'#F3E3D3', spot:'#C68B59', tint:'#F8EEE4', desc:'Il adore les câlins et le miel.',
     art:() => `<circle cx="38" cy="50" r="11" fill="#C68B59" ${S}/><circle cx="82" cy="50" r="11" fill="#C68B59" ${S}/><circle cx="38" cy="50" r="5" fill="#F0D2B0"/><circle cx="82" cy="50" r="5" fill="#F0D2B0"/>` + feet('#A8703F') + bod('#C68B59','#F0D2B0') + `<ellipse cx="60" cy="80" rx="12" ry="8.5" fill="#F0D2B0"/><ellipse cx="60" cy="74" rx="4" ry="3" fill="${OUT}"/>` + face(66) },
   { id:'cerisette', nom:'Cerisette', egg:'#FFE6F0', spot:'#E63946', tint:'#FFF0F5', desc:'La plus gourmande de toute la collection.',
     art:() => `<polygon points="36,82 84,82 78,106 42,106" fill="#F2A65A" ${S}/><path d="M48 85 L50 104 M60 85 V104 M72 85 L70 104" stroke="#C97A2E" stroke-width="2.5"/><path d="M28 80 C24 66 36 48 60 48 C84 48 96 66 92 80 C88 86 80 84 76 86 C70 88 66 84 60 86 C54 88 50 84 44 86 C38 88 32 86 28 80 Z" fill="#FFB6D5" ${S}/><g stroke-width="2.5" stroke-linecap="round"><path d="M38 62 l4 -2" stroke="#4BA3F5"/><path d="M82 64 l3 3" stroke="#FFC83D"/><path d="M86 74 l-3 2" stroke="#3FBF6E"/></g><path d="M62 40 Q64 30 72 26" fill="none" stroke="${OUT}" stroke-width="2.5" stroke-linecap="round"/><circle cx="61" cy="43" r="7" fill="#E63946" ${S}/>` + face(64) },
@@ -905,10 +986,411 @@ const CREATURES = [
   { id:'lunou', nom:'Lunou', egg:'#E2E5F6', spot:'#3E4C9A', tint:'#E9EBF8', desc:'Il se réveille quand les étoiles s’allument.',
     art:() => `<circle cx="60" cy="34" r="12" fill="#FFE58A" ${S}/><circle cx="66.5" cy="30" r="10" fill="#E9EBF8"/>` + feet('#323F85') + bod('#3E4C9A','#7C88CF') + `<polygon points="${starPts(44,92,3.5,1.5)}" fill="#FFE58A"/><polygon points="${starPts(76,92,3,1.3)}" fill="#FFE58A"/><polygon points="${starPts(60,99,2.5,1.1)}" fill="#FFE58A"/>` + face(70,'happy','#FFFFFF') }
 ];
-const CRE = {}; CREATURES.forEach(c => { CRE[c.id] = c; });
-const NC = CREATURES.length;
-const SURPRISE = { egg:'#FFF0BF', spot:'#FFB81C' };
 const creatureSVG = (c, cls) => `<svg class="creature ${cls||''}" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="62" r="56" fill="${c.tint}"/>${c.art()}</svg>`;
+/* ================= Cartes à collectionner ================= */
+const FAMS = [
+  { id:'flamme', nom:'Flamme', fc:'#E8662A', fl:'#FFE6D2', tint:'#FFF0DC', egg:'#FFE3C2', spot:'#FF8A3D', belly:'#FFE3C2',
+    bodies:['#FF8A3D','#FF6B4A','#F7A23B','#E8553A','#FFB347','#FF7F50'], acc:['#FFC23D','#FFE066','#FF5E3A'] },
+  { id:'eau', nom:'Eau', fc:'#2F86DE', fl:'#DCEEFF', tint:'#E6F2FF', egg:'#DDEEFF', spot:'#4BA3F5', belly:'#DDF1FF',
+    bodies:['#4BA3F5','#3BC4E0','#5E8CF0','#2EA7C9','#6FB8FF','#3D7FD9'], acc:['#BFE2FF','#7FD9E5','#FFFFFF'] },
+  { id:'plante', nom:'Plante', fc:'#2E9E5B', fl:'#DDF5DF', tint:'#ECF9E6', egg:'#E2F6DA', spot:'#4AAE5A', belly:'#E8F8DF',
+    bodies:['#6CD07A','#4AAE5A','#9BD45A','#3FBF8F','#7CC56B','#A8D66A'], acc:['#2E9E5B','#FFD23F','#FF8FB8'] },
+  { id:'ciel', nom:'Ciel', fc:'#4C9BDB', fl:'#E3F1FF', tint:'#EDF6FF', egg:'#E5F2FF', spot:'#9AD0FF', belly:'#FFFFFF',
+    bodies:['#9AD0FF','#B9E2FF','#C4D3FF','#8FC7F2','#D2E6FF','#A7DCF5'], acc:['#FFFFFF','#FFE066','#FF9FB5'] },
+  { id:'pierre', nom:'Pierre', fc:'#7A7F9A', fl:'#ECEDF4', tint:'#EEF1F6', egg:'#E7EAF0', spot:'#8D96AA', belly:'#E7EAF0',
+    bodies:['#9AA3B5','#B49BE6','#8C93A8','#C2B4D9','#7FA8B8','#A6A0C7'], acc:['#7FE0E0','#E6B3FF','#FFD6F0'] },
+  { id:'givre', nom:'Givre', fc:'#3FA9D6', fl:'#E0F6FF', tint:'#EAF8FF', egg:'#E3F7FF', spot:'#5BB7E0', belly:'#F0FBFF',
+    bodies:['#8FD8F7','#BFEFFF','#A9E4F5','#D5F3FF','#7CC9E8','#B8E0F0'], acc:['#FFFFFF','#5BB7E0','#FF6B6B'] },
+  { id:'nuit', nom:'Nuit', fc:'#4A4FA8', fl:'#E4E5F7', tint:'#E9EBF8', egg:'#E2E5F6', spot:'#3E4C9A', belly:'#7C88CF',
+    bodies:['#3E4C9A','#5B4BA8','#2F3A7A','#6C5BC7','#4A5BB5','#3A3F86'], acc:['#FFE58A','#C9D0FF','#FF9FD0'] },
+  { id:'bonbon', nom:'Bonbon', fc:'#E5679C', fl:'#FFE3EF', tint:'#FFF0F5', egg:'#FFE6F0', spot:'#FF86B4', belly:'#FFF0F6',
+    bodies:['#FFB6D5','#FF9FC8','#F7C1E4','#FFC8A8','#E7B6FF','#FFD1DC'], acc:['#FF6FA3','#7FD3F0','#FFE066'] },
+  { id:'soleil', nom:'Soleil', fc:'#E09A00', fl:'#FFF3C9', tint:'#FFF8DC', egg:'#FFF3C4', spot:'#FFB81C', belly:'#FFF4CC',
+    bodies:['#FFD23F','#FFC83D','#FFB81C','#FFDB6E','#F9C846','#FFE07A'], acc:['#FF8A3D','#FFFFFF','#FF6B6B'] },
+  { id:'foret', nom:'Forêt', fc:'#8B5A3C', fl:'#F3E6D8', tint:'#F6EDE3', egg:'#F1E4D6', spot:'#B07A4F', belly:'#F0D9BE',
+    bodies:['#B07A4F','#C68B59','#8B5A3C','#A0784F','#9C6B4A','#C9A27A'], acc:['#E2533B','#F2D3AE','#6CD07A'] }
+];
+const FAMI = {}; FAMS.forEach((F, i) => { FAMI[F.id] = i; });
+const FAM_ICON = {
+  flamme:'M12 2.5c2 3.5 6.5 6 6.5 11a6.5 6.5 0 01-13 0c0-3 2-4.5 2.5-6.5 1 2 2 2.5 3 2.5 0-2.5-.5-4.5 1-7z',
+  eau:'M12 2.5c3 4.5 7 8 7 12a7 7 0 01-14 0c0-4 4-7.5 7-12z',
+  plante:'M4.5 19.5C4 11 9 4.5 20 4c.5 10.5-5.5 15.5-14 15.5zM4.5 19.5l7.5-7.5',
+  ciel:'M7 18.5h10.5a4.2 4.2 0 00.6-8.4 5.7 5.7 0 00-11-1.4A4.9 4.9 0 007 18.5z',
+  pierre:'M6.5 4h11l4 6L12 21 2.5 10z',
+  givre:'M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7M9 3.5l3 2.5 3-2.5M9 20.5l3-2.5 3 2.5',
+  nuit:'M20 14.5A8.5 8.5 0 119.5 4a7 7 0 0010.5 10.5z',
+  bonbon:'M8 12a4 4 0 108 0 4 4 0 10-8 0zM8 12L2.5 8v8zM16 12l5.5-4v8z',
+  soleil:'M12 7.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zM12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1',
+  foret:'M2.5 12.5a9.5 7.5 0 0119 0zM9.5 12.5h5v6.5a2.5 2.5 0 01-5 0z'
+};
+const FAM_STROKE = { plante:1, givre:1, soleil:1 };
+const famIcon = F => `<svg viewBox="0 0 24 24" class="fam-ic" aria-hidden="true"><path d="${FAM_ICON[F.id]}" ${FAM_STROKE[F.id] ? `fill="${F.id === 'givre' ? 'none' : F.fc}" stroke="${F.fc}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"` : `fill="${F.fc}"`}/></svg>`;
+const RAR = {
+  c:  { nom:'Commune',    st:1, w:60, rank:0 },
+  r:  { nom:'Rare',       st:2, w:27, rank:1 },
+  tr: { nom:'Très rare',  st:3, w:10, rank:2 },
+  l:  { nom:'Légendaire', st:4, w:3,  rank:3 }
+};
+const RAR_OF_INDEX = j => j < 6 ? 'c' : j < 9 ? 'r' : j < 11 ? 'tr' : 'l';
+const ORIG_FAM = { flammeche:'flamme', gouttelune:'eau', feuillou:'plante', etoilou:'nuit', rocaillou:'pierre', nuagette:'ciel', ronflon:'nuit', petalou:'bonbon', givrou:'givre', champichou:'foret',
+  bondissou:'ciel', minouflet:'soleil', cornebois:'foret', couronnelle:'ciel', rubanette:'bonbon', vaguelin:'eau', helicou:'ciel', coquillou:'foret', plumette:'ciel', piquinou:'foret',
+  volcanou:'flamme', arcolin:'ciel', lumignon:'nuit', bzzou:'soleil', cactou:'plante', cubiglace:'givre', nounourson:'foret', cerisette:'bonbon', banquisou:'givre', lunou:'nuit' };
+const ORIG_RAR = { couronnelle:'r', lunou:'r', lumignon:'r', volcanou:'r', cerisette:'r', banquisou:'r', plumette:'r', helicou:'r', arcolin:'tr', etoilou:'tr', cubiglace:'tr', bzzou:'tr' };
+
+/* Les 120 nouvelles cartes : 12 par famille (6 communes, 3 rares, 2 très rares, 1 légendaire) */
+const NEW_CARDS = {
+  flamme:[
+    ['Tisonnet','Il garde une braise toute chaude au creux de ses pattes.'],
+    ['Lampion','Il s’allume tout seul les soirs de fête.'],
+    ['Popcornet','Quand il a trop chaud, il fait pop ! comme du maïs.'],
+    ['Braisette','Elle souffle sur les bougies… pour les rallumer !'],
+    ['Grésille','On l’entend crépiter avant de la voir arriver.'],
+    ['Pimentine','Elle est toute petite, mais elle a du caractère !'],
+    ['Chaufferette','Elle réchauffe les mains froides en hiver.'],
+    ['Cheminou','Il dort près de la cheminée et ronronne devant le feu.'],
+    ['Fumeron','Il dessine des ronds de fumée en forme de chiffres.'],
+    ['Flambée','Quand elle danse, tout le monde se réchauffe autour.'],
+    ['Fournaisette','Elle cuit les meilleurs gâteaux du royaume.'],
+    ['Brasero','Le gardien du feu. Sa flamme ne s’éteint jamais.']
+  ],
+  eau:[
+    ['Flaquette','Elle adore sauter dans les flaques avec ses bottes.'],
+    ['Gouttelette','Une petite goutte qui tombe toujours au mauvais moment.'],
+    ['Bulline','Elle souffle des bulles qui n’éclatent jamais.'],
+    ['Glouglou','Il boit dix verres d’eau par jour… au moins !'],
+    ['Ricochet','Il saute sur l’eau comme un caillou bien lancé.'],
+    ['Arrosette','Elle arrose les fleurs du jardin chaque matin.'],
+    ['Clapotis','Il chante en faisant clap-clap sur les vagues.'],
+    ['Ruisselet','Il descend la montagne en chantonnant.'],
+    ['Fontainette','Elle fait jaillir de l’eau fraîche les jours de chaleur.'],
+    ['Rosée','Elle pose des perles d’eau sur l’herbe au lever du jour.'],
+    ['Cascadou','Il plonge du haut des cascades sans jamais avoir peur.'],
+    ['Abysse','Il connaît tous les secrets du fond de l’océan.']
+  ],
+  plante:[
+    ['Pépin','Plante-le, et il deviendra un grand pommier.'],
+    ['Bourgeon','Il se réveille au printemps, tout frais et tout vert.'],
+    ['Trèfle','Il porte bonheur, surtout quand il a quatre feuilles.'],
+    ['Petipois','Il roule partout et se cache au fond des assiettes.'],
+    ['Ciboulette','Elle pousse vite et sent bon dans la salade.'],
+    ['Radisette','Rose dehors, blanche dedans, et toujours croquante.'],
+    ['Brindille','Légère comme une plume, elle voyage avec le vent.'],
+    ['Fougère','Elle déroule ses feuilles comme une coquille d’escargot.'],
+    ['Pistache','Elle se cache dans sa coquille quand elle est timide.'],
+    ['Noisette','Elle ramasse des provisions pour tout l’hiver.'],
+    ['Basilic','Il parfume tout le jardin quand il est content.'],
+    ['Séquoia','Le plus vieux et le plus grand arbre de la forêt magique.']
+  ],
+  ciel:[
+    ['Plumeau','Il chatouille les nuages pour les faire rire.'],
+    ['Brisette','Une petite brise qui fait s’envoler les chapeaux.'],
+    ['Pissenlou','Souffle sur lui, et il s’envole en mille graines.'],
+    ['Cumulus','Un gros nuage tout doux qui adore les siestes.'],
+    ['Girouette','Elle tourne pour montrer d’où vient le vent.'],
+    ['Cervolant','Il vole très haut au bout d’une longue ficelle.'],
+    ['Aigrette','Ses plumes brillent quand le soleil se lève.'],
+    ['Nimbus','Il apporte la pluie… mais aussi l’arc-en-ciel.'],
+    ['Zéphyr','Un vent doux et tiède qui sent bon l’été.'],
+    ['Mistral','Il souffle si fort qu’il fait danser les arbres.'],
+    ['Bourrasque','Elle arrive en tourbillon et repart aussi vite.'],
+    ['Sirocco','Le grand vent qui traverse les déserts et les mers.']
+  ],
+  pierre:[
+    ['Galet','Tout rond et tout lisse, il adore les plages.'],
+    ['Silex','Frotte-le bien : il fait des étincelles !'],
+    ['Ardoise','On peut écrire des calculs sur son dos.'],
+    ['Granit','Rien ne peut le faire bouger quand il boude.'],
+    ['Paillette','Elle brille de mille feux à la lumière.'],
+    ['Pépite','Une petite pierre d’or qui se cache dans les rivières.'],
+    ['Menhir','Il reste debout dans les champs depuis très longtemps.'],
+    ['Quartz','Il fait tic-tac comme une montre bien réglée.'],
+    ['Opaline','Elle change de couleur selon son humeur.'],
+    ['Géode','Fermée, c’est un caillou. Ouverte, c’est un trésor !'],
+    ['Améthyste','Ses cristaux violets chantent quand il pleut.'],
+    ['Cristalline','La reine des cristaux. Elle éclaire les grottes la nuit.']
+  ],
+  givre:[
+    ['Flocon','Il n’y a pas deux Flocons pareils dans le monde.'],
+    ['Moufle','Elle tient chaud aux mains des enfants.'],
+    ['Bonnette','Elle ne sort jamais sans son bonnet à pompon.'],
+    ['Grêlon','Il tombe du ciel en rebondissant partout.'],
+    ['Iglou','Il construit des maisons en blocs de neige.'],
+    ['Bise','Un petit vent d’hiver qui pique le bout du nez.'],
+    ['Givrette','Elle dessine des fougères de glace sur les vitres.'],
+    ['Verglas','Il glisse sur les routes gelées sans jamais tomber.'],
+    ['Stalactou','Il pend la tête en bas au plafond des grottes.'],
+    ['Congère','Elle fait des tas de neige parfaits pour les luges.'],
+    ['Edelweiss','Une fleur de neige qui pousse tout en haut des montagnes.'],
+    ['Frimas','Le grand esprit de l’hiver, qui fait tomber la première neige.']
+  ],
+  nuit:[
+    ['Veilleuse','Elle reste allumée pour chasser les cauchemars.'],
+    ['Pyjama','Il est toujours prêt pour aller au lit.'],
+    ['Berceuse','Elle chante tout doucement pour endormir les bébés.'],
+    ['Hiboulet','Il fait hou-hou et compte les étoiles toute la nuit.'],
+    ['Rêverie','Elle invente des rêves pleins de couleurs.'],
+    ['Croissant','Il a la forme de la lune… et pas d’un gâteau !'],
+    ['Astre','Il brille tout seul dans le ciel noir.'],
+    ['Polaire','Elle montre le nord aux voyageurs perdus.'],
+    ['Nébule','Un nuage d’étoiles qui tourne doucement sur lui-même.'],
+    ['Pléiade','Sept petites étoiles qui voyagent toujours ensemble.'],
+    ['Éclipse','Elle cache le soleil… juste quelques minutes.'],
+    ['Comète','Elle passe une fois tous les cent ans, avec sa longue queue brillante.']
+  ],
+  bonbon:[
+    ['Sucette','Elle tourne, elle tourne, et elle est toujours sucrée.'],
+    ['Réglisse','Elle s’enroule en spirale comme un ruban.'],
+    ['Biscotte','Elle fait crac-crac à chaque pas.'],
+    ['Chouquette','Elle est couverte de petits grains de sucre.'],
+    ['Meringue','Légère comme un nuage, elle fond au soleil.'],
+    ['Caramel','Il colle un peu, mais c’est un très bon ami.'],
+    ['Nougat','Il est plein de noisettes et de bonne humeur.'],
+    ['Praline','Toute rose, elle sent bon la fête foraine.'],
+    ['Berlingot','Il a quatre coins et toutes les couleurs.'],
+    ['Guimauve','Toute moelleuse, elle fait les meilleurs câlins.'],
+    ['Madeleine','Elle a la forme d’un coquillage et sent bon le goûter.'],
+    ['Macaronne','La reine des goûters, toujours habillée de couleurs pastel.']
+  ],
+  soleil:[
+    ['Canari','Il chante dès que le soleil se lève.'],
+    ['Zeste','Un petit bout de citron qui pétille de joie.'],
+    ['Abricot','Tout doux, tout orange et tout sucré.'],
+    ['Mirabelle','Une petite prune dorée qui roule dans l’herbe.'],
+    ['Boutondor','Une petite fleur jaune qui pousse dans les prés.'],
+    ['Citronnelle','Elle chasse les moustiques les soirs d’été.'],
+    ['Clémentine','Elle a plein de quartiers… à partager !'],
+    ['Safran','Il colore en jaune tout ce qu’il touche.'],
+    ['Midinette','Elle se réveille quand le soleil est tout en haut.'],
+    ['Ambre','Une pierre dorée qui garde la chaleur du soleil.'],
+    ['Rayonne','Elle envoie des rayons de bonne humeur partout.'],
+    ['Soleillou','Le gardien du soleil. Grâce à lui, chaque jour commence.']
+  ],
+  foret:[
+    ['Châtaigne','Elle se cache dans sa coque piquante.'],
+    ['Bogue','Il pique un peu, mais il protège ses amis.'],
+    ['Racinou','Ses racines vont très loin sous la terre.'],
+    ['Taupinette','Elle creuse des tunnels dans tout le jardin.'],
+    ['Terreau','Il aide toutes les graines à bien pousser.'],
+    ['Pommedepin','Elle tombe des sapins et roule jusqu’en bas.'],
+    ['Cèpe','Il porte un grand chapeau brun bien rond.'],
+    ['Girolle','Elle pousse en famille dans la mousse.'],
+    ['Souchette','Elle vit dans une vieille souche avec plein d’amis.'],
+    ['Morille','Son chapeau est plein de petits trous comme une éponge.'],
+    ['Truffette','Elle se cache sous la terre et sent très bon.'],
+    ['Sylvestre','L’esprit de la forêt, qui veille sur tous les animaux.']
+  ]
+};
+
+/* ----- Dessin des créatures générées ----- */
+function shade(hex, k){
+  const n = parseInt(hex.slice(1), 16); let r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+  if (k < 1){ r = Math.round(r*k); g = Math.round(g*k); b = Math.round(b*k); }
+  else { const t = k - 1; r = Math.round(r + (255-r)*t); g = Math.round(g + (255-g)*t); b = Math.round(b + (255-b)*t); }
+  return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
+}
+function lum(hex){ const n = parseInt(hex.slice(1), 16); return (0.2126*(n >> 16) + 0.7152*((n >> 8) & 255) + 0.0722*(n & 255)) / 255; }
+const CG_SH = {
+  round:{ d:c => `<ellipse cx="60" cy="76" rx="31" ry="29" fill="${c}" ${S}/>`, faceY:70, topY:47, earY:52, earDX:20, belly:[60,90,17,10], feet:1, sideX:29, neck:[88,28] },
+  tall: { d:c => `<ellipse cx="60" cy="72" rx="25" ry="34" fill="${c}" ${S}/>`, faceY:62, topY:38, earY:44, earDX:15, belly:[60,90,14,11], feet:1, sideX:35, neck:[80,24] },
+  wide: { d:c => `<ellipse cx="60" cy="80" rx="37" ry="25" fill="${c}" ${S}/>`, faceY:74, topY:55, earY:60, earDX:24, belly:[60,93,20,8], feet:1, sideX:23, neck:[92,32] },
+  pear: { d:c => `<path d="M60 42 C76 42 88 60 91 80 C94 100 80 106 60 106 C40 106 26 100 29 80 C32 60 44 42 60 42 Z" fill="${c}" ${S}/>`, faceY:66, topY:42, earY:50, earDX:13, belly:[60,92,19,10], feet:1, sideX:30, neck:[84,30] },
+  drop: { d:c => `<path d="M60 32 C70 48 92 58 92 80 C92 98 78 106 60 106 C42 106 28 98 28 80 C28 58 50 48 60 32 Z" fill="${c}" ${S}/>`, faceY:74, topY:32, earY:66, earDX:28, belly:[60,95,17,7], feet:1, sideX:28, neck:[92,29], pointy:1 },
+  ghost:{ d:c => `<path d="M30 104 L30 72 C30 50 44 40 60 40 C76 40 90 50 90 72 L90 104 Q84 97 78 104 Q72 97 66 104 Q60 97 54 104 Q48 97 42 104 Q36 97 30 104 Z" fill="${c}" ${S}/>`, faceY:64, topY:40, earY:47, earDX:18, belly:null, feet:0, sideX:30, neck:[82,30] },
+  cube: { d:c => `<rect x="31" y="46" width="58" height="58" rx="16" fill="${c}" ${S}/>`, faceY:68, topY:46, earY:50, earDX:20, belly:[60,94,18,6], feet:1, sideX:31, neck:[86,29] }
+};
+const SH_ORDER = ['round','tall','wide','pear','drop','ghost','cube'];
+const EAR_ORDER = ['round','cat','none','antenna','tuft','horns','floppy','bunny'];
+const PAT_ORDER = ['belly','spots','stripes','belly','heart','none'];
+const EYE_ORDER = ['normal','happy','sparkle','big','sleepy','wink'];
+const MOUTH_ORDER = ['smile','open','cat','o'];
+const sparkle = (x, y, r) => `<path d="M${x} ${y-r} L${x+r*0.3} ${y-r*0.3} L${x+r} ${y} L${x+r*0.3} ${y+r*0.3} L${x} ${y+r} L${x-r*0.3} ${y+r*0.3} L${x-r} ${y} L${x-r*0.3} ${y-r*0.3} Z" fill="#FFE066" stroke="${OUT}" stroke-width="1.6" stroke-linejoin="round"/>`;
+const flamePath = (cx, y, h, w) => `M${cx} ${y-h} C${cx+w*0.5} ${y-h*0.62} ${cx+w*1.1} ${y-h*0.48} ${cx+w*0.95} ${y-h*0.16} C${cx+w*0.85} ${y+1} ${cx-w*0.85} ${y+1} ${cx-w*0.95} ${y-h*0.16} C${cx-w*1.1} ${y-h*0.48} ${cx-w*0.35} ${y-h*0.55} ${cx} ${y-h} Z`;
+function genEars(type, m, c, inner, acc){
+  const L = 60 - m.earDX, R = 60 + m.earDX, y = m.earY, t = m.topY;
+  switch (type){
+    case 'round': return [L,R].map(x => `<circle cx="${x}" cy="${y}" r="10" fill="${c}" ${S}/><circle cx="${x}" cy="${y}" r="4.5" fill="${inner}"/>`).join('');
+    case 'cat': return `<polygon points="${L-9},${y+9} ${L-5},${y-15} ${L+11},${y+1}" fill="${c}" ${S}/><polygon points="${L-5},${y+5} ${L-3},${y-7} ${L+5},${y+1}" fill="${inner}"/>` +
+      `<polygon points="${R+9},${y+9} ${R+5},${y-15} ${R-11},${y+1}" fill="${c}" ${S}/><polygon points="${R+5},${y+5} ${R+3},${y-7} ${R-5},${y+1}" fill="${inner}"/>`;
+    case 'bunny': return `<ellipse cx="${L+3}" cy="${y-14}" rx="7" ry="17" fill="${c}" ${S} transform="rotate(-12 ${L+3} ${y-14})"/><ellipse cx="${L+3}" cy="${y-13}" rx="3" ry="11" fill="${inner}" transform="rotate(-12 ${L+3} ${y-13})"/>` +
+      `<ellipse cx="${R-3}" cy="${y-14}" rx="7" ry="17" fill="${c}" ${S} transform="rotate(12 ${R-3} ${y-14})"/><ellipse cx="${R-3}" cy="${y-13}" rx="3" ry="11" fill="${inner}" transform="rotate(12 ${R-3} ${y-13})"/>`;
+    case 'floppy': return `<ellipse cx="${L-4}" cy="${y+12}" rx="8" ry="15" fill="${shade(c,.88)}" ${S} transform="rotate(28 ${L-4} ${y+12})"/><ellipse cx="${R+4}" cy="${y+12}" rx="8" ry="15" fill="${shade(c,.88)}" ${S} transform="rotate(-28 ${R+4} ${y+12})"/>`;
+    case 'antenna': return `<path d="M54 ${t+4} C52 ${t-6} 46 ${t-12} 42 ${t-14} M66 ${t+4} C68 ${t-6} 74 ${t-12} 78 ${t-14}" fill="none" stroke="${OUT}" stroke-width="3" stroke-linecap="round"/><circle cx="42" cy="${t-15}" r="5" fill="${acc}" ${S}/><circle cx="78" cy="${t-15}" r="5" fill="${acc}" ${S}/>`;
+    case 'horns': return `<polygon points="${49},${t+6} ${46},${t-9} ${56},${t+3}" fill="${acc}" ${S}/><polygon points="${71},${t+6} ${74},${t-9} ${64},${t+3}" fill="${acc}" ${S}/>`;
+    case 'tuft': return `<path d="M48 ${t+6} L51 ${t-9} L56 ${t+1} L60 ${t-13} L64 ${t+1} L69 ${t-9} L72 ${t+6} Z" fill="${shade(c,.9)}" ${S}/>`;
+    default: return '';
+  }
+}
+function genEyes(y, type, lc){
+  if (type === 'happy') return eyes(y, 'happy', lc);
+  if (type === 'sleepy') return eyes(y, 'sleepy', lc);
+  if (type === 'wink') return `<ellipse cx="48" cy="${y}" rx="7" ry="8.5" fill="#fff" stroke="${OUT}" stroke-width="2.5"/><circle cx="49" cy="${y+1.5}" r="4.2" fill="${OUT}"/><circle cx="50.6" cy="${y-0.6}" r="1.6" fill="#fff"/><path d="M65 ${y+3} q7 -9 14 0" fill="none" stroke="${lc}" stroke-width="3.2" stroke-linecap="round"/>`;
+  if (type === 'big') return [48,72].map(x => `<ellipse cx="${x}" cy="${y}" rx="8.5" ry="10" fill="#fff" stroke="${OUT}" stroke-width="2.5"/><circle cx="${x+1}" cy="${y+2}" r="5.4" fill="${OUT}"/><circle cx="${x+3}" cy="${y-1}" r="2" fill="#fff"/><circle cx="${x-1}" cy="${y+4}" r="1" fill="#fff"/>`).join('');
+  if (type === 'sparkle') return [48,72].map(x => `<ellipse cx="${x}" cy="${y}" rx="7" ry="8.5" fill="#fff" stroke="${OUT}" stroke-width="2.5"/><circle cx="${x+1}" cy="${y+1.5}" r="4.4" fill="${OUT}"/><polygon points="${starPts(x+2.4, y-0.2, 2.6, 1)}" fill="#fff"/>`).join('');
+  return eyes(y);
+}
+function genMouth(y, type, lc){
+  if (type === 'open') return `<path d="M53 ${y+9} Q60 ${y+18} 67 ${y+9} Z" fill="${OUT}" stroke="${OUT}" stroke-width="2" stroke-linejoin="round"/><ellipse cx="60" cy="${y+13.5}" rx="3.5" ry="2" fill="#FF7FA0"/>`;
+  if (type === 'cat') return `<path d="M53 ${y+10} q3.5 4 7 0 q3.5 4 7 0" fill="none" stroke="${lc}" stroke-width="2.6" stroke-linecap="round"/>`;
+  if (type === 'o') return `<ellipse cx="60" cy="${y+11}" rx="3" ry="3.5" fill="${lc}"/>`;
+  return `<path d="M54 ${y+10} q6 6 12 0" fill="none" stroke="${lc}" stroke-width="2.6" stroke-linecap="round"/>`;
+}
+function genPattern(type, m, body, F, acc){
+  if (type === 'belly' && m.belly) return `<ellipse cx="${m.belly[0]}" cy="${m.belly[1]}" rx="${m.belly[2]}" ry="${m.belly[3]}" fill="${lum(body) < .32 ? F.belly : shade(body, 1.55)}"/>`;
+  if (type === 'spots') return [[44,90,5],[75,86,4],[66,99,3]].map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="${p[2]}" fill="${shade(body, .8)}"/>`).join('');
+  if (type === 'stripes') return `<path d="M44 ${m.neck[0]+5} q16 6 32 0 M46 ${m.neck[0]+13} q14 5 28 0" fill="none" stroke="${shade(body, .78)}" stroke-width="3.2" stroke-linecap="round"/>`;
+  if (type === 'heart'){ const y = m.belly ? m.belly[1] : 90; return `<path d="M60 ${y+6} C52 ${y} 53 ${y-6} 57 ${y-5} C59 ${y-5} 60 ${y-3} 60 ${y-3} C60 ${y-3} 61 ${y-5} 63 ${y-5} C67 ${y-6} 68 ${y} 60 ${y+6} Z" fill="${acc}" stroke="${OUT}" stroke-width="1.8"/>`; }
+  return '';
+}
+const TOP_BUSY = { flamme:[0,2], eau:[0], plante:[0,1,2], ciel:[1,2], pierre:[0], givre:[0], nuit:[0,2], bonbon:[0,2], soleil:[1,2], foret:[0,1] };
+const HATS = { nuit:[2], foret:[0,1] };
+function genMotif(fam, v, m, body, acc, F){
+  const t = m.topY, fy = m.faceY, R = 120 - m.sideX, L = m.sideX;
+  let back = '', front = '';
+  switch (fam){
+    case 'flamme':
+      if (v === 0) front = `<path d="${flamePath(60, t+7, 24, 11)}" fill="${acc}" ${S}/><path d="${flamePath(60, t+5, 12, 5.5)}" fill="#FFE066"/>`;
+      else if (v === 1) back = `<g transform="rotate(48 ${R+2} 96)"><path d="${flamePath(R+2, 98, 30, 11)}" fill="${acc}" ${S}/><path d="${flamePath(R+2, 96, 16, 5.5)}" fill="#FFE066"/></g>`;
+      else front = `<path d="${flamePath(51, t+8, 17, 7)}" fill="${acc}" ${S}/><path d="${flamePath(69, t+8, 17, 7)}" fill="${acc}" ${S}/>`;
+      break;
+    case 'eau':
+      if (v === 0) front = `<path d="M60 ${t-15} C64 ${t-8} 70 ${t-4} 70 ${t+2} C70 ${t+7} 65 ${t+10} 60 ${t+10} C55 ${t+10} 50 ${t+7} 50 ${t+2} C50 ${t-4} 56 ${t-8} 60 ${t-15} Z" fill="${shade(body,.82)}" ${S}/><ellipse cx="57" cy="${t+1}" rx="2" ry="4" fill="#FFFFFF" opacity=".7"/>`;
+      else if (v === 1) back = `<ellipse cx="${L-2}" cy="${fy+14}" rx="11" ry="6" fill="${shade(body,.82)}" ${S} transform="rotate(-28 ${L-2} ${fy+14})"/><ellipse cx="${R+2}" cy="${fy+14}" rx="11" ry="6" fill="${shade(body,.82)}" ${S} transform="rotate(28 ${R+2} ${fy+14})"/>`;
+      else front = [[95,40,5.5],[104,27,3.8],[22,48,4.5],[17,34,2.8]].map(b => `<circle cx="${b[0]}" cy="${b[1]}" r="${b[2]}" fill="#FFFFFF" fill-opacity=".55" stroke="#2EA7C9" stroke-width="2"/>`).join('');
+      break;
+    case 'plante':
+      if (v === 0) front = `<path d="M60 ${t+3} L60 ${t-12}" stroke="${OUT}" stroke-width="3" stroke-linecap="round"/><path d="M60 ${t-10} C50 ${t-24} 36 ${t-22} 32 ${t-16} C40 ${t-4} 54 ${t-4} 60 ${t-10} Z" fill="${acc}" ${S}/><path d="M60 ${t-12} C68 ${t-28} 84 ${t-28} 89 ${t-23} C83 ${t-11} 68 ${t-7} 60 ${t-12} Z" fill="${shade(acc,1.25)}" ${S}/>`;
+      else if (v === 1) front = `<path d="M60 ${t+4} C50 ${t-14} 66 ${t-26} 84 ${t-22} C82 ${t-6} 72 ${t+3} 60 ${t+4} Z" fill="${acc}" ${S}/><path d="M62 ${t+1} C68 ${t-8} 74 ${t-14} 80 ${t-19}" fill="none" stroke="${shade(acc,.7)}" stroke-width="2" stroke-linecap="round"/>`;
+      else { const cx = 70, cy = t-2; front = `<path d="M64 ${t+5} L${cx} ${cy}" stroke="#2E9E5B" stroke-width="3" stroke-linecap="round"/>` + [0,72,144,216,288].map(a => { const r = a*Math.PI/180; return `<circle cx="${(cx+7*Math.cos(r)).toFixed(1)}" cy="${(cy-4+7*Math.sin(r)).toFixed(1)}" r="5.5" fill="#FF8FB8" ${S}/>`; }).join('') + `<circle cx="${cx}" cy="${cy-4}" r="4.5" fill="#FFD23F" ${S}/>`; }
+      break;
+    case 'ciel':
+      if (v === 0 || v === 2) back = `<ellipse cx="${L-6}" cy="${fy+6}" rx="10" ry="17" fill="#FFFFFF" ${S} transform="rotate(30 ${L-6} ${fy+6})"/><ellipse cx="${R+6}" cy="${fy+6}" rx="10" ry="17" fill="#FFFFFF" ${S} transform="rotate(-30 ${R+6} ${fy+6})"/>`;
+      if (v === 1){ const p = [[51,t+1,8],[60,t-5,10],[69,t+1,8]]; front = p.map(c => `<circle cx="${c[0]}" cy="${c[1]}" r="${c[2]}" fill="#FFFFFF" stroke="${OUT}" stroke-width="6"/>`).join('') + p.map(c => `<circle cx="${c[0]}" cy="${c[1]}" r="${c[2]}" fill="#FFFFFF"/>`).join(''); }
+      if (v === 2) front = `<path d="M60 ${t+3} C55 ${t-9} 60 ${t-19} 67 ${t-23} C69 ${t-13} 67 ${t-3} 60 ${t+3} Z" fill="${acc === '#FFFFFF' ? '#FFE066' : acc}" ${S}/>`;
+      break;
+    case 'pierre':
+      if (v === 0) front = `<polygon points="47,${t+6} 50,${t-7} 55,${t+5}" fill="${shade(acc,1.3)}" ${S}/><polygon points="54,${t+5} 60,${t-17} 66,${t+5}" fill="${acc}" ${S}/><polygon points="64,${t+5} 72,${t-9} 75,${t+7}" fill="${shade(acc,1.3)}" ${S}/>`;
+      else if (v === 1) back = `<polygon points="${R-14},62 ${R-7},30 ${R+1},60" fill="${acc}" ${S}/><polygon points="${R-4},68 ${R+8},44 ${R+10},72" fill="${shade(acc,1.3)}" ${S}/><polygon points="${R-22},58 ${R-19},42 ${R-13},57" fill="${shade(acc,1.3)}" ${S}/><path d="M${R-7} 36 L${R-6} 54" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity=".7"/>`;
+      else front = `<polygon points="60,${fy-25} 67,${fy-17} 60,${fy-9} 53,${fy-17}" fill="${acc}" ${S}/><polygon points="60,${fy-22} 63,${fy-17} 60,${fy-14}" fill="#FFFFFF" opacity=".7"/>`;
+      break;
+    case 'givre':
+      if (v === 0) front = `<polygon points="48,${t+6} 51,${t-9} 56,${t+4}" fill="#E9FBFF" ${S}/><polygon points="55,${t+4} 60,${t-15} 65,${t+4}" fill="#FFFFFF" ${S}/><polygon points="64,${t+4} 69,${t-9} 72,${t+6}" fill="#E9FBFF" ${S}/>`;
+      else if (v === 1){ const y = m.neck[0], w = m.neck[1] + 2; front = `<path d="M${60-w} ${y} Q60 ${y+9} ${60+w} ${y} L${60+w} ${y+8} Q60 ${y+17} ${60-w} ${y+8} Z" fill="#FF6B6B" ${S}/><path d="M${60+w-12} ${y+10} l3 16 l9 -2 l-3 -16 Z" fill="#FF6B6B" ${S}/><path d="M${60-w+8} ${y+3} v8 M${60-w+18} ${y+6} v8 M${60+w-20} ${y+6} v8" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>`; }
+      else { const y = m.belly ? m.belly[1] : 90; front = `<path d="M60 ${y-7} v14 M54 ${y-3.5} l12 7 M54 ${y+3.5} l12 -7" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/><path d="M60 ${y-7} v14 M54 ${y-3.5} l12 7 M54 ${y+3.5} l12 -7" stroke="#3FA9D6" stroke-width="2.5" stroke-linecap="round"/>`; }
+      break;
+    case 'nuit':
+      if (v === 0){ const cx = 60, cy = t-7; front = `<path d="M${cx+3} ${cy-9.5} A10 10 0 1 0 ${cx+3} ${cy+9.5} A12.5 12.5 0 0 1 ${cx+3} ${cy-9.5} Z" fill="#FFE58A" ${S}/>`; }
+      else if (v === 1) front = sparkle(22, 44, 6) + sparkle(98, 36, 7) + sparkle(102, 62, 4.5);
+      else front = `<path d="M38 ${t+9} Q48 ${t-16} 80 ${t-12} Q94 ${t-9} 98 ${t+6} Q88 ${t-1} 82 ${t+8} Z" fill="${acc}" ${S}/><path d="M36 ${t+5} Q60 ${t-3} 84 ${t+5} L84 ${t+12} Q60 ${t+4} 36 ${t+12} Z" fill="#FFFFFF" ${S}/><circle cx="99" cy="${t+8}" r="5.5" fill="#FFFFFF" ${S}/>`;
+      break;
+    case 'bonbon':
+      if (v === 0){ const cx = 68, cy = t+1; front = `<path d="M${cx} ${cy} L${cx-13} ${cy-9} L${cx-12} ${cy+10} Z" fill="${acc}" ${S}/><path d="M${cx} ${cy} L${cx+13} ${cy-9} L${cx+12} ${cy+10} Z" fill="${acc}" ${S}/><circle cx="${cx}" cy="${cy}" r="5" fill="${shade(acc,1.25)}" ${S}/>`; }
+      else if (v === 1){ const cols = ['#FF6FA3','#7FD3F0','#FFE066','#6CD07A','#A98CF2','#FF8A3D']; front = [[44,84,20],[54,96,-30],[70,90,45],[78,80,-10],[62,82,70],[48,72,-50]].map((s,i) => `<rect x="${s[0]-3.5}" y="${s[1]-1.5}" width="7" height="3" rx="1.5" fill="${cols[i]}" transform="rotate(${s[2]} ${s[0]} ${s[1]})"/>`).join(''); }
+      else front = `<path d="M60 ${t+3} L60 ${t-10}" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/><path d="M60 ${t+3} L60 ${t-10}" stroke="${OUT}" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="60" cy="${t-19}" r="10" fill="${acc}" ${S}/><path d="M60 ${t-19} m-1 0 a1.5 1.5 0 0 1 3 0 a3 3 0 0 1 -6 0 a4.5 4.5 0 0 1 9 0 a6 6 0 0 1 -12 1" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>`;
+      break;
+    case 'soleil':
+      if (v === 0){ const cy = fy + 4; back = range(0,11).map(i => { const a = (i*30 - 90)*Math.PI/180, a1 = a - 0.16, a2 = a + 0.16; const p = [[60+36*Math.cos(a1), cy+36*Math.sin(a1)],[60+50*Math.cos(a), cy+50*Math.sin(a)],[60+36*Math.cos(a2), cy+36*Math.sin(a2)]]; return `<polygon points="${p.map(q => q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ')}" fill="${acc === '#FFFFFF' ? '#FF8A3D' : acc}" stroke="${OUT}" stroke-width="2" stroke-linejoin="round"/>`; }).join(''); }
+      else if (v === 1) front = range(0,4).map(i => { const a = (-150 + i*30)*Math.PI/180; const x1 = 60+16*Math.cos(a-0.22), y1 = t+14+16*Math.sin(a-0.22), x2 = 60+30*Math.cos(a), y2 = t+14+30*Math.sin(a), x3 = 60+16*Math.cos(a+0.22), y3 = t+14+16*Math.sin(a+0.22); return `<polygon points="${x1.toFixed(1)},${y1.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)} ${x3.toFixed(1)},${y3.toFixed(1)}" fill="#FF8A3D" ${S}/>`; }).join('');
+      else front = `<path d="M60 ${t+3} q1 -8 6 -13" fill="none" stroke="#8B5A3C" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="74" cy="${t-11}" rx="9" ry="4.5" fill="#6CD07A" ${S} transform="rotate(-20 74 ${t-11})"/>`;
+      break;
+    case 'foret':
+      if (v === 0) front = `<path d="M30 ${t+12} C30 ${t-14} 90 ${t-14} 90 ${t+12} C90 ${t+16} 30 ${t+16} 30 ${t+12} Z" fill="${acc === '#F2D3AE' ? '#E2533B' : acc}" ${S}/>` + [[44,t+2,4.5],[60,t-5,5.5],[76,t+2,4.5],[52,t+9,2.8],[68,t+9,2.8]].map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="${p[2]}" fill="#FFFFFF"/>`).join('');
+      else if (v === 1) front = `<path d="M38 ${t+10} Q60 ${t-18} 82 ${t+10} Q60 ${t+15} 38 ${t+10} Z" fill="#E3B46B" ${S}/><path d="M44 ${t+4} l6 6 M52 ${t-2} l10 10 M62 ${t-3} l10 10 M72 ${t+1} l6 6" stroke="#A8743A" stroke-width="2" stroke-linecap="round"/><path d="M60 ${t-6} l2 -7" stroke="${OUT}" stroke-width="3" stroke-linecap="round"/>`;
+      else back = `<polygon points="${spikePts(60, fy+10, 46, 31, 195, 345, 7)}" fill="${shade(body,.68)}" ${S}/>`;
+      break;
+  }
+  return { back, front };
+}
+function buildGenArt(spec){
+  const F = FAMS[spec.f], m = CG_SH[spec.shape], body = spec.body, dark = lum(body) < .32;
+  const lc = dark ? '#FFFFFF' : OUT, inner = dark ? shade(body, 1.5) : '#FFC9D6';
+  const mo = genMotif(F.id, spec.v, m, body, spec.acc, F);
+  let svg = '';
+  if (spec.rar === 'l') svg += `<circle cx="60" cy="66" r="52" fill="${shade(F.fc,1.75)}"/><circle cx="60" cy="66" r="47" fill="none" stroke="${shade(F.fc,1.3)}" stroke-width="3" stroke-dasharray="4 6"/>`;
+  svg += mo.back + genEars(spec.ear, m, body, inner, spec.acc === '#FFFFFF' ? shade(body,.8) : spec.acc);
+  if (spec.arms) svg += `<ellipse cx="${m.sideX+1}" cy="${m.faceY+20}" rx="6" ry="9" fill="${shade(body,.9)}" ${S} transform="rotate(30 ${m.sideX+1} ${m.faceY+20})"/><ellipse cx="${119-m.sideX}" cy="${m.faceY+20}" rx="6" ry="9" fill="${shade(body,.9)}" ${S} transform="rotate(-30 ${119-m.sideX} ${m.faceY+20})"/>`;
+  if (m.feet) svg += feet(shade(body, .85));
+  svg += m.d(body) + genPattern(spec.pat, m, body, F, spec.acc === '#FFFFFF' ? '#FF9FB5' : spec.acc) + mo.front;
+  svg += genEyes(m.faceY, spec.eye, lc) + cheeks(m.faceY) + genMouth(m.faceY, spec.mouth, lc);
+  if (spec.rar === 'tr') svg += sparkle(20, 40, 5) + sparkle(100, 92, 4.5);
+  if (spec.rar === 'l') svg += sparkle(18, 36, 6.5) + sparkle(102, 30, 5) + sparkle(104, 96, 5.5);
+  return svg;
+}
+function genSpec(f, j){
+  const F = FAMS[f], rar = RAR_OF_INDEX(j);
+  let shape = SH_ORDER[(j*3 + f) % 7], v = j % 3;
+  if (j === 11) v = 0;
+  const isHat = () => (HATS[F.id] || []).includes(v);
+  if (shape === 'drop' && isHat()) shape = 'round';
+  let ear = EAR_ORDER[(j*5 + f*2) % 8];
+  const busy = (TOP_BUSY[F.id] || []).includes(v);
+  if (isHat()) ear = 'none';
+  else if (busy && !['round','cat','floppy','none'].includes(ear)) ear = ['round','cat','floppy','none'][(j + f) % 4];
+  if (shape === 'drop' && !['none','round','floppy'].includes(ear)) ear = 'round';
+  if (shape === 'ghost' && ear === 'floppy') ear = 'round';
+  if (F.id === 'soleil' && (ear === 'bunny' || ear === 'cat')) ear = busy ? 'none' : 'tuft';
+  if (F.id === 'ciel' && (v === 0 || v === 2) && ear === 'floppy') ear = 'round';
+  return { f, rar, shape, v, ear, body:F.bodies[j % 6], acc:F.acc[(j + f) % 3], pat:PAT_ORDER[(j*7 + f*3) % 6], eye:EYE_ORDER[(j*5 + f) % 6], mouth:MOUTH_ORDER[(j*3 + f) % 4], arms:(j + f) % 4 === 2 };
+}
+const pad3 = n => String(n).padStart(3, '0');
+const favTable = n => ((n*7) % 9) + 2;
+CREATURES.forEach((c, i) => { c.num = i + 1; c.fam = ORIG_FAM[c.id]; c.rar = ORIG_RAR[c.id] || 'c'; c.tab = favTable(c.num); });
+const CARDS = CREATURES.slice();
+FAMS.forEach((F, f) => NEW_CARDS[F.id].forEach((nd, j) => {
+  const num = CARDS.length + 1, spec = genSpec(f, j);
+  let memo = null;
+  CARDS.push({ id:'k' + pad3(num), num, nom:nd[0], desc:nd[1], fam:F.id, rar:spec.rar, tab:favTable(num), tint:F.tint, egg:F.egg, spot:F.spot,
+    art:() => memo || (memo = buildGenArt(spec)) });
+}));
+
+/* ----- Affichage des cartes ----- */
+function cardHTML(c, o){
+  o = o || {};
+  const F = FAMS[FAMI[c.fam]], R = RAR[c.rar];
+  const stars = '★'.repeat(R.st);
+  if (o.mini) return `<div class="tcard mini rar-${c.rar}" style="--fc:${F.fc};--fl:${F.fl}"><div class="tc-head"><span class="tc-name">${c.nom}</span></div><div class="tc-art">${creatureSVG(c)}</div><div class="tc-mini-foot"><span class="tc-stars">${stars}</span><span>N°${pad3(c.num)}</span></div></div>`;
+  return `<div class="tcard rar-${c.rar}${o.pop ? ' pop' : ''}" style="--fc:${F.fc};--fl:${F.fl}">
+    <div class="tc-head"><span class="tc-name">${c.nom}</span><span class="tc-num">N°${pad3(c.num)}</span></div>
+    <div class="tc-art">${creatureSVG(c)}</div>
+    <div class="tc-fam">${famIcon(F)}<span>${F.nom}</span><span class="tc-rar">${stars} ${R.nom}</span></div>
+    <p class="tc-desc">${c.desc}</p>
+    <div class="tc-foot"><span>Sa table préférée</span><b>× ${c.tab}</b></div>
+  </div>`;
+}
+function cardBackHTML(c){
+  const F = FAMS[FAMI[c.fam]];
+  return `<div class="tcard mini back" style="--fc:${F.fc};--fl:${F.fl}" role="img" aria-label="Carte N°${pad3(c.num)}, pas encore trouvée, famille ${F.nom}"><div class="tc-back-in">${famIcon(F)}<b>?</b><span>N°${pad3(c.num)}</span></div></div>`;
+}
+
+/* ----- Tirage, doubles et échanges ----- */
+const EX_COST = 3;
+function pickW(items, wf){
+  const tot = items.reduce((s, x) => s + wf(x), 0); let r = Math.random() * tot;
+  for (const x of items){ r -= wf(x); if (r < 0) return x; }
+  return items[items.length - 1];
+}
+const owned = c => (P.collected[c.id] || 0) > 0;
+function chooseEggFam(){
+  return FAMS.indexOf(pickW(FAMS, F => 1 + 2 * CARDS.filter(c => c.fam === F.id && !owned(c)).length));
+}
+function eggFam(){
+  if (P.eggFam == null || !FAMS[P.eggFam]) P.eggFam = chooseEggFam();
+  return FAMS[P.eggFam];
+}
+function drawCard(famId){
+  const fam = CARDS.filter(c => c.fam === famId), fresh = fam.filter(c => !owned(c));
+  if ((P.dry || 0) >= 3 && fresh.length) return pickW(fresh, c => RAR[c.rar].w);
+  const rars = Object.keys(RAR).filter(r => fam.some(c => c.rar === r));
+  const rar = pickW(rars, r => RAR[r].w);
+  const pool = fam.filter(c => c.rar === rar), pf = pool.filter(c => !owned(c));
+  return pf.length && Math.random() < 0.5 ? pick(pf) : pick(pool);
+}
+const dupTotal = () => P ? CARDS.reduce((s, c) => s + Math.max(0, (P.collected[c.id] || 0) - 1), 0) : 0;
+function pushRecent(id){
+  P.recent = [id].concat((P.recent || []).filter(x => x !== id)).slice(0, 12);
+}
+
+const CRE = {}; CARDS.forEach(c => { CRE[c.id] = c; });
+const NC = CARDS.length;
 const CRACKS = ['M34 56 l8 6 l6 -5 l7 7','M72 36 l-4 8 l7 4 l-3 9','M88 72 l-9 3 l3 8 l-8 4','M27 84 l9 -3 l4 8 l8 -4','M50 100 l6 -8 l6 6 l8 -7'];
 const SPOTS = [[44,50,6],[72,34,4.5],[82,60,7],[38,80,5],[66,92,6.5],[54,68,3.5],[84,92,4]];
 function eggSVG(c, heat, o){
@@ -979,8 +1461,8 @@ const LS_KEY = 'oeufs-magiques-v2', OLD_KEY = 'oeufs-magiques-table2-v1';
 let DB = { players:{}, current:null };
 try { const raw = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); if (raw && raw.players) DB = raw; } catch(e){}
 function lsSave(){ try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); } catch(e){} }
-const defaults = () => ({ stars:0, collected:{}, heat:0, lastCreature:null, bestStreak:0, facts:{}, levels:{}, sessions:[], records:{}, medals:{}, days:{}, totalOk:0, totalKo:0, totalMs:0, games:0,
-  settings:{ op:'mul', tables:[2], add:1, sub:1, mode:'choix', kind:'q10', chrono:true, sound:true } });
+const defaults = () => ({ stars:0, collected:{}, heat:0, lastCreature:null, recent:[], eggFam:null, dry:0, bestStreak:0, facts:{}, levels:{}, sessions:[], records:{}, medals:{}, days:{}, totalOk:0, totalKo:0, totalMs:0, games:0,
+  settings:{ op:'mul', tables:[2], add:1, sub:1, mode:'choix', kind:'q10', chrono:true, sound:true, voice:'', voiceRate:'normale' } });
 function shape(p){ const d = defaults(); const s = Object.assign(d.settings, p.settings || {}); const out = Object.assign(d, p); out.settings = s; return out; }
 Object.keys(DB.players).forEach(id => { DB.players[id] = shape(DB.players[id]); });
 let P = (DB.current && DB.players[DB.current] && !DB.players[DB.current].deleted) ? DB.players[DB.current] : null;
@@ -1104,15 +1586,72 @@ function beep(notes){
 }
 const SND = { ok:[[660,0,.15],[880,.12,.22]], oops:[[330,0,.2],[262,.18,.28]], hatch:[[523,0,.15],[659,.13,.15],[784,.26,.15],[1047,.39,.45]], end:[[523,0,.12],[784,.12,.3]] };
 const canSpeak = ('speechSynthesis' in window) && (typeof SpeechSynthesisUtterance !== 'undefined');
+const VOICE_RATES = { lente:0.8, normale:0.95, rapide:1.1 };
+function frVoices(){
+  if (!canSpeak) return [];
+  try { return window.speechSynthesis.getVoices().filter(v => /^fr([-_]|$)/i.test(v.lang || '')); } catch(e){ return []; }
+}
+function voiceScore(v){
+  const n = ((v.name || '') + ' ' + (v.voiceURI || '')).toLowerCase();
+  let s = 0;
+  if (/natural|naturel|neural/.test(n)) s += 100;
+  if (/premium/.test(n)) s += 90;
+  if (/enhanced|amélior|ameliore/.test(n)) s += 80;
+  if (/google/.test(n)) s += 60;
+  if (/online/.test(n)) s += 30;
+  if (/denise|eloise|vivienne|audrey|amélie|amelie|aurélie|aurelie|marie|thomas|julie|hortense|henri|remy|rémy/.test(n)) s += 12;
+  if (/fr[-_]fr/.test((v.lang || '').toLowerCase())) s += 15;
+  if (/compact|espeak|eddy|flo|grand|reed|rocko|sandy|shelley|jacques/.test(n)) s -= 30;
+  return s;
+}
+function pickVoice(){
+  const vs = frVoices(); if (!vs.length) return null;
+  const want = P && P.settings.voice;
+  if (want){ const m = vs.find(v => v.name === want); if (m) return m; }
+  return vs.slice().sort((a,b) => voiceScore(b) - voiceScore(a))[0];
+}
 function speak(t){
   if (!canSpeak || !t) return;
   try {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(String(t).replace(/×/g,' fois ').replace(/−/g,' moins ').replace(/\+/g,' plus ').replace(/’/g,"'"));
-    u.lang = 'fr-FR'; u.rate = 0.9; u.pitch = 1.1;
-    const v = window.speechSynthesis.getVoices().filter(v => /^fr/i.test(v.lang))[0];
-    if (v) u.voice = v;
+    const v = pickVoice();
+    u.lang = v ? v.lang : 'fr-FR'; if (v) u.voice = v;
+    u.rate = VOICE_RATES[(P && P.settings.voiceRate) || 'normale'] || 0.95;
+    u.pitch = 1.04;
     window.speechSynthesis.speak(u);
+  } catch(e){}
+}
+const UA = navigator.userAgent || '';
+const IS_IOS = /iPad|iPhone|iPod/.test(UA) || (/Macintosh/.test(UA) && navigator.maxTouchPoints > 1);
+function voiceTip(){
+  if (IS_IOS) return 'Pour une voix bien plus naturelle sur iPad : Réglages → Accessibilité → Contenu énoncé → Voix → Français, puis télécharge une voix « améliorée » ou « premium » (par exemple Audrey ou Thomas). Relance le jeu : elle sera choisie toute seule.';
+  if (/Android/.test(UA)) return 'Sur Android, la voix vient des réglages « Synthèse vocale » du téléphone : choisis le moteur Google et télécharge une voix française.';
+  if (/Linux/.test(UA)) return 'Sur Linux, la plus agréable est la voix « Google français » de Google Chrome (il faut internet). Avec Chromium, la lecture peut rester muette.';
+  if (/Windows/.test(UA)) return 'Sur Windows, le navigateur Microsoft Edge propose des voix très naturelles (par exemple « Denise »). Avec Chrome, choisis « Google français ».';
+  if (/Macintosh/.test(UA)) return 'Sur Mac : Réglages Système → Accessibilité → Contenu énoncé → Voix du système → Gérer les voix, puis télécharge une voix française « améliorée ».';
+  return 'La voix dépend de l’appareil et du navigateur. Les voix marquées « naturelle » sont les plus agréables.';
+}
+function voiceTag(v){
+  const s = voiceScore(v);
+  return s >= 80 ? ' · très naturelle' : s >= 55 ? ' · naturelle' : '';
+}
+function renderVoice(){
+  if (!P) return;
+  const vs = frVoices().slice().sort((a,b) => voiceScore(b) - voiceScore(a)), cur = pickVoice();
+  const sel = $('voiceSel');
+  sel.innerHTML = '<option value="">Automatique : la meilleure voix</option>' + vs.map(v => `<option value="${esc(v.name)}">${esc(v.name)}${voiceTag(v)}</option>`).join('');
+  sel.value = P.settings.voice && vs.some(v => v.name === P.settings.voice) ? P.settings.voice : '';
+  sel.disabled = !vs.length; $('voiceTry').disabled = !vs.length;
+  $('voiceNow').textContent = !canSpeak ? 'Ce navigateur ne sait pas lire à voix haute.' : !vs.length ? 'Aucune voix française n’est disponible pour l’instant sur cet appareil.' : `Voix utilisée : ${cur.name}${voiceTag(cur)}.`;
+  document.querySelectorAll('[data-rate]').forEach(b => b.setAttribute('aria-pressed', b.dataset.rate === (P.settings.voiceRate || 'normale') ? 'true' : 'false'));
+  $('voiceTip').textContent = voiceTip();
+}
+if (canSpeak){
+  try {
+    window.speechSynthesis.getVoices();
+    const onV = () => { if (typeof screen !== 'undefined' && screen === 'stats') renderVoice(); };
+    if (window.speechSynthesis.addEventListener) window.speechSynthesis.addEventListener('voiceschanged', onV); else window.speechSynthesis.onvoiceschanged = onV;
   } catch(e){}
 }
 
@@ -1613,34 +2152,57 @@ function quitGame(){
 }
 
 /* ================= Éclosion ================= */
-const distinct = () => P ? CREATURES.filter(c => P.collected[c.id]).length : 0;
-const nextCreatureId = () => { const m = CREATURES.filter(c => !P.collected[c.id])[0]; return m ? m.id : null; };
+const distinct = () => P ? CARDS.filter(c => owned(c)).length : 0;
 function hatch(after){
-  const nid = nextCreatureId(), before = nid ? CRE[nid] : SURPRISE;
-  const id = nid || pick(CREATURES).id, c = CRE[id];
-  P.collected[id] = (P.collected[id] || 0) + 1; P.heat = 0; P.lastCreature = id; touch();
+  const F = eggFam(), c = drawCard(F.id), isNew = !owned(c);
+  P.collected[c.id] = (P.collected[c.id] || 0) + 1; P.heat = 0; P.lastCreature = c.id;
+  P.dry = isNew ? 0 : (P.dry || 0) + 1;
+  pushRecent(c.id); P.eggFam = chooseEggFam(); touch();
   hatchAfter = after || null;
   hold('hatch');
+  reveal({ egg:F, card:c, isNew });
+}
+function reveal(o){
+  const c = o.card, art = $('hatchArt');
   $('overlay').hidden = false;
-  $('hatchEyebrow').textContent = 'Crac… crac…';
-  $('hatchArt').innerHTML = eggSVG(before, 5, { cls:'shake' });
-  $('hatchTitle').textContent = 'Ton œuf éclot !';
-  $('hatchText').textContent = 'Regarde bien…';
   $('hatchClose').hidden = true;
-  setTimeout(() => {
-    const d = distinct();
-    $('hatchEyebrow').textContent = nid ? 'Nouvelle créature !' : 'Œuf surprise !';
-    $('hatchArt').innerHTML = creatureSVG(c, 'pop');
+  art.classList.remove('is-card');
+  const show = () => {
+    const d = distinct(), n = P.collected[c.id];
+    art.classList.add('is-card');
+    art.innerHTML = cardHTML(c, { pop:true });
+    $('hatchEyebrow').textContent = !o.isNew ? 'Carte en double' : c.rar === 'l' ? 'Carte légendaire !' : c.rar === 'tr' ? 'Carte très rare !' : c.rar === 'r' ? 'Carte rare !' : 'Nouvelle carte !';
     $('hatchTitle').textContent = 'Voici ' + c.nom + ' !';
-    let txt = c.desc + ' ';
-    if (nid) txt += d === NC ? `Tu as trouvé les ${NC} créatures ! Ton diplôme t’attend dans la collection.` : `Tu as maintenant ${d} créature${d>1?'s':''} sur ${NC}.`;
-    else txt += `Tu as maintenant ${P.collected[id]} ${c.nom} dans ta collection.`;
-    $('hatchText').textContent = txt;
+    $('hatchText').textContent = o.isNew
+      ? (o.used ? `Tu as donné ${o.used}. ` : '') + (d === NC ? `Tu as les ${NC} cartes ! Ton diplôme t’attend dans la collection.` : `Tu as maintenant ${d} cartes différentes sur ${NC}.`)
+      : `Tu as maintenant ${n} cartes ${c.nom}. ${EX_COST} doubles s’échangent contre une carte nouvelle !`;
     $('hatchClose').hidden = false; $('hatchClose').focus();
-    beep(SND.hatch); confetti();
-    if (soundOn()) speak('Voici ' + c.nom + ' !');
+    beep(SND.hatch); if (o.isNew) confetti();
+    if (soundOn()) speak((o.isNew ? 'Voici ' : 'Encore ') + c.nom + ' !');
     renderSide();
-  }, reduced ? 300 : 1500);
+  };
+  if (o.egg){
+    $('hatchEyebrow').textContent = 'Crac… crac…';
+    art.innerHTML = eggSVG(o.egg, 5, { cls:'shake' });
+    $('hatchTitle').textContent = 'Ton œuf ' + o.egg.nom + ' éclot !';
+    $('hatchText').textContent = 'Regarde bien…';
+    setTimeout(show, reduced ? 300 : 1500);
+  } else show();
+}
+function doExchange(){
+  if (!P) return;
+  const missing = CARDS.filter(c => !owned(c));
+  if (dupTotal() < EX_COST || !missing.length) return;
+  const used = {};
+  for (let i=0;i<EX_COST;i++){
+    const d = CARDS.filter(c => (P.collected[c.id] || 0) > 1).sort((a,b) => RAR[a.rar].rank - RAR[b.rar].rank || P.collected[b.id] - P.collected[a.id])[0];
+    P.collected[d.id]--; used[d.nom] = (used[d.nom] || 0) + 1;
+  }
+  const parts = Object.keys(used).map(n => used[n] + ' ' + n);
+  const c = pickW(missing, x => RAR[x.rar].w);
+  P.collected[c.id] = 1; P.lastCreature = c.id; pushRecent(c.id); touch(true);
+  hatchAfter = renderCollection;
+  reveal({ card:c, isNew:true, used: parts.length > 1 ? parts.slice(0,-1).join(', ') + ' et ' + parts[parts.length-1] : parts[0] });
 }
 function closeHatch(){
   $('overlay').hidden = true;
@@ -1680,20 +2242,21 @@ function renderSide(){
   $('sideStars').textContent = P.stars;
   $('sideCreatures').textContent = distinct() + '/' + NC;
   $('sideMedals').textContent = medalCount();
-  const nid = nextCreatureId(), c = nid ? CRE[nid] : SURPRISE, d = distinct();
-  $('sideEgg').innerHTML = eggSVG(c, P.heat, { cls: P.heat >= 4 ? 'wiggle' : '' });
-  $('sideEggTitle').textContent = nid ? 'Œuf n°' + (d+1) + ' sur ' + NC : 'Œuf surprise doré';
+  const F = eggFam(), d = distinct();
+  $('sideEgg').innerHTML = eggSVG(F, P.heat, { cls: P.heat >= 4 ? 'wiggle' : '' });
+  $('sideEggTitle').textContent = 'Œuf ' + F.nom;
   $('sideHeat').innerHTML = pipsHTML(P.heat, true);
   $('sideHeat').setAttribute('aria-label', P.heat + ' sur 5');
   freshPip = false;
   const r = 5 - P.heat;
   $('sideEggHint').textContent = r === 5 ? 'Chaque bonne réponse le réchauffe. À 5 étoiles, il éclot !' : r === 1 ? 'Encore 1 bonne réponse : il va éclore !' : `Encore ${r} bonnes réponses pour le faire éclore.`;
-  const got = CREATURES.filter(x => P.collected[x.id]);
-  const sig = got.map(x => x.id).join(',');
+  if (!(P.recent || []).length && d) P.recent = CARDS.filter(owned).map(x => x.id).reverse().slice(0, 12);
+  const rec = (P.recent || []).filter(id => CRE[id]).slice(0, 6);
+  const sig = rec.join(',') + '|' + d;
   if (sig !== thumbsSig){
     thumbsSig = sig;
-    $('sideThumbs').innerHTML = got.map(x => `<span title="${x.nom}">${creatureSVG(x)}</span>`).join('') +
-      (got.length === 0 ? '<p class="more">Fais éclore ton premier œuf !</p>' : got.length < NC ? `<p class="more">Encore ${NC - got.length} à découvrir</p>` : '<p class="more">Collection complète !</p>');
+    $('sideThumbs').innerHTML = rec.map(id => `<span title="${CRE[id].nom}">${creatureSVG(CRE[id])}</span>`).join('') +
+      (d === 0 ? '<p class="more">Fais éclore ton premier œuf !</p>' : d < NC ? `<p class="more">${d} cartes sur ${NC} · encore ${NC - d} à découvrir</p>` : '<p class="more">Collection complète !</p>');
   }
   const t = P.days[todayKey()] || { ok:0, ko:0, ms:0 }, n = t.ok + t.ko;
   $('sideToday').innerHTML = `<li><span>Bonnes réponses</span><b>${t.ok}</b></li><li><span>Réussite</span><b>${n ? Math.round(t.ok/n*100) + ' %' : '—'}</b></li><li><span>Temps de jeu</span><b>${t.ms ? fmtTotal(t.ms) : '—'}</b></li><li><span>Meilleure série</span><b>${P.bestStreak || 0}</b></li>`;
@@ -1722,7 +2285,7 @@ function renderWelcome(){
   const ps = livePlayers();
   $('welcomeArt').innerHTML = eggSVG(CREATURES[2],0) + eggSVG(CREATURES[0],3) + eggSVG(CREATURES[1],1);
   $('knownPlayers').hidden = !ps.length;
-  $('playerList').innerHTML = ps.map(p => `<button class="pl-btn" type="button" data-pid="${esc(p.id)}">${avatarSVG(p)}<span><b>${esc(p.name)}</b><span>${pl(Object.keys(p.collected||{}).length,'créature')} · ${pl(p.stars||0,'étoile')}</span></span></button>`).join('');
+  $('playerList').innerHTML = ps.map(p => `<button class="pl-btn" type="button" data-pid="${esc(p.id)}">${avatarSVG(p)}<span><b>${esc(p.name)}</b><span>${pl(Object.keys(p.collected||{}).length,'carte')} · ${pl(p.stars||0,'étoile')}</span></span></button>`).join('');
   $('nameAsk').textContent = ps.length ? 'Nouveau joueur ? Écris ton prénom :' : 'Comment tu t’appelles ?';
 }
 
@@ -1816,19 +2379,34 @@ function buildLearnAddSub(){
 }
 
 /* ----- Collection ----- */
+let collFam = 'all', collShow = 'all';
 function renderCollection(){
-  const d = distinct();
-  $('collText').textContent = d === 0 ? 'Aucune créature pour l’instant. Joue pour faire éclore ton premier œuf !' : d === NC ? 'Bravo ! Tu as trouvé toutes les créatures.' : `Tu as trouvé ${d} créature${d>1?'s':''} sur ${NC}.`;
+  const d = distinct(), dup = dupTotal(), missing = NC - d;
+  $('collText').textContent = d === 0 ? 'Aucune carte pour l’instant. Joue pour faire éclore ton premier œuf !' : d === NC ? `Bravo ! Tu as les ${NC} cartes.` + (dup ? ` Et ${pl(dup, 'double')} en plus.` : '') : `${d} cartes différentes sur ${NC} · ${pl(dup, 'double')}`;
   $('collBar').style.width = (d / NC * 100) + '%';
   $('collBarWrap').setAttribute('aria-label', d + ' sur ' + NC);
+  $('exBtn').disabled = !(dup >= EX_COST && missing > 0);
+  $('exText').textContent = missing === 0 ? 'Ta collection est complète : plus rien à échanger !' : dup >= EX_COST ? `Tu as ${pl(dup, 'double')} : échange-en ${EX_COST} contre une carte que tu n’as pas encore.` : `Échange : ${EX_COST} doubles = 1 carte nouvelle. ` + (dup ? `Tu en as ${dup}, encore ${EX_COST - dup} !` : 'Tu n’as pas encore de double.');
   $('diploma').hidden = d < NC;
-  $('dipText').textContent = `Les ${NC} œufs ont éclos ! ${P.name} est un grand éleveur de créatures.`;
-  $('grid').innerHTML = CREATURES.map((c, i) => {
-    const k = P.collected[c.id];
-    if (k) return `<li class="slot got"><div class="slot-art">${creatureSVG(c)}</div>${k > 1 ? `<span class="count">×${k}</span>` : ''}<p class="slot-name">${c.nom}</p><p class="slot-desc">${c.desc}</p></li>`;
-    return `<li class="slot"><div class="slot-art">${eggSVG(c, 0, { mystery:true })}</div><p class="slot-name">N°${i+1}</p><p class="slot-desc">Encore à découvrir</p></li>`;
-  }).join('');
+  $('dipText').textContent = `Les ${NC} cartes sont réunies ! ${P.name} est un grand collectionneur.`;
+  $('famChips').innerHTML = `<button class="fchip" type="button" data-fam="all" aria-pressed="${collFam === 'all'}">Toutes <small>${d}/${NC}</small></button>` +
+    FAMS.map(F => { const all = CARDS.filter(c => c.fam === F.id); return `<button class="fchip" type="button" data-fam="${F.id}" aria-pressed="${collFam === F.id}">${famIcon(F)}${F.nom} <small>${all.filter(owned).length}/${all.length}</small></button>`; }).join('');
+  document.querySelectorAll('[data-show]').forEach(b => b.setAttribute('aria-pressed', b.dataset.show === collShow ? 'true' : 'false'));
+  const list = CARDS.filter(c => (collFam === 'all' || c.fam === collFam) && (collShow === 'all' || (collShow === 'got' && owned(c)) || (collShow === 'dup' && P.collected[c.id] > 1) || (collShow === 'miss' && !owned(c))));
+  $('grid').innerHTML = list.length ? list.map(c => { const n = P.collected[c.id] || 0;
+    return n ? `<li><button class="cbtn" type="button" data-card="${c.id}" aria-label="${esc(c.nom)}, carte ${RAR[c.rar].nom.toLowerCase()}${n > 1 ? ', ' + n + ' exemplaires' : ''}">${cardHTML(c, { mini:true })}${n > 1 ? `<span class="tc-count">×${n}</span>` : ''}</button></li>` : `<li>${cardBackHTML(c)}</li>`; }).join('')
+    : `<li class="grid-empty">${collShow === 'dup' ? 'Pas encore de double ici.' : collShow === 'miss' ? 'Tu as toutes les cartes ici !' : 'Aucune carte ici pour l’instant.'}</li>`;
 }
+let viewCard = null;
+function openCard(id){
+  const c = CRE[id]; if (!c) return;
+  viewCard = c;
+  const n = P.collected[c.id] || 0;
+  $('cardBig').innerHTML = cardHTML(c);
+  $('cardCount').textContent = n > 1 ? `Tu as ${n} cartes ${c.nom}` : 'Tu as 1 carte ' + c.nom;
+  $('cardOverlay').hidden = false; $('cardClose').focus();
+}
+function closeCard(){ $('cardOverlay').hidden = true; viewCard = null; }
 
 /* ----- Statistiques ----- */
 function chartSVG(list){
@@ -1847,7 +2425,7 @@ function renderStats(){
   $('statsSince').textContent = 'Joue depuis le ' + new Date(P.created || Date.now()).toLocaleDateString('fr-FR') + '.';
   $('statTiles').innerHTML = [
     [P.games, 'Parties jouées'], [P.totalOk, 'Bonnes réponses'], [n ? Math.round(P.totalOk/n*100) + ' %' : '—', 'Réussite'],
-    [P.totalMs ? fmtTotal(P.totalMs) : '—', 'Temps d’entraînement'], [P.stars, 'Étoiles'], [distinct() + ' / ' + NC, 'Créatures']
+    [P.totalMs ? fmtTotal(P.totalMs) : '—', 'Temps d’entraînement'], [P.stars, 'Étoiles'], [distinct() + ' / ' + NC, 'Cartes']
   ].map(t => `<div class="tile"><b>${t[0]}</b><span>${t[1]}</span></div>`).join('');
   $('medalBoard').innerHTML = MEDALS.map(m => { const l = P.medals[m.k] || 0; return `<div class="medal-item">${medalSVG(l, m.lab)}<span>${m.name}${l ? '<br>' + (l === 3 ? 'Or' : l === 2 ? 'Argent' : 'Bronze') : ''}</span></div>`; }).join('');
   const last = P.sessions.slice(0,12).reverse();
@@ -1871,6 +2449,7 @@ function renderStats(){
   const rk = Object.keys(P.records);
   $('recordsWrap').innerHTML = rk.length ? `<table class="data"><thead><tr><th>Exercice</th><th>10 questions sans faute</th><th>20 questions sans faute</th><th>Défi 1 minute</th></tr></thead><tbody>${rk.map(k => { const r = P.records[k]; return `<tr><td>${esc(recLabel(k))}</td><td>${r.q10 ? fmtDur(r.q10) : '—'}</td><td>${r.q20 ? fmtDur(r.q20) : '—'}</td><td>${r.c60 ? pl(r.c60,'bonne réponse','bonnes réponses') : '—'}</td></tr>`; }).join('')}</tbody></table>` : '<p class="muted">Pas encore de record. Fais un sans faute ou un défi 1 minute !</p>';
   $('historyWrap').innerHTML = P.sessions.length ? `<table class="data"><thead><tr><th>Date</th><th>Exercice</th><th>Partie</th><th>Score</th><th>Temps</th></tr></thead><tbody>${P.sessions.slice(0,20).map(s => `<tr><td>${longDate(s.d)}</td><td>${esc(s.ex)}</td><td>${KIND_LABEL[s.kind]}</td><td>${s.ok} / ${s.n}${s.fix ? ` <span class="fixed-tag">+${s.fix} rattrapé${s.fix > 1 ? 's' : ''}</span>` : ''}</td><td>${fmtDur(s.ms)}</td></tr>`).join('')}</tbody></table>` : '<p class="muted">Aucune partie pour l’instant.</p>';
+  renderVoice();
   $('resetQ').textContent = `Effacer ${P.name} et tous ses progrès ?`;
   $('resetConfirm').hidden = true;
   setSync(syncState);
@@ -1949,6 +2528,16 @@ $('replayBtn').addEventListener('click', startGame);
 $('otherBtn').addEventListener('click', () => showScreen('setup'));
 $('toStatsBtn').addEventListener('click', () => showScreen('stats'));
 $('hatchClose').addEventListener('click', closeHatch);
+$('exBtn').addEventListener('click', doExchange);
+$('famChips').addEventListener('click', e => { const b = e.target.closest('[data-fam]'); if (!b) return; collFam = b.dataset.fam; renderCollection(); });
+document.querySelectorAll('[data-show]').forEach(b => b.addEventListener('click', () => { collShow = b.dataset.show; renderCollection(); }));
+$('grid').addEventListener('click', e => { const b = e.target.closest('[data-card]'); if (b) openCard(b.dataset.card); });
+$('cardClose').addEventListener('click', closeCard);
+$('cardOverlay').addEventListener('click', e => { if (e.target === $('cardOverlay')) closeCard(); });
+$('cardSay').addEventListener('click', () => { if (viewCard) speak(viewCard.nom + '. ' + viewCard.desc); });
+$('voiceSel').addEventListener('change', () => { P.settings.voice = $('voiceSel').value; touch(); renderVoice(); });
+$('voiceTry').addEventListener('click', () => { const ex = ['Combien font 7 fois 8 ?', 'Bravo ! Tu as trouvé une nouvelle carte !', 'Voici Brindille, de la famille Plante.']; speak(pick(ex)); });
+document.querySelectorAll('[data-rate]').forEach(b => b.addEventListener('click', () => { P.settings.voiceRate = b.dataset.rate; touch(); renderVoice(); speak('Voici ma nouvelle vitesse.'); }));
 document.querySelectorAll('[data-learn]').forEach(b => b.addEventListener('click', () => { learnTab = b.dataset.learn; renderLearn(); }));
 $('learnChips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; learnTable = +b.dataset.lt; revealed = {}; renderLearn(); });
 $('hideToggle').addEventListener('change', () => { revealed = {}; renderLearn(); });
@@ -1976,6 +2565,7 @@ $('resetYes').addEventListener('click', () => {
   showScreen('welcome');
 });
 document.addEventListener('keydown', e => {
+  if (!$('cardOverlay').hidden){ if (e.key === 'Escape'){ e.preventDefault(); closeCard(); } return; }
   if (!$('overlay').hidden){
     if ((e.key === 'Escape' || e.key === 'Enter') && !$('hatchClose').hidden){ e.preventDefault(); closeHatch(); }
     return;

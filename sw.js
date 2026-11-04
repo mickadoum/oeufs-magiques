@@ -1,6 +1,6 @@
 /* Les Œufs Magiques : fonctionnement hors ligne.
    Les fichiers sont servis depuis la tablette, puis mis à jour en arrière-plan quand internet est là. */
-const CACHE = 'oeufs-magiques-v2';
+const CACHE = 'oeufs-magiques-v3';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest',
   'icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png',
@@ -15,7 +15,8 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('fetch', e => {
   const req = e.request;
-  if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
+  const url = new URL(req.url);
+  if (req.method !== 'GET' || url.origin !== self.location.origin || url.pathname.indexOf('/cahier/') !== -1) return;
   const net = fetch(req).then(res => {
     if (res && res.ok){ const copy = res.clone(); return caches.open(CACHE).then(c => c.put(req, copy)).then(() => res); }
     return res;
