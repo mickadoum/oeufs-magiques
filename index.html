@@ -50,6 +50,7 @@ img{max-width:100%}
   --mul:#E4552A;
   --add:#7151D8;
   --sub:#2A78D0;
+  --dbl:#13917F;
   --op-ink:#FFFFFF;
   --scrim:rgba(12,22,48,.6);
   --font-display:"Grandstander","Trebuchet MS",system-ui,sans-serif;
@@ -79,6 +80,7 @@ img{max-width:100%}
     --mul:#FF8259;
     --add:#A98CF2;
     --sub:#6BB4FF;
+    --dbl:#4FD1B8;
     --op-ink:#1A1030;
     --scrim:rgba(3,8,22,.7);
     color-scheme:dark;
@@ -107,6 +109,7 @@ img{max-width:100%}
   --mul:#FF8259;
   --add:#A98CF2;
   --sub:#6BB4FF;
+  --dbl:#4FD1B8;
   --op-ink:#1A1030;
   --scrim:rgba(3,8,22,.7);
   color-scheme:dark;
@@ -242,7 +245,8 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
 .step{background:var(--paper);border:3px solid var(--line);border-radius:24px;padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px}
 .step-title{font-weight:800;font-size:1.2rem;display:flex;align-items:center;gap:10px}
 .step-num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);font-size:1rem;flex:none}
-.ops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ops{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:1100px){.ops{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .op{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;background:var(--paper-2);border:3px solid var(--edge);border-radius:20px;box-shadow:0 5px 0 var(--edge);padding:10px 14px 12px;cursor:pointer}
 .op-sign{font-family:var(--font-display);font-weight:900;font-size:2.6rem;line-height:1}
 .op-txt b{display:block;font-family:var(--font-display);font-weight:800;font-size:1.15rem}
@@ -250,9 +254,11 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
 .op-mul .op-sign{color:var(--mul)}
 .op-add .op-sign{color:var(--add)}
 .op-sub .op-sign{color:var(--sub)}
+.op-dbl .op-sign{color:var(--dbl)}
 .op-mul[aria-pressed="true"]{background:var(--mul);color:var(--op-ink)}
 .op-add[aria-pressed="true"]{background:var(--add);color:var(--op-ink)}
 .op-sub[aria-pressed="true"]{background:var(--sub);color:var(--op-ink)}
+.op-dbl[aria-pressed="true"]{background:var(--dbl);color:var(--op-ink)}
 .op[aria-pressed="true"] .op-sign,.op[aria-pressed="true"] .op-txt span{color:inherit}
 .op:active,.pick:active,.chip:active{transform:translateY(3px);box-shadow:0 2px 0 var(--edge)}
 @media (max-width:600px){.ops{grid-template-columns:minmax(0,1fr)}.op{flex-direction:row;align-items:center;gap:14px}.op-sign{width:44px;text-align:center;flex:none}}
@@ -272,6 +278,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
 .pick[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .pick.add[aria-pressed="true"]{background:var(--add);color:var(--op-ink)}
 .pick.sub[aria-pressed="true"]{background:var(--sub);color:var(--op-ink)}
+.pick.dbl[aria-pressed="true"]{background:var(--dbl);color:var(--op-ink)}
 .go-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:4px solid var(--edge);border-radius:24px;box-shadow:0 6px 0 var(--edge);padding:12px 16px}
 .recap{font-weight:700;min-width:0;flex:1 1 220px}
 .warn{color:var(--oops);font-weight:700}
@@ -439,11 +446,13 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
 .bar-mul{fill:var(--mul)}
 .bar-add{fill:var(--add)}
 .bar-sub{fill:var(--sub)}
+.bar-dbl{fill:var(--dbl)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.9rem;color:var(--ink-soft)}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;border:1px solid var(--line)}
 .lg-mul{background:var(--mul)}
 .lg-add{background:var(--add)}
 .lg-sub{background:var(--sub)}
+.lg-dbl{background:var(--dbl)}
 .lg-none{background:var(--paper-2)}
 .lg-rev{background:var(--oops-bg)}
 .lg-mid{background:var(--sun-soft)}
@@ -532,6 +541,18 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
 .card-count{background:var(--paper);color:var(--ink);border:3px solid var(--edge);border-radius:999px;padding:4px 16px;font-family:var(--font-display);font-weight:800;text-align:center}
 .voice-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .vsel{flex:1 1 240px;min-width:0;max-width:100%;font:inherit;font-size:1rem;padding:8px 12px;border-radius:12px;border:3px solid var(--edge);background:var(--paper-2);color:var(--ink)}
+.q-lbl{font-size:.5em;vertical-align:middle;color:var(--ink-soft)}
+.question.wrap{white-space:normal;font-size:clamp(2.2rem,9vw,4.6rem)}
+.bills{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.bill{min-width:56px;height:32px;padding:0 8px;border-radius:6px;border:2px solid #1F2A4D;display:grid;place-items:center;font-family:var(--font-display);font-weight:900;font-size:1rem;color:#1F2A4D;font-variant-numeric:tabular-nums}
+.bill.ba{background:#FFD6C2}
+.bill.bb{background:#CDE4FF}
+.dser{font-family:var(--font-display);font-weight:800;margin-top:6px}
+.dgrid{display:flex;flex-wrap:wrap;gap:6px}
+.dcell{min-width:70px;padding:6px 8px;border-radius:8px;background:var(--paper-2);color:var(--ink-soft);font-size:.88rem;font-weight:700;text-align:center;font-variant-numeric:tabular-nums}
+.dcell.rev{background:var(--oops-bg);color:var(--oops)}
+.dcell.mid{background:var(--sun-soft);color:var(--ink)}
+.dcell.good{background:var(--leaf-bg);color:var(--leaf)}
 @keyframes shine{from{background-position:130% 0}to{background-position:-130% 0}}
 @media (max-height:820px){
   body.in-game .tabs,body.in-game .sub{display:none}
@@ -554,7 +575,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
         <svg viewBox="0 0 46 52" aria-hidden="true"><path class="logo-egg" d="M23 3C33 3 41 19 41 31C41 43 33 50 23 50C13 50 5 43 5 31C5 19 13 3 23 3Z"/><circle class="logo-spot" cx="13" cy="36" r="3"/><circle class="logo-spot" cx="32" cy="40" r="2.4"/><path class="logo-star" d="M23 17l2.6 5.4 5.9.8-4.3 4 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4 5.9-.8z"/></svg>
         <div>
           <h1>Les Œufs Magiques</h1>
-          <p class="sub">Tables, additions et soustractions</p>
+          <p class="sub">Tables, doubles, additions et soustractions</p>
         </div>
       </div>
       <button class="icon-btn" id="soundBtn" type="button" aria-pressed="true" aria-label="Son activé">
@@ -633,6 +654,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
           <button class="op op-mul" type="button" data-op="mul" aria-pressed="true"><span class="op-sign">×</span><span class="op-txt"><b>Multiplications</b><span>Les tables de 1 à 10</span></span></button>
           <button class="op op-add" type="button" data-op="add" aria-pressed="false"><span class="op-sign">+</span><span class="op-txt"><b>Additions</b><span>De 4 + 3 à 38 + 25</span></span></button>
           <button class="op op-sub" type="button" data-op="sub" aria-pressed="false"><span class="op-sign">−</span><span class="op-txt"><b>Soustractions</b><span>De 9 − 4 à 52 − 27</span></span></button>
+          <button class="op op-dbl" type="button" data-op="dbl" aria-pressed="false"><span class="op-sign">×2</span><span class="op-txt"><b>Doubles</b><span>À connaître par cœur, de 1 + 1 à 500 + 500</span></span></button>
         </div>
       </div>
       <div class="step" id="stepTables">
@@ -642,7 +664,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
         <div class="chip-tools"><button class="btn btn-small" type="button" id="allTables">Toutes les tables</button><button class="btn btn-small" type="button" id="noTables">Aucune</button></div>
       </div>
       <div class="step" id="stepLevels" hidden>
-        <h3 class="step-title"><span class="step-num">2</span>Quel niveau ?</h3>
+        <h3 class="step-title"><span class="step-num">2</span><span id="levelTitle">Quel niveau ?</span></h3>
         <div class="picks" id="levelPicks"></div>
       </div>
       <div class="step">
@@ -660,7 +682,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
           <button class="pick" type="button" data-kind="c60" aria-pressed="false"><b>Défi 1 minute</b><span>Le plus de bonnes réponses possible</span></button>
         </div>
         <label class="switch"><input type="checkbox" id="chronoToggle" checked><span class="switch-ui"></span><span>Afficher le chronomètre</span></label>
-        <p class="muted" id="mulNote">Multiplications en 10 ou 20 questions : chaque calcul raté revient jusqu’à ce qu’il soit réussi. La partie se termine à 100 % de réussite.</p>
+        <p class="muted" id="mulNote">En 10 ou 20 questions, chaque calcul raté revient jusqu’à ce qu’il soit réussi. La partie se termine à 100 % de réussite.</p>
       </div>
       <div class="go-row">
         <p class="recap" id="recap"></p>
@@ -696,7 +718,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
         <div class="answers" id="answers"></div>
         <div class="typepad" id="typepad" hidden>
           <form class="type-form" id="typeForm" autocomplete="off">
-            <input class="type-input" id="typeInput" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="?" aria-label="Ta réponse">
+            <input class="type-input" id="typeInput" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="?" aria-label="Ta réponse">
             <button class="btn btn-primary" type="submit" id="typeOk">Valider</button>
           </form>
           <p class="type-hint" id="typeHint">Tape ta réponse au clavier, puis appuie sur Entrée.</p>
@@ -742,6 +764,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
         <button type="button" data-learn="mul" aria-pressed="true">Les tables</button>
         <button type="button" data-learn="add" aria-pressed="false">Les additions</button>
         <button type="button" data-learn="sub" aria-pressed="false">Les soustractions</button>
+        <button type="button" data-learn="dbl" aria-pressed="false">Les doubles</button>
       </div></div>
       <div id="learnMul" class="screen-part">
         <div class="card">
@@ -759,6 +782,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
       </div>
       <div id="learnAdd" hidden></div>
       <div id="learnSub" hidden></div>
+      <div id="learnDbl" hidden></div>
     </section>
 
     <!-- COLLECTION -->
@@ -800,7 +824,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
       </div>
       <div class="card">
         <h3>Mes dernières parties</h3>
-        <div class="legend"><span><i class="lg-mul"></i>Multiplications</span><span><i class="lg-add"></i>Additions</span><span><i class="lg-sub"></i>Soustractions</span></div>
+        <div class="legend"><span><i class="lg-mul"></i>Multiplications</span><span><i class="lg-add"></i>Additions</span><span><i class="lg-sub"></i>Soustractions</span><span><i class="lg-dbl"></i>Doubles</span></div>
         <div class="chart-wrap" id="chart"></div>
       </div>
       <div class="card">
@@ -808,6 +832,12 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
         <p class="muted">Un calcul est acquis après 3 bonnes réponses de suite.</p>
         <div class="legend"><span><i class="lg-none"></i>Pas encore vu</span><span><i class="lg-rev"></i>À revoir</span><span><i class="lg-mid"></i>En cours</span><span><i class="lg-good"></i>Acquis</span></div>
         <div class="table-wrap"><table class="heatmap" id="heatmap"></table></div>
+      </div>
+      <div class="card">
+        <h3>Les doubles</h3>
+        <p class="muted">Un double est acquis après 3 bonnes réponses de suite.</p>
+        <div class="legend"><span><i class="lg-none"></i>Pas encore vu</span><span><i class="lg-rev"></i>À revoir</span><span><i class="lg-mid"></i>En cours</span><span><i class="lg-good"></i>Acquis</span></div>
+        <div id="dblMap"></div>
       </div>
       <div class="card">
         <h3>Additions et soustractions</h3>
@@ -899,7 +929,7 @@ function shortDate(t){ const d=new Date(t); return pad(d.getDate())+'/'+pad(d.ge
 function longDate(t){ const d=new Date(t); return pad(d.getDate())+'/'+pad(d.getMonth()+1)+' '+pad(d.getHours())+'h'+pad(d.getMinutes()); }
 let reduced=false, coarse=false;
 try { reduced = matchMedia('(prefers-reduced-motion: reduce)').matches; coarse = matchMedia('(pointer: coarse)').matches; } catch(e){}
-const SIGN = { mul:'×', add:'+', sub:'−' };
+const SIGN = { mul:'×', add:'+', sub:'−', dbl:'+' };
 const STAR_D = 'M12 2.8l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.6l-5.4 2.9 1.1-6.1L3.2 9.2l6.1-.8z';
 const starSVG = (cls) => `<svg viewBox="0 0 24 24" class="${cls}" aria-hidden="true"><path d="${STAR_D}"/></svg>`;
 
@@ -1421,6 +1451,13 @@ const SUB_LEVELS = [
   { id:3, name:'Dizaines et unités', ex:'57 − 4 · 80 − 30', short:'DU' },
   { id:4, name:'Jusqu’à 100 avec retenue', ex:'52 − 27', short:'100' }
 ];
+const DBL_LEVELS = [
+  { id:1, name:'Série A', ex:'de 1 + 1 à 15 + 15', short:'A', list:range(1,15) },
+  { id:2, name:'Série B', ex:'20 + 20, 25 + 25… 50 + 50', short:'B', list:[20,25,30,35,40,45,50] },
+  { id:3, name:'Série C', ex:'100 + 100, 150 + 150… 500 + 500', short:'C', list:[100,150,200,250,300,500] },
+  { id:4, name:'Les trois séries', ex:'A, B et C mélangées', short:'ABC', list:null }
+];
+const dblList = L => L === 4 ? DBL_LEVELS.slice(0,3).reduce((a, l) => a.concat(l.list), []) : DBL_LEVELS[(L || 1) - 1].list;
 const KIND_LABEL = { q10:'10 questions', q20:'20 questions', c60:'Défi 1 minute' };
 const MODE_LABEL = { choix:'Je choisis', clavier:'J’écris la réponse' };
 function tablesLabel(ts){
@@ -1431,23 +1468,27 @@ function tablesLabel(ts){
 }
 function exLabel(c){
   if (c.op === 'mul') return tablesLabel(c.tables);
+  if (c.op === 'dbl') return 'Doubles · ' + DBL_LEVELS[(c.dbl || 1)-1].name;
   if (c.op === 'add') return 'Additions · ' + ADD_LEVELS[c.add-1].name;
   return 'Soustractions · ' + SUB_LEVELS[c.sub-1].name;
 }
-function recKey(c){ return c.op === 'mul' ? 'm:' + c.tables.slice().sort((a,b)=>a-b).join('-') : c.op === 'add' ? 'a' + c.add : 's' + c.sub; }
+function recKey(c){ return c.op === 'dbl' ? 'd' + (c.dbl || 1) : c.op === 'mul' ? 'm:' + c.tables.slice().sort((a,b)=>a-b).join('-') : c.op === 'add' ? 'a' + c.add : 's' + c.sub; }
 function recLabel(k){
   if (k.indexOf('m:') === 0) return tablesLabel(k.slice(2).split('-').map(Number));
   const L = parseInt(k.slice(1),10);
+  if (k[0] === 'd') return 'Doubles · ' + DBL_LEVELS[L-1].name;
   return k[0] === 'a' ? 'Additions · ' + ADD_LEVELS[L-1].name : 'Soustractions · ' + SUB_LEVELS[L-1].name;
 }
 function medalKey(c){
   if (c.op === 'mul') return c.tables.length === 1 ? 'm' + c.tables[0] : c.tables.length === 10 ? 'mall' : null;
+  if (c.op === 'dbl') return 'd' + (c.dbl || 1);
   return c.op === 'add' ? 'a' + c.add : 's' + c.sub;
 }
 const MEDALS = range(1,10).map(t => ({ k:'m'+t, name:'Table de '+t, lab:'×'+t }))
   .concat([{ k:'mall', name:'Toutes les tables', lab:'×' }])
   .concat(ADD_LEVELS.map(l => ({ k:'a'+l.id, name:'Additions · '+l.name, lab:'+'+l.short })))
-  .concat(SUB_LEVELS.map(l => ({ k:'s'+l.id, name:'Soustractions · '+l.name, lab:'−'+l.short })));
+  .concat(SUB_LEVELS.map(l => ({ k:'s'+l.id, name:'Soustractions · '+l.name, lab:'−'+l.short })))
+  .concat(DBL_LEVELS.map(l => ({ k:'d'+l.id, name:'Doubles · '+l.name, lab:l.short })));
 const MEDAL_NAME = ['', 'de bronze', 'd’argent', 'd’or'];
 function medalSVG(level, lab){
   const fs = lab.length <= 2 ? 18 : lab.length === 3 ? 15 : 12;
@@ -1462,7 +1503,7 @@ let DB = { players:{}, current:null };
 try { const raw = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); if (raw && raw.players) DB = raw; } catch(e){}
 function lsSave(){ try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); } catch(e){} }
 const defaults = () => ({ stars:0, collected:{}, heat:0, lastCreature:null, recent:[], eggFam:null, dry:0, bestStreak:0, facts:{}, levels:{}, sessions:[], records:{}, medals:{}, days:{}, totalOk:0, totalKo:0, totalMs:0, games:0,
-  settings:{ op:'mul', tables:[2], add:1, sub:1, mode:'choix', kind:'q10', chrono:true, sound:true, voice:'', voiceRate:'normale' } });
+  settings:{ op:'mul', tables:[2], add:1, sub:1, dbl:1, mode:'choix', kind:'q10', chrono:true, sound:true, voice:'', voiceRate:'normale' } });
 function shape(p){ const d = defaults(); const s = Object.assign(d.settings, p.settings || {}); const out = Object.assign(d, p); out.settings = s; return out; }
 Object.keys(DB.players).forEach(id => { DB.players[id] = shape(DB.players[id]); });
 let P = (DB.current && DB.players[DB.current] && !DB.players[DB.current].deleted) ? DB.players[DB.current] : null;
@@ -1741,6 +1782,37 @@ function helpMul(q){
     { t:'L’astuce', h:`<p>${trickFor(x,y)} Donc <strong>${x} × ${y} = ${r}</strong>.</p>`, s:`${trickFor(x,y)} Donc ${x} × ${y} égale ${r}.` }
   ];
 }
+function billsHTML(n, cls){
+  const parts = []; let r = n;
+  while (r >= 100){ parts.push(100); r -= 100; }
+  if (r) parts.push(r);
+  return `<div class="bills" aria-hidden="true">${parts.map(p => `<span class="bill ${cls}">${p}</span>`).join('')}</div>`;
+}
+function helpDbl(q){
+  const n = q.n, r = q.res, u = n % 10, t = n - u;
+  const vis = n <= 15 ? tenFrames(fill(n,'da').concat(fill(n,'db')))
+    : n < 100 ? `<div class="blk-sum">${blocksHTML(n,'ba')}<span class="op-mid">+</span>${blocksHTML(n,'bb')}</div>`
+    : `<div class="blk-sum">${billsHTML(n,'ba')}<span class="op-mid">+</span>${billsHTML(n,'bb')}</div>`;
+  const s1 = { t:`Le double de ${n}, c’est ${n} + ${n}`, h:`<p>On prend ${n}, puis encore ${n}. ${n <= 15 ? 'Compte tous les points :' : 'Regarde :'}</p>${vis}`, s:`Le double de ${n}, c'est ${n} plus ${n}.` };
+  let txt, nodes, labels, ex;
+  if (n <= 5){ txt = `Montre ${n} doigt${n > 1 ? 's' : ''} sur chaque main, puis compte-les tous.`; nodes = [String(n),'?']; labels = ['+' + n]; ex = `${n} + ${n} = ${r}.`; }
+  else if (n < 10){ const k = n - 5; txt = `Pense à 5 + 5 = 10, puis ajoute le double de ${k} : ${k} + ${k} = ${2*k}.`; nodes = [String(n),'10','?']; labels = ['+' + (10-n), '+' + (2*n-10)]; ex = `5 + 5 = 10, ${k} + ${k} = ${2*k}, et 10 + ${2*k} = ${r}.`; }
+  else if (n === 10){ txt = '10 + 10, ce sont 2 dizaines.'; nodes = ['10','?']; labels = ['+10']; ex = '10 + 10 = 20.'; }
+  else if (n < 20){ txt = `Double la dizaine, puis les unités : le double de 10 = 20, et le double de ${u} = ${2*u}.`; nodes = [String(n), String(n+10), '?']; labels = ['+10', '+' + u]; ex = `20 + ${2*u} = ${r}.`; }
+  else if (n < 100){
+    const T = t / 10;
+    if (u){ txt = `Double les dizaines, puis les unités : le double de ${t} = ${2*t} (car ${T} + ${T} = ${2*T}), et le double de ${u} = ${2*u}.`; nodes = [String(n), String(n+t), '?']; labels = ['+' + t, '+' + u]; ex = `${2*t} + ${2*u} = ${r}.`; }
+    else { txt = `Le double de ${T} = ${2*T}, donc le double de ${n} = ${2*T} dizaines.`; nodes = [String(n), '?']; labels = ['+' + n]; ex = `${n} + ${n} = ${r}.`; }
+  } else {
+    const H = Math.floor(n / 100), rest = n - 100*H;
+    if (rest){ txt = `Double les centaines, puis le reste : le double de ${100*H} = ${200*H}, et le double de ${rest} = ${2*rest}.`; nodes = [String(n), String(n + 100*H), '?']; labels = ['+' + 100*H, '+' + rest]; ex = `${200*H} + ${2*rest} = ${r}.`; }
+    else { txt = `Le double de ${H} = ${2*H}, donc le double de ${n} = ${2*H} centaines.`; nodes = [String(n), '?']; labels = ['+' + n]; ex = `${n} + ${n} = ${r}.`; }
+  }
+  const tbl = n <= 10 ? ` C’est aussi ${n} × 2, dans la table de 2.` : '';
+  return [s1,
+    { t:'Une façon de calculer', h:`<p>${txt}</p>${hopsHTML(nodes, labels)}`, s:txt },
+    { t:'La réponse expliquée', h:`<p>${ex} Donc <strong>le double de ${n} = ${r}</strong>.${tbl}</p>`, s:`${ex} Donc le double de ${n} égale ${r}.` }];
+}
 function helpAdd(q){
   const a=q.a, b=q.b, r=q.res, big=Math.max(a,b), small=Math.min(a,b);
   const s1 = r <= 20
@@ -1840,7 +1912,7 @@ function helpSub(q){
 const mulKey = (x, y) => 'm' + Math.min(x,y) + 'x' + Math.max(x,y);
 const readFact = k => (P && P.facts[k]) || { ok:0, ko:0, run:0 };
 function mk(op, a, b, key){
-  const res = op === 'mul' ? a*b : op === 'add' ? a+b : a-b;
+  const res = op === 'mul' ? a*b : (op === 'add' || op === 'dbl') ? a+b : a-b;
   return { op, a, b, res, key, id: op + ':' + a + ':' + b };
 }
 function genMul(tables){
@@ -1878,6 +1950,32 @@ function drawDeck(kind){
   }
   const q = genMul(G.cfg.tables); q.kind = kind; return q;
 }
+const dblKey = n => 'd' + n;
+function dblQ(n, kind){ const q = mk('dbl', n, n, dblKey(n)); q.n = n; q.fmt = Math.random() < .5 ? 'mot' : 'plus'; if (kind) q.kind = kind; return q; }
+function genDbl(L){
+  let c = dblList(L).filter(n => !(G && dblKey(n) === G.lastFact));
+  if (!c.length) c = dblList(L);
+  const n = pickW(c, n => { const f = readFact(dblKey(n)); let w = 4 - Math.min(3, f.run); if (f.ko > 0 && f.run === 0) w += 2; return w; });
+  return dblQ(n);
+}
+function deckForDbl(L){
+  const g = [[],[],[]];
+  dblList(L).forEach(n => { const f = readFact(dblKey(n)); g[(f.ko > 0 && f.run === 0) ? 0 : f.run >= 3 ? 2 : 1].push(n); });
+  return shuffle(g[0]).concat(shuffle(g[1]), shuffle(g[2]));
+}
+function drawDeckDbl(kind){
+  for (let pass=0; pass<2; pass++){
+    if (pass === 1 || !G.deck.length) G.deck = G.deck.concat(deckForDbl(G.cfg.dbl));
+    for (let i=0;i<G.deck.length;i++){
+      const n = G.deck[i], k = dblKey(n);
+      if (k === G.lastFact || (kind === 'extra' && G.toFix[k])) continue;
+      G.deck.splice(i,1);
+      return dblQ(n, kind);
+    }
+  }
+  const q = genDbl(G.cfg.dbl); q.kind = kind; return q;
+}
+const qText = q => q.op === 'dbl' && q.fmt === 'mot' ? 'Le double de ' + q.n : `${q.a} ${SIGN[q.op]} ${q.b}`;
 function genAdd(L){
   let a, b;
   if (L === 1){ a = rnd(1,9); b = rnd(0,10-a); if (b === 0 && Math.random() < .7) b = rnd(1,10-a); }
@@ -1909,7 +2007,13 @@ function genSub(L){
 function choicesFor(q){
   const ans = q.res, a = q.a, b = q.b;
   let order = [];
-  if (q.op === 'mul'){
+  if (q.op === 'dbl'){
+    const n = q.n, u = n % 10, t = n - u, step = n >= 100 ? 100 : n >= 20 ? 10 : 1;
+    const pri = [];
+    if (n > 10 && n < 100 && 2*u >= 10) pri.push(parseInt(String(2*t/10) + String(2*u), 10));
+    const near = step === 1 ? [ans+1, ans-1, ans+2, ans-2] : step === 10 ? [ans+10, ans-10, ans+5, ans-5, ans+20] : [ans+100, ans-100, ans+50, ans-50, ans+200];
+    order = pri.concat(shuffle(near)).concat([n, n+1]);
+  } else if (q.op === 'mul'){
     order = [a+b].concat(shuffle([(a+1)*b, (a-1)*b, a*(b+1), a*(b-1)])).concat(shuffle([ans+1, ans-1, ans+2, ans-2]));
   } else if (q.op === 'add'){
     const pri = [];
@@ -1925,7 +2029,7 @@ function choicesFor(q){
   }
   order = order.concat([ans+3, ans+4, ans+5, ans+6]);
   const out = [ans];
-  order.forEach(c => { if (out.length < 4 && c >= 0 && c !== ans && out.indexOf(c) === -1 && c <= 200) out.push(c); });
+  order.forEach(c => { if (out.length < 4 && c >= 0 && c !== ans && out.indexOf(c) === -1 && (q.op === 'dbl' || c <= 200)) out.push(c); });
   return shuffle(out);
 }
 
@@ -1947,7 +2051,7 @@ function startGame(){
   if (s.op === 'mul' && !s.tables.length) return;
   G = { cfg: clone(s), total: s.kind === 'q20' ? 20 : s.kind === 'q10' ? 10 : Infinity, qn:0, ok:0, ko:0, help:0, mistakes:[], elapsed:0, since:null, holds:{}, over:false,
         retry:[], lastId:null, lastFact:null, streak:0, best:0, stars:0, q:null, locked:false, pending:null, hl:0, usedHelp:false, qStart:0,
-        mul100: s.op === 'mul' && s.kind !== 'c60', plan:0, planOk:0, toFix:{}, fixed:{}, deck:[] };
+        mul100: (s.op === 'mul' || s.op === 'dbl') && s.kind !== 'c60', plan:0, planOk:0, toFix:{}, fixed:{}, deck:[] };
   $('exLabel').textContent = exLabel(G.cfg);
   $('stopConfirm').hidden = true;
   showScreen('game');
@@ -1959,15 +2063,15 @@ function nextQ(){
     const fix = Object.keys(G.toFix).map(k => G.toFix[k]);
     const due = fix.filter(x => x.due <= G.qn && x.q.key !== G.lastFact);
     if (due.length) return Object.assign({}, due[0].q, { kind:'fix' });
-    if (G.plan < G.total) return drawDeck('plan');
+    if (G.plan < G.total) return G.cfg.op === 'dbl' ? drawDeckDbl('plan') : drawDeck('plan');
     const any = fix.filter(x => x.q.key !== G.lastFact);
     if (any.length) return Object.assign({}, any[0].q, { kind:'fix' });
-    return drawDeck('extra');
+    return G.cfg.op === 'dbl' ? drawDeckDbl('extra') : drawDeck('extra');
   }
   for (let i=0;i<G.retry.length;i++){ if (G.retry[i].due <= G.qn && G.retry[i].q.id !== G.lastId) return G.retry.splice(i,1)[0].q; }
   const c = G.cfg; let q = null;
   for (let tries=0; tries<8; tries++){
-    q = c.op === 'mul' ? genMul(c.tables) : c.op === 'add' ? genAdd(c.add) : genSub(c.sub);
+    q = c.op === 'mul' ? genMul(c.tables) : c.op === 'dbl' ? genDbl(c.dbl) : c.op === 'add' ? genAdd(c.add) : genSub(c.sub);
     if (q.id !== G.lastId) break;
   }
   return q;
@@ -1976,9 +2080,11 @@ function newQuestion(){
   if (!G || G.over) return;
   clearTimeout(G.pending);
   const q = nextQ();
-  G.q = q; G.lastId = q.id; if (q.op === 'mul') G.lastFact = q.key;
+  G.q = q; G.lastId = q.id; if (q.op === 'mul' || q.op === 'dbl') G.lastFact = q.key;
   G.locked = false; G.hl = 0; G.usedHelp = false; G.qStart = gEl();
-  $('question').innerHTML = `<span>${q.a}</span> <span class="q-op">${SIGN[q.op]}</span> <span>${q.b}</span> = <span class="q-mark" id="qMark">?</span>`;
+  const motDbl = q.op === 'dbl' && q.fmt === 'mot';
+  $('question').classList.toggle('wrap', motDbl);
+  $('question').innerHTML = motDbl ? `<span class="q-lbl">Le double de</span> <span>${q.n}</span> = <span class="q-mark" id="qMark">?</span>` : `<span>${q.a}</span> <span class="q-op">${SIGN[q.op]}</span> <span>${q.b}</span> = <span class="q-mark" id="qMark">?</span>`;
   $('feedback').innerHTML = ''; $('feedback').className = 'feedback';
   $('help').hidden = true; $('help').innerHTML = '';
   renderAnswerArea(); updateHelpBtn(); renderGameBar(); renderStreak();
@@ -2001,7 +2107,7 @@ function lockInputs(){
 }
 const OK_MSG = ['Bravo','Super','Génial','Trop fort','Excellent','Magnifique','Bien joué'];
 function record(q, ok){
-  if (q.op === 'mul'){ const f = P.facts[q.key] || (P.facts[q.key] = { ok:0, ko:0, run:0 }); if (ok){ f.ok++; f.run++; } else { f.ko++; f.run = 0; } }
+  if (q.op === 'mul' || q.op === 'dbl'){ const f = P.facts[q.key] || (P.facts[q.key] = { ok:0, ko:0, run:0 }); if (ok){ f.ok++; f.run++; } else { f.ko++; f.run = 0; } }
   else { const lv = P.levels[q.key] || (P.levels[q.key] = { ok:0, ko:0 }); if (ok) lv.ok++; else lv.ko++; }
   if (ok) P.totalOk++; else P.totalKo++;
   const d = dayRec(); if (ok) d.ok++; else d.ko++;
@@ -2040,14 +2146,14 @@ function answer(v, btn){
     G.pending = setTimeout(go, (G.usedHelp || bonus) ? 1700 : (G.cfg.kind === 'c60' ? 650 : 1100));
   } else {
     G.ko++; G.streak = 0;
-    G.mistakes.push({ f:`${q.a} ${SIGN[q.op]} ${q.b}`, res:q.res, given:v });
+    G.mistakes.push({ f:qText(q), res:q.res, given:v });
     if (!G.mul100) G.retry.push({ q, due: G.qn + 2 });
     mark.classList.add('fix');
     if (btn){ btn.classList.add('bad'); const good = document.querySelector(`#answers .ans[data-v="${q.res}"]`); if (good) good.classList.add('good'); }
     else $('typeInput').classList.add('bad');
-    const hint = q.op === 'mul' ? `C’est ${q.a} paquets de ${q.b}.` : q.op === 'sub' ? `Vérifie : ${q.res} + ${q.b} = ${q.a}.` : `Vérifie en comptant à partir de ${Math.max(q.a,q.b)}.`;
+    const hint = q.op === 'dbl' ? (q.fmt === 'mot' ? `C’est ${q.n} + ${q.n}.` : `C’est le double de ${q.n}.`) : q.op === 'mul' ? `C’est ${q.a} paquets de ${q.b}.` : q.op === 'sub' ? `Vérifie : ${q.res} + ${q.b} = ${q.a}.` : `Vérifie en comptant à partir de ${Math.max(q.a,q.b)}.`;
     fb.className = 'feedback oops';
-    fb.innerHTML = `<p class="fb-title">Presque ! ${q.a} ${SIGN[q.op]} ${q.b} = ${q.res}</p><p class="fb-sub">${hint} ${G.mul100 ? 'Il reviendra jusqu’à ce que tu le réussisses.' : 'On le revoit dans un moment.'}</p>` + (G.cfg.kind === 'c60' ? '' : '<button class="btn btn-primary" type="button" id="contBtn">Question suivante</button>');
+    fb.innerHTML = `<p class="fb-title">Presque ! ${qText(q)} = ${q.res}</p><p class="fb-sub">${hint} ${G.mul100 ? 'Il reviendra jusqu’à ce que tu le réussisses.' : 'On le revoit dans un moment.'}</p>` + (G.cfg.kind === 'c60' ? '' : '<button class="btn btn-primary" type="button" id="contBtn">Question suivante</button>');
     beep(SND.oops); touch(); renderSide(); renderGameBar(); renderStreak();
     if (G.cfg.kind === 'c60') G.pending = setTimeout(next, 1500);
     else { $('contBtn').addEventListener('click', next); setTimeout(() => { const c = $('contBtn'); if (c) c.focus(); }, 60); }
@@ -2072,7 +2178,7 @@ function updateHelpBtn(){
   $('helpBtn').setAttribute('aria-expanded', l > 0 ? 'true' : 'false');
 }
 function renderHelp(){
-  const q = G.q, steps = q.op === 'mul' ? helpMul(q) : q.op === 'add' ? helpAdd(q) : helpSub(q);
+  const q = G.q, steps = q.op === 'dbl' ? helpDbl(q) : q.op === 'mul' ? helpMul(q) : q.op === 'add' ? helpAdd(q) : helpSub(q);
   let h = '';
   for (let i=0;i<G.hl;i++) h += `<div class="help-step"><h4>${steps[i].t}</h4>${steps[i].h}</div>`;
   $('help').innerHTML = h; $('help').hidden = false;
@@ -2297,13 +2403,14 @@ function renderSetup(){
   $('stepLevels').hidden = s.op === 'mul';
   $('tableChips').innerHTML = range(1,10).map(t => { const m = P.medals['m'+t] || 0; return `<button class="chip" type="button" data-t="${t}" aria-pressed="${s.tables.indexOf(t) > -1}" aria-label="Table de ${t}${m ? ', médaille ' + MEDAL_NAME[m] : ''}">${t}${m ? `<span class="mdot l${m}"></span>` : ''}</button>`; }).join('');
   if (s.op !== 'mul'){
-    const L = s.op === 'add' ? ADD_LEVELS : SUB_LEVELS, cur = s.op === 'add' ? s.add : s.sub, pre = s.op === 'add' ? 'a' : 's';
+    const L = s.op === 'add' ? ADD_LEVELS : s.op === 'dbl' ? DBL_LEVELS : SUB_LEVELS, cur = s[s.op] || 1, pre = s.op === 'add' ? 'a' : s.op === 'dbl' ? 'd' : 's';
+    $('levelTitle').textContent = s.op === 'dbl' ? 'Quelle série ?' : 'Quel niveau ?';
     $('levelPicks').innerHTML = L.map(l => { const m = P.medals[pre + l.id] || 0; return `<button class="pick ${s.op}" type="button" data-level="${l.id}" aria-pressed="${l.id === cur}"><b>${l.name}</b><span class="ex">${l.ex}</span>${m ? `<span class="mdot l${m}"></span>` : ''}</button>`; }).join('');
   }
   document.querySelectorAll('#modePicks .pick').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === s.mode ? 'true' : 'false'));
   document.querySelectorAll('#kindPicks .pick').forEach(b => b.setAttribute('aria-pressed', b.dataset.kind === s.kind ? 'true' : 'false'));
   $('chronoToggle').checked = s.chrono !== false;
-  const ok = s.op !== 'mul' || s.tables.length > 0, m100 = s.op === 'mul' && s.kind !== 'c60';
+  const ok = s.op !== 'mul' || s.tables.length > 0, m100 = (s.op === 'mul' || s.op === 'dbl') && s.kind !== 'c60';
   $('mulNote').hidden = !m100;
   $('startBtn').disabled = !ok;
   $('recap').innerHTML = ok ? `${exLabel(s)} · ${MODE_LABEL[s.mode]} · ${KIND_LABEL[s.kind]}${m100 ? ' · jusqu’à 100 % de réussite' : ''}` : '<span class="warn">Choisis au moins une table.</span>';
@@ -2346,7 +2453,8 @@ let learnTab = 'mul', learnTable = 2, revealed = {}, learnBuilt = false;
 function renderLearn(){
   if (P && !learnTable) learnTable = 2;
   document.querySelectorAll('[data-learn]').forEach(b => b.setAttribute('aria-pressed', b.dataset.learn === learnTab ? 'true' : 'false'));
-  $('learnMul').hidden = learnTab !== 'mul'; $('learnAdd').hidden = learnTab !== 'add'; $('learnSub').hidden = learnTab !== 'sub';
+  $('learnMul').hidden = learnTab !== 'mul'; $('learnAdd').hidden = learnTab !== 'add'; $('learnSub').hidden = learnTab !== 'sub'; $('learnDbl').hidden = learnTab !== 'dbl';
+  if (learnTab === 'dbl') renderLearnDbl();
   if (!learnBuilt){ buildLearnAddSub(); learnBuilt = true; }
   if (learnTab !== 'mul') return;
   const t = learnTable, hide = $('hideToggle').checked;
@@ -2359,6 +2467,13 @@ function renderLearn(){
   }).join('');
   $('stonesTitle').textContent = `Compte de ${t} en ${t}`;
   $('stones').innerHTML = range(1,10).map(i => `<button class="stone" type="button" data-i="${i}">${i*t}</button>`).join('');
+}
+let dblHide = false, dblRevealed = {};
+function renderLearnDbl(){
+  const serie = l => `<div class="card" style="margin-top:16px"><h3>${l.name}</h3><ol class="table-list">${l.list.map(n => { const m = dblHide && !dblRevealed[n]; return `<li><button class="row" type="button" data-dbl="${n}"><span class="calc">Le double de ${n} = <span class="res${m ? ' masked' : ''}">${m ? '?' : 2*n}</span></span><span class="hook">${m ? 'Touche pour voir la réponse.' : n + ' + ' + n + ' = ' + 2*n}</span></button></li>`; }).join('')}</ol></div>`;
+  $('learnDbl').innerHTML = `<div class="card"><h2>Les doubles</h2><p class="lead">Le double d’un nombre, c’est ce nombre + le même nombre. C’est aussi ce nombre × 2. Ces doubles sont à connaître par cœur au CE1.</p><label class="switch"><input type="checkbox" id="dblHide"${dblHide ? ' checked' : ''}><span class="switch-ui"></span><span>Cacher les résultats pour me tester</span></label></div>
+    <div class="card" style="margin-top:16px"><h3>L’astuce pour les grands nombres</h3><p class="lead">Double les dizaines, puis les unités. Le double de 35 : le double de 30 = 60, le double de 5 = 10, et 60 + 10 = 70.</p>${hopsHTML(['35','65','70'],['+30','+5'])}<p class="lead">Pareil avec les centaines : le double de 250, c’est le double de 200 (400) + le double de 50 (100) = 500.</p></div>` +
+    DBL_LEVELS.slice(0,3).map(serie).join('');
 }
 function buildLearnAddSub(){
   const friends = range(0,5).map(i => `<button class="friend" type="button" data-say="${i} + ${10-i} = 10">${tenFrames(fill(i,'da').concat(fill(10-i,'db')), true)}<b>${i} + ${10-i}</b></button>`).join('');
@@ -2442,6 +2557,7 @@ function renderStats(){
     hm += '</tr>';
   });
   $('heatmap').innerHTML = hm + '</tbody>';
+  $('dblMap').innerHTML = DBL_LEVELS.slice(0,3).map(l => `<p class="dser">${l.name}</p><div class="dgrid">${l.list.map(n => { const f = readFact(dblKey(n)), tot = f.ok + f.ko; const cls = !tot ? '' : f.run >= 3 ? 'good' : (f.ko > 0 && f.run === 0) ? 'rev' : 'mid'; return `<span class="dcell ${cls}" title="Le double de ${n} = ${2*n}">${n} → ${2*n}</span>`; }).join('')}</div>`).join('');
   $('levelBars').innerHTML = [['add', ADD_LEVELS, 'a', 'Additions'], ['sub', SUB_LEVELS, 's', 'Soustractions']].map(g => g[1].map(l => {
     const v = P.levels[g[2] + l.id] || { ok:0, ko:0 }, t = v.ok + v.ko, p = t ? Math.round(v.ok/t*100) : 0;
     return `<div class="lvl"><div class="lvl-top"><b>${g[3]} · ${l.name}</b><span class="muted">${t ? `${p} % · ${v.ok} sur ${t}` : 'Pas encore essayé'}</span></div><div class="lvl-track"><span class="fill-${g[0]}" style="width:${p}%"></span></div></div>`;
@@ -2503,7 +2619,7 @@ $('chronoToggle').addEventListener('change', () => { P.settings.chrono = $('chro
 $('startBtn').addEventListener('click', startGame);
 $('answers').addEventListener('click', e => { const b = e.target.closest('.ans'); if (b && !b.disabled) answer(parseInt(b.dataset.v,10), b); });
 $('typeForm').addEventListener('submit', e => { e.preventDefault(); submitTyped(); });
-$('typeInput').addEventListener('input', () => { const i = $('typeInput'); const v = i.value.replace(/\D/g,'').slice(0,3); if (v !== i.value) i.value = v; i.classList.remove('empty'); });
+$('typeInput').addEventListener('input', () => { const i = $('typeInput'); const v = i.value.replace(/\D/g,'').slice(0,4); if (v !== i.value) i.value = v; i.classList.remove('empty'); });
 if (coarse){ $('typeInput').setAttribute('inputmode','none'); $('typeInput').readOnly = true; $('typeOk').hidden = true; const mp = document.querySelector('#modePicks [data-mode=clavier] span'); if (mp) mp.textContent = 'Aucune réponse affichée : je tape le nombre sur le pavé'; }
 if (coarse) $('typeHint').hidden = true;
 $('keys').addEventListener('click', e => {
@@ -2511,7 +2627,7 @@ $('keys').addEventListener('click', e => {
   const k = b.dataset.k, inp = $('typeInput');
   if (k === 'ok') return submitTyped();
   if (k === 'del') inp.value = inp.value.slice(0,-1);
-  else if (inp.value.length < 3) inp.value += k;
+  else if (inp.value.length < 4) inp.value += k;
   inp.classList.remove('empty');
 });
 $('helpBtn').addEventListener('click', () => {
@@ -2519,7 +2635,7 @@ $('helpBtn').addEventListener('click', () => {
   G.hl++; if (!G.usedHelp){ G.usedHelp = true; G.help++; }
   renderHelp();
 });
-$('listenBtn').addEventListener('click', () => { if (G && G.q) speak(`Combien font ${G.q.a} ${SIGN[G.q.op]} ${G.q.b} ?`); });
+$('listenBtn').addEventListener('click', () => { if (G && G.q) speak(G.q.op === 'dbl' && G.q.fmt === 'mot' ? `Quel est le double de ${G.q.n} ?` : `Combien font ${G.q.a} ${SIGN[G.q.op]} ${G.q.b} ?`); });
 if (!canSpeak) $('listenBtn').hidden = true;
 $('stopBtn').addEventListener('click', () => { $('stopConfirm').hidden = false; hold('confirm'); $('stopNo').focus(); });
 $('stopNo').addEventListener('click', () => { $('stopConfirm').hidden = true; release('confirm'); });
@@ -2539,6 +2655,13 @@ $('voiceSel').addEventListener('change', () => { P.settings.voice = $('voiceSel'
 $('voiceTry').addEventListener('click', () => { const ex = ['Combien font 7 fois 8 ?', 'Bravo ! Tu as trouvé une nouvelle carte !', 'Voici Brindille, de la famille Plante.']; speak(pick(ex)); });
 document.querySelectorAll('[data-rate]').forEach(b => b.addEventListener('click', () => { P.settings.voiceRate = b.dataset.rate; touch(); renderVoice(); speak('Voici ma nouvelle vitesse.'); }));
 document.querySelectorAll('[data-learn]').forEach(b => b.addEventListener('click', () => { learnTab = b.dataset.learn; renderLearn(); }));
+$('learnDbl').addEventListener('change', e => { if (e.target.id === 'dblHide'){ dblHide = e.target.checked; dblRevealed = {}; renderLearnDbl(); } });
+$('learnDbl').addEventListener('click', e => {
+  const r = e.target.closest('[data-dbl]'); if (!r) return;
+  const n = +r.dataset.dbl;
+  if (dblHide && !dblRevealed[n]){ dblRevealed[n] = true; renderLearnDbl(); }
+  speak(`Le double de ${n}, égale ${2*n}`);
+});
 $('learnChips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; learnTable = +b.dataset.lt; revealed = {}; renderLearn(); });
 $('hideToggle').addEventListener('change', () => { revealed = {}; renderLearn(); });
 $('tableList').addEventListener('click', e => {
@@ -2574,7 +2697,7 @@ document.addEventListener('keydown', e => {
   const inp = $('typeInput');
   if (e.target === inp || (e.target.closest && e.target.closest('input,textarea'))) return;
   if (e.target !== document.body && !(e.target.closest && e.target.closest('#keys'))) return;
-  if (/^[0-9]$/.test(e.key)){ e.preventDefault(); if (inp.value.length < 3) inp.value += e.key; if (!coarse) inp.focus(); }
+  if (/^[0-9]$/.test(e.key)){ e.preventDefault(); if (inp.value.length < 4) inp.value += e.key; if (!coarse) inp.focus(); }
   else if (e.key === 'Backspace'){ e.preventDefault(); inp.value = inp.value.slice(0,-1); }
   else if (e.key === 'Enter'){ e.preventDefault(); submitTyped(); }
 });
