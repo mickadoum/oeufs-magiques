@@ -680,6 +680,7 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
           <button class="pick" type="button" data-kind="q10" aria-pressed="true"><b>10 questions</b><span>Une partie courte</span></button>
           <button class="pick" type="button" data-kind="q20" aria-pressed="false"><b>20 questions</b><span>Pour bien réviser</span></button>
           <button class="pick" type="button" data-kind="c60" aria-pressed="false"><b>Défi 1 minute</b><span>Le plus de bonnes réponses possible</span></button>
+          <button class="pick" type="button" data-kind="sus" aria-pressed="false"><b>Jusqu’à les savoir</b><span>Sans limite : chaque calcul réussi 3 fois</span></button>
         </div>
         <label class="switch"><input type="checkbox" id="chronoToggle" checked><span class="switch-ui"></span><span>Afficher le chronomètre</span></label>
         <p class="muted" id="mulNote">En 10 ou 20 questions, chaque calcul raté revient jusqu’à ce qu’il soit réussi. La partie se termine à 100 % de réussite.</p>
@@ -1458,7 +1459,7 @@ const DBL_LEVELS = [
   { id:4, name:'Les trois séries', ex:'A, B et C mélangées', short:'ABC', list:null }
 ];
 const dblList = L => L === 4 ? DBL_LEVELS.slice(0,3).reduce((a, l) => a.concat(l.list), []) : DBL_LEVELS[(L || 1) - 1].list;
-const KIND_LABEL = { q10:'10 questions', q20:'20 questions', c60:'Défi 1 minute' };
+const KIND_LABEL = { q10:'10 questions', q20:'20 questions', c60:'Défi 1 minute', sus:'Jusqu’à les savoir' };
 const MODE_LABEL = { choix:'Je choisis', clavier:'J’écris la réponse' };
 function tablesLabel(ts){
   const t = ts.slice().sort((a,b)=>a-b);
@@ -2051,14 +2052,35 @@ function startGame(){
   if (s.op === 'mul' && !s.tables.length) return;
   G = { cfg: clone(s), total: s.kind === 'q20' ? 20 : s.kind === 'q10' ? 10 : Infinity, qn:0, ok:0, ko:0, help:0, mistakes:[], elapsed:0, since:null, holds:{}, over:false,
         retry:[], lastId:null, lastFact:null, streak:0, best:0, stars:0, q:null, locked:false, pending:null, hl:0, usedHelp:false, qStart:0,
-        mul100: (s.op === 'mul' || s.op === 'dbl') && s.kind !== 'c60', plan:0, planOk:0, toFix:{}, fixed:{}, deck:[] };
+        mul100: (s.op === 'mul' || s.op === 'dbl') && (s.kind === 'q10' || s.kind === 'q20'), plan:0, planOk:0, toFix:{}, fixed:{}, deck:[],
+        sus: (s.op === 'mul' || s.op === 'dbl') && s.kind === 'sus', cnt:{}, due:{}, seenAt:{}, items:[], itemOf:{} };
+  if (G.sus){
+    if (s.op === 'dbl') dblList(s.dbl).forEach(n => { const k = dblKey(n); G.items.push(k); G.itemOf[k] = n; });
+    else { const seen = {}; s.tables.forEach(t => range(1,10).forEach(n => { const k = mulKey(t,n); if (!seen[k]){ seen[k] = 1; G.items.push(k); G.itemOf[k] = [t,n]; } })); }
+  }
   $('exLabel').textContent = exLabel(G.cfg);
   $('stopConfirm').hidden = true;
   showScreen('game');
   newQuestion();
   tStart();
 }
+function susQ(k){
+  const it = G.itemOf[k];
+  if (G.cfg.op === 'dbl') return dblQ(it, 'sus');
+  const t = it[0], n = it[1], swap = t !== n && Math.random() < 0.4;
+  const q = mk('mul', swap ? t : n, swap ? n : t, k); q.table = t; q.kind = 'sus'; return q;
+}
+const susLeft = () => G.items.filter(k => (G.cnt[k] || 0) < 3);
+const susDone = () => G.items.length - susLeft().length;
+function nextSus(){
+  const need = susLeft();
+  const due = need.filter(k => G.due[k] != null && G.due[k] <= G.qn && k !== G.lastFact);
+  if (due.length) return susQ(due[0]);
+  let pool = need.filter(k => k !== G.lastFact); if (!pool.length) pool = need;
+  return susQ(pickW(pool, k => (4 - (G.cnt[k] || 0)) * (G.seenAt[k] != null && G.qn - G.seenAt[k] < 3 ? 0.25 : 1)));
+}
 function nextQ(){
+  if (G.sus) return nextSus();
   if (G.mul100){
     const fix = Object.keys(G.toFix).map(k => G.toFix[k]);
     const due = fix.filter(x => x.due <= G.qn && x.q.key !== G.lastFact);
@@ -2081,6 +2103,7 @@ function newQuestion(){
   clearTimeout(G.pending);
   const q = nextQ();
   G.q = q; G.lastId = q.id; if (q.op === 'mul' || q.op === 'dbl') G.lastFact = q.key;
+  if (G.sus) G.seenAt[q.key] = G.qn;
   G.locked = false; G.hl = 0; G.usedHelp = false; G.qStart = gEl();
   const motDbl = q.op === 'dbl' && q.fmt === 'mot';
   $('question').classList.toggle('wrap', motDbl);
@@ -2124,6 +2147,12 @@ function answer(v, btn){
     else if (!ok){ G.toFix[q.key] = { q: Object.assign({}, q), due: G.qn + 2 }; G.fixed[q.key] = 1; }
   }
   const nFix = Object.keys(G.toFix).length;
+  if (G.sus){
+    if (ok){ G.cnt[q.key] = Math.min(3, (G.cnt[q.key] || 0) + 1); delete G.due[q.key]; }
+    else { G.cnt[q.key] = 0; G.due[q.key] = G.qn + 2; }
+  }
+  const susC = G.sus ? (G.cnt[q.key] || 0) : 0;
+  const susLine = !G.sus ? '' : susC >= 3 ? `<p class="fb-sub fixed-tag">${'★'.repeat(3)} Celui-là, tu le sais par cœur !</p>` : `<p class="fb-sub">${'★'.repeat(susC)}${'☆'.repeat(3 - susC)} Encore ${pl(3 - susC, 'bonne réponse', 'bonnes réponses')} pour celui-là.</p>`;
   record(q, ok);
   const mark = $('qMark'); mark.textContent = q.res;
   lockInputs(); updateHelpBtn();
@@ -2137,7 +2166,7 @@ function answer(v, btn){
     if (btn) btn.classList.add('good'); else $('typeInput').classList.add('good');
     const nm = Math.random() < .35 ? ' ' + esc(P.name) : '';
     fb.className = 'feedback ok';
-    fb.innerHTML = `<p class="fb-title">${pick(OK_MSG)}${nm} !</p>` +
+    fb.innerHTML = `<p class="fb-title">${pick(OK_MSG)}${nm} !</p>` + susLine +
       (fixedNow ? `<p class="fb-sub fixed-tag">Calcul rattrapé ! ${nFix ? 'Encore ' + pl(nFix, 'calcul') + ' à rattraper.' : (G.plan >= G.total ? 'Tout est réussi !' : '')}</p>` : '') +
       (G.usedHelp ? '<p class="fb-sub">Tu as bien utilisé l’aide.</p>' : '') + (bonus ? `<span class="bonus">Série de ${G.streak} ! +1 étoile bonus</span>` : '');
     beep(SND.ok); bumpStars();
@@ -2147,13 +2176,13 @@ function answer(v, btn){
   } else {
     G.ko++; G.streak = 0;
     G.mistakes.push({ f:qText(q), res:q.res, given:v });
-    if (!G.mul100) G.retry.push({ q, due: G.qn + 2 });
+    if (!G.mul100 && !G.sus) G.retry.push({ q, due: G.qn + 2 });
     mark.classList.add('fix');
     if (btn){ btn.classList.add('bad'); const good = document.querySelector(`#answers .ans[data-v="${q.res}"]`); if (good) good.classList.add('good'); }
     else $('typeInput').classList.add('bad');
     const hint = q.op === 'dbl' ? (q.fmt === 'mot' ? `C’est ${q.n} + ${q.n}.` : `C’est le double de ${q.n}.`) : q.op === 'mul' ? `C’est ${q.a} paquets de ${q.b}.` : q.op === 'sub' ? `Vérifie : ${q.res} + ${q.b} = ${q.a}.` : `Vérifie en comptant à partir de ${Math.max(q.a,q.b)}.`;
     fb.className = 'feedback oops';
-    fb.innerHTML = `<p class="fb-title">Presque ! ${qText(q)} = ${q.res}</p><p class="fb-sub">${hint} ${G.mul100 ? 'Il reviendra jusqu’à ce que tu le réussisses.' : 'On le revoit dans un moment.'}</p>` + (G.cfg.kind === 'c60' ? '' : '<button class="btn btn-primary" type="button" id="contBtn">Question suivante</button>');
+    fb.innerHTML = `<p class="fb-title">Presque ! ${qText(q)} = ${q.res}</p><p class="fb-sub">${hint} ${G.sus ? 'Il reviendra : il faudra le réussir encore 3 fois.' : G.mul100 ? 'Il reviendra jusqu’à ce que tu le réussisses.' : 'On le revoit dans un moment.'}</p>` + (G.cfg.kind === 'c60' ? '' : '<button class="btn btn-primary" type="button" id="contBtn">Question suivante</button>');
     beep(SND.oops); touch(); renderSide(); renderGameBar(); renderStreak();
     if (G.cfg.kind === 'c60') G.pending = setTimeout(next, 1500);
     else { $('contBtn').addEventListener('click', next); setTimeout(() => { const c = $('contBtn'); if (c) c.focus(); }, 60); }
@@ -2161,7 +2190,7 @@ function answer(v, btn){
 }
 function next(){
   if (!G || G.over) return;
-  const done = G.mul100 ? (G.plan >= G.total && !Object.keys(G.toFix).length) : G.qn >= G.total;
+  const done = G.sus ? !susLeft().length : G.mul100 ? (G.plan >= G.total && !Object.keys(G.toFix).length) : G.qn >= G.total;
   if (done) return endGame(false);
   newQuestion();
 }
@@ -2192,6 +2221,7 @@ function renderGameBar(){
   const kind = G.q && G.q.kind;
   let label;
   if (c60) label = pl(G.ok, 'bonne réponse', 'bonnes réponses');
+  else if (G.sus) label = `Sus par cœur : ${susDone()} sur ${G.items.length}` + (G.cfg.op === 'dbl' ? ' doubles' : ' calculs');
   else if (G.mul100){
     if (G.plan >= G.total && (nFix || kind !== 'plan')) label = nFix ? `Rattrapage : encore ${pl(nFix, 'calcul')} à réussir` : 'Rattrapage terminé !';
     else {
@@ -2200,7 +2230,8 @@ function renderGameBar(){
     }
   } else label = `Question ${Math.min(G.qn + (G.locked ? 0 : 1), G.total)} sur ${G.total}`;
   $('qCountLabel').textContent = label;
-  if (!c60) $('progBar').style.width = ((G.mul100 ? G.plan : G.qn) / G.total * 100) + '%';
+  if (G.sus) $('progBar').style.width = (G.items.reduce((s, k) => s + Math.min(3, G.cnt[k] || 0), 0) / (G.items.length * 3) * 100) + '%';
+  else if (!c60) $('progBar').style.width = ((G.mul100 ? G.plan : G.qn) / G.total * 100) + '%';
   const banner = $('fixBanner');
   if (G.mul100 && kind && kind !== 'plan'){
     banner.hidden = false;
@@ -2233,12 +2264,13 @@ function endGame(timeUp){
   P.totalMs += ms; dayRec().ms += ms; P.games++;
   const rk = recKey(c);
   const sOk = G.mul100 ? G.planOk : G.ok, sN = G.mul100 ? G.total : G.qn, fixN = Object.keys(G.fixed).length;
-  const complete = G.mul100 ? G.plan === G.total : G.qn === G.total;
+  const complete = G.sus ? !susLeft().length : G.mul100 ? G.plan === G.total : G.qn === G.total;
   const sess = { d:Date.now(), op:c.op, ex:exLabel(c), rk, kind:c.kind, ok:sOk, n:sN, ms, help:G.help, fix:fixN, all:G.qn };
   P.sessions.unshift(sess); if (P.sessions.length > 60) P.sessions.length = 60;
   const rec = P.records[rk] || (P.records[rk] = {});
   let newRec = false;
-  if (c.kind !== 'c60'){ if (complete && sOk === sN && (!rec[c.kind] || ms < rec[c.kind])){ rec[c.kind] = ms; newRec = true; } }
+  if (c.kind === 'sus'){ if (complete && (!rec.sus || ms < rec.sus)){ rec.sus = ms; newRec = true; } }
+  else if (c.kind !== 'c60'){ if (complete && sOk === sN && (!rec[c.kind] || ms < rec[c.kind])){ rec[c.kind] = ms; newRec = true; } }
   else if (G.ok > 0 && (!rec.c60 || G.ok > rec.c60)){ rec.c60 = G.ok; newRec = true; }
   let medal = 0; const mk2 = medalKey(c);
   if (mk2 && c.kind !== 'c60' && complete){
@@ -2410,42 +2442,49 @@ function renderSetup(){
   document.querySelectorAll('#modePicks .pick').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === s.mode ? 'true' : 'false'));
   document.querySelectorAll('#kindPicks .pick').forEach(b => b.setAttribute('aria-pressed', b.dataset.kind === s.kind ? 'true' : 'false'));
   $('chronoToggle').checked = s.chrono !== false;
-  const ok = s.op !== 'mul' || s.tables.length > 0, m100 = (s.op === 'mul' || s.op === 'dbl') && s.kind !== 'c60';
-  $('mulNote').hidden = !m100;
+  const factOp = s.op === 'mul' || s.op === 'dbl';
+  if (!factOp && s.kind === 'sus') s.kind = 'q10';
+  document.querySelector('#kindPicks [data-kind="sus"]').hidden = !factOp;
+  document.querySelectorAll('#kindPicks .pick').forEach(b => b.setAttribute('aria-pressed', b.dataset.kind === s.kind ? 'true' : 'false'));
+  const ok = s.op !== 'mul' || s.tables.length > 0, m100 = factOp && (s.kind === 'q10' || s.kind === 'q20'), sus = factOp && s.kind === 'sus';
+  $('mulNote').hidden = !(m100 || sus);
+  $('mulNote').textContent = sus ? 'Pas de nombre de questions : elles continuent jusqu’à ce que chaque calcul soit réussi 3 fois. Une erreur remet le compteur de ce calcul à zéro.' : 'En 10 ou 20 questions, chaque calcul raté revient jusqu’à ce qu’il soit réussi. La partie se termine à 100 % de réussite.';
   $('startBtn').disabled = !ok;
   $('recap').innerHTML = ok ? `${exLabel(s)} · ${MODE_LABEL[s.mode]} · ${KIND_LABEL[s.kind]}${m100 ? ' · jusqu’à 100 % de réussite' : ''}` : '<span class="warn">Choisis au moins une table.</span>';
 }
 
 function renderResults(sess, newRec, medal, mk2, timeUp){
-  const c60 = sess.kind === 'c60', pct = sess.n ? sess.ok / sess.n : 0, name = esc(P.name), m100 = !!(G && G.mul100);
+  const c60 = sess.kind === 'c60', pct = sess.n ? sess.ok / sess.n : 0, name = esc(P.name), m100 = !!(G && G.mul100), sus = !!(G && G.sus), nItems = sus ? G.items.length : 0;
   $('resEyebrow').textContent = c60 ? (timeUp ? 'Temps écoulé !' : 'Défi terminé') : 'Partie terminée · ' + sess.ex;
-  $('resTitle').innerHTML = c60 ? `Bravo ${name} !` : pct === 1 ? `Sans faute, ${name} !` : m100 ? `Bravo ${name}, tout est réussi !` : pct >= .8 ? `Bravo ${name} !` : pct >= .5 ? `Bien joué ${name} !` : `Continue ${name}, tu progresses !`;
-  $('resScore').textContent = sess.ok;
-  $('resOf').textContent = c60 ? ' en 1 min' : ' / ' + sess.n;
-  $('resFirst').hidden = !m100;
-  $('resFixed').hidden = !m100;
+  $('resTitle').innerHTML = sus ? `Bravo ${name}, tu les sais tous !` : c60 ? `Bravo ${name} !` : pct === 1 ? `Sans faute, ${name} !` : m100 ? `Bravo ${name}, tout est réussi !` : pct >= .8 ? `Bravo ${name} !` : pct >= .5 ? `Bien joué ${name} !` : `Continue ${name}, tu progresses !`;
+  $('resScore').textContent = sus ? nItems : sess.ok;
+  $('resOf').textContent = sus ? ' / ' + nItems : c60 ? ' en 1 min' : ' / ' + sess.n;
+  $('resFirst').hidden = !(m100 || sus);
+  $('resFirst').textContent = sus ? (G.cfg.op === 'dbl' ? 'doubles sus par cœur' : 'calculs sus par cœur') : 'du premier coup';
+  $('resFixed').hidden = !(m100 || sus);
+  if (sus) $('resFixed').textContent = `${pl(sess.ok, 'bonne réponse', 'bonnes réponses')} sur ${pl(sess.n, 'question')}`;
   if (m100) $('resFixed').textContent = sess.fix ? `Puis 100 % : ${sess.fix === 1 ? 'le calcul raté a été réussi' : 'les ' + sess.fix + ' calculs ratés ont été réussis'} au rattrapage` : '100 % du premier coup !';
-  $('resMistTitle').textContent = m100 ? 'Calculs rattrapés' : 'À revoir';
+  $('resMistTitle').textContent = sus ? 'Ratés en chemin, puis réussis' : m100 ? 'Calculs rattrapés' : 'À revoir';
   $('resMistText').textContent = m100 ? 'Ratés une fois, puis réussis. Ils reviendront dans tes prochaines parties pour bien les retenir.' : 'Ces calculs reviendront plus souvent dans tes prochaines parties.';
   const st = c60 ? (sess.ok >= 20 ? 3 : sess.ok >= 12 ? 2 : sess.ok >= 5 ? 1 : 0) : (pct === 1 ? 3 : pct >= .8 ? 2 : pct >= .5 ? 1 : 0);
   $('resStars').innerHTML = range(1,3).map(i => starSVG('mini-star' + (i <= st ? ' on' : ''))).join('');
   $('resRecord').hidden = !newRec;
-  if (newRec) $('resRecord').textContent = c60 ? `Nouveau record : ${pl(sess.ok,'bonne réponse','bonnes réponses')} en 1 minute !` : `Nouveau record : sans faute en ${fmtDur(sess.ms)} !`;
+  if (newRec) $('resRecord').textContent = c60 ? `Nouveau record : ${pl(sess.ok,'bonne réponse','bonnes réponses')} en 1 minute !` : sus ? `Nouveau record : tout su en ${fmtDur(sess.ms)} !` : `Nouveau record : sans faute en ${fmtDur(sess.ms)} !`;
   const md = MEDALS.filter(m => m.k === mk2)[0];
   $('resMedal').hidden = !medal;
   if (medal && md) $('resMedal').innerHTML = medalSVG(medal, md.lab) + `<div><b>Médaille ${MEDAL_NAME[medal]} !</b><br>${md.name}</div>`;
   const all = sess.all || sess.n, avg = all ? sess.ms / all : 0;
-  $('resTiles').classList.toggle('six', m100);
+  $('resTiles').classList.toggle('six', m100 || sus);
   $('resTiles').innerHTML = [
     [fmtDur(sess.ms), 'Temps de la partie'],
     [all ? fmtDur(avg) : '—', 'Temps moyen par calcul'],
     ['+' + G.stars, 'Étoiles gagnées'],
     [G.best, 'Meilleure série'],
     [G.help, 'Aides utilisées']
-  ].concat(m100 ? [[all, 'Questions en tout']] : []).map(t => `<div class="tile"><b>${t[0]}</b><span>${t[1]}</span></div>`).join('');
+  ].concat(m100 || sus ? [[all, 'Questions en tout']] : []).map(t => `<div class="tile"><b>${t[0]}</b><span>${t[1]}</span></div>`).join('');
   const seen = {}, mist = G.mistakes.filter(m => seen[m.f] ? false : (seen[m.f] = true));
   $('resMistakesCard').hidden = !mist.length;
-  $('resMistakes').innerHTML = mist.map(m => `<li${m100 ? ' class="done"' : ''}><span class="f">${m.f} = ${m.res}</span><span class="muted">tu avais répondu ${m.given}</span></li>`).join('');
+  $('resMistakes').innerHTML = mist.map(m => `<li${m100 || sus ? ' class="done"' : ''}><span class="f">${m.f} = ${m.res}</span><span class="muted">tu avais répondu ${m.given}</span></li>`).join('');
 }
 
 /* ----- Apprendre ----- */
@@ -2563,7 +2602,7 @@ function renderStats(){
     return `<div class="lvl"><div class="lvl-top"><b>${g[3]} · ${l.name}</b><span class="muted">${t ? `${p} % · ${v.ok} sur ${t}` : 'Pas encore essayé'}</span></div><div class="lvl-track"><span class="fill-${g[0]}" style="width:${p}%"></span></div></div>`;
   }).join('')).join('');
   const rk = Object.keys(P.records);
-  $('recordsWrap').innerHTML = rk.length ? `<table class="data"><thead><tr><th>Exercice</th><th>10 questions sans faute</th><th>20 questions sans faute</th><th>Défi 1 minute</th></tr></thead><tbody>${rk.map(k => { const r = P.records[k]; return `<tr><td>${esc(recLabel(k))}</td><td>${r.q10 ? fmtDur(r.q10) : '—'}</td><td>${r.q20 ? fmtDur(r.q20) : '—'}</td><td>${r.c60 ? pl(r.c60,'bonne réponse','bonnes réponses') : '—'}</td></tr>`; }).join('')}</tbody></table>` : '<p class="muted">Pas encore de record. Fais un sans faute ou un défi 1 minute !</p>';
+  $('recordsWrap').innerHTML = rk.length ? `<table class="data"><thead><tr><th>Exercice</th><th>10 questions sans faute</th><th>20 questions sans faute</th><th>Défi 1 minute</th><th>Jusqu’à les savoir</th></tr></thead><tbody>${rk.map(k => { const r = P.records[k]; return `<tr><td>${esc(recLabel(k))}</td><td>${r.q10 ? fmtDur(r.q10) : '—'}</td><td>${r.q20 ? fmtDur(r.q20) : '—'}</td><td>${r.c60 ? pl(r.c60,'bonne réponse','bonnes réponses') : '—'}</td><td>${r.sus ? fmtDur(r.sus) : '—'}</td></tr>`; }).join('')}</tbody></table>` : '<p class="muted">Pas encore de record. Fais un sans faute ou un défi 1 minute !</p>';
   $('historyWrap').innerHTML = P.sessions.length ? `<table class="data"><thead><tr><th>Date</th><th>Exercice</th><th>Partie</th><th>Score</th><th>Temps</th></tr></thead><tbody>${P.sessions.slice(0,20).map(s => `<tr><td>${longDate(s.d)}</td><td>${esc(s.ex)}</td><td>${KIND_LABEL[s.kind]}</td><td>${s.ok} / ${s.n}${s.fix ? ` <span class="fixed-tag">+${s.fix} rattrapé${s.fix > 1 ? 's' : ''}</span>` : ''}</td><td>${fmtDur(s.ms)}</td></tr>`).join('')}</tbody></table>` : '<p class="muted">Aucune partie pour l’instant.</p>';
   renderVoice();
   $('resetQ').textContent = `Effacer ${P.name} et tous ses progrès ?`;
