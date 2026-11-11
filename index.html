@@ -542,7 +542,9 @@ body.no-player .shell{grid-template-columns:minmax(0,1fr);grid-template-areas:"h
 .voice-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .vsel{flex:1 1 240px;min-width:0;max-width:100%;font:inherit;font-size:1rem;padding:8px 12px;border-radius:12px;border:3px solid var(--edge);background:var(--paper-2);color:var(--ink)}
 .q-lbl{font-size:.5em;vertical-align:middle;color:var(--ink-soft)}
-.question.wrap{white-space:normal;font-size:clamp(2.2rem,9vw,4.6rem)}
+.question.dblq{font-size:clamp(2.2rem,9vw,4.4rem)}
+.q-dbl{display:flex;flex-direction:column;align-items:center;gap:4px}
+.q-dbl .q-lbl{font-size:.48em;white-space:normal}
 .bills{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .bill{min-width:56px;height:32px;padding:0 8px;border-radius:6px;border:2px solid #1F2A4D;display:grid;place-items:center;font-family:var(--font-display);font-weight:900;font-size:1rem;color:#1F2A4D;font-variant-numeric:tabular-nums}
 .bill.ba{background:#FFD6C2}
@@ -1790,7 +1792,7 @@ function billsHTML(n, cls){
   return `<div class="bills" aria-hidden="true">${parts.map(p => `<span class="bill ${cls}">${p}</span>`).join('')}</div>`;
 }
 function helpDbl(q){
-  const n = q.n, r = q.res, u = n % 10, t = n - u;
+  const n = q.n, r = fmtN(q.res), u = n % 10, t = n - u;
   const vis = n <= 15 ? tenFrames(fill(n,'da').concat(fill(n,'db')))
     : n < 100 ? `<div class="blk-sum">${blocksHTML(n,'ba')}<span class="op-mid">+</span>${blocksHTML(n,'bb')}</div>`
     : `<div class="blk-sum">${billsHTML(n,'ba')}<span class="op-mid">+</span>${billsHTML(n,'bb')}</div>`;
@@ -1952,7 +1954,7 @@ function drawDeck(kind){
   const q = genMul(G.cfg.tables); q.kind = kind; return q;
 }
 const dblKey = n => 'd' + n;
-function dblQ(n, kind){ const q = mk('dbl', n, n, dblKey(n)); q.n = n; q.fmt = Math.random() < .5 ? 'mot' : 'plus'; if (kind) q.kind = kind; return q; }
+function dblQ(n, kind){ const q = mk('dbl', n, n, dblKey(n)); q.n = n; q.fmt = 'both'; if (kind) q.kind = kind; return q; }
 function genDbl(L){
   let c = dblList(L).filter(n => !(G && dblKey(n) === G.lastFact));
   if (!c.length) c = dblList(L);
@@ -1976,7 +1978,8 @@ function drawDeckDbl(kind){
   }
   const q = genDbl(G.cfg.dbl); q.kind = kind; return q;
 }
-const qText = q => q.op === 'dbl' && q.fmt === 'mot' ? 'Le double de ' + q.n : `${q.a} ${SIGN[q.op]} ${q.b}`;
+const fmtN = v => v >= 1000 ? String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202F') : String(v);
+const qText = q => q.op === 'dbl' ? `Le double de ${q.n} : ${q.n} + ${q.n}` : `${q.a} ${SIGN[q.op]} ${q.b}`;
 function genAdd(L){
   let a, b;
   if (L === 1){ a = rnd(1,9); b = rnd(0,10-a); if (b === 0 && Math.random() < .7) b = rnd(1,10-a); }
@@ -2105,9 +2108,9 @@ function newQuestion(){
   G.q = q; G.lastId = q.id; if (q.op === 'mul' || q.op === 'dbl') G.lastFact = q.key;
   if (G.sus) G.seenAt[q.key] = G.qn;
   G.locked = false; G.hl = 0; G.usedHelp = false; G.qStart = gEl();
-  const motDbl = q.op === 'dbl' && q.fmt === 'mot';
-  $('question').classList.toggle('wrap', motDbl);
-  $('question').innerHTML = motDbl ? `<span class="q-lbl">Le double de</span> <span>${q.n}</span> = <span class="q-mark" id="qMark">?</span>` : `<span>${q.a}</span> <span class="q-op">${SIGN[q.op]}</span> <span>${q.b}</span> = <span class="q-mark" id="qMark">?</span>`;
+  const isDbl = q.op === 'dbl';
+  $('question').classList.toggle('dblq', isDbl);
+  $('question').innerHTML = isDbl ? `<span class="q-dbl"><span class="q-lbl">Le double de ${q.n}</span> <span>${q.n} <span class="q-op">+</span> ${q.n} = <span class="q-mark" id="qMark">?</span></span></span>` : `<span>${q.a}</span> <span class="q-op">${SIGN[q.op]}</span> <span>${q.b}</span> = <span class="q-mark" id="qMark">?</span>`;
   $('feedback').innerHTML = ''; $('feedback').className = 'feedback';
   $('help').hidden = true; $('help').innerHTML = '';
   renderAnswerArea(); updateHelpBtn(); renderGameBar(); renderStreak();
@@ -2116,7 +2119,7 @@ function renderAnswerArea(){
   const choix = G.cfg.mode === 'choix';
   $('answers').hidden = !choix; $('typepad').hidden = choix;
   if (choix){
-    $('answers').innerHTML = choicesFor(G.q).map(v => `<button type="button" class="ans" data-v="${v}">${v}</button>`).join('');
+    $('answers').innerHTML = choicesFor(G.q).map(v => `<button type="button" class="ans" data-v="${v}">${fmtN(v)}</button>`).join('');
   } else {
     const inp = $('typeInput');
     inp.value = ''; inp.className = 'type-input'; inp.disabled = false; $('typeOk').disabled = false;
@@ -2154,7 +2157,7 @@ function answer(v, btn){
   const susC = G.sus ? (G.cnt[q.key] || 0) : 0;
   const susLine = !G.sus ? '' : susC >= 3 ? `<p class="fb-sub fixed-tag">${'★'.repeat(3)} Celui-là, tu le sais par cœur !</p>` : `<p class="fb-sub">${'★'.repeat(susC)}${'☆'.repeat(3 - susC)} Encore ${pl(3 - susC, 'bonne réponse', 'bonnes réponses')} pour celui-là.</p>`;
   record(q, ok);
-  const mark = $('qMark'); mark.textContent = q.res;
+  const mark = $('qMark'); mark.textContent = fmtN(q.res);
   lockInputs(); updateHelpBtn();
   const fb = $('feedback');
   if (ok){
@@ -2180,9 +2183,9 @@ function answer(v, btn){
     mark.classList.add('fix');
     if (btn){ btn.classList.add('bad'); const good = document.querySelector(`#answers .ans[data-v="${q.res}"]`); if (good) good.classList.add('good'); }
     else $('typeInput').classList.add('bad');
-    const hint = q.op === 'dbl' ? (q.fmt === 'mot' ? `C’est ${q.n} + ${q.n}.` : `C’est le double de ${q.n}.`) : q.op === 'mul' ? `C’est ${q.a} paquets de ${q.b}.` : q.op === 'sub' ? `Vérifie : ${q.res} + ${q.b} = ${q.a}.` : `Vérifie en comptant à partir de ${Math.max(q.a,q.b)}.`;
+    const hint = q.op === 'dbl' ? `Le double, c’est le nombre plus lui-même.` : q.op === 'mul' ? `C’est ${q.a} paquets de ${q.b}.` : q.op === 'sub' ? `Vérifie : ${q.res} + ${q.b} = ${q.a}.` : `Vérifie en comptant à partir de ${Math.max(q.a,q.b)}.`;
     fb.className = 'feedback oops';
-    fb.innerHTML = `<p class="fb-title">Presque ! ${qText(q)} = ${q.res}</p><p class="fb-sub">${hint} ${G.sus ? 'Il reviendra : il faudra le réussir encore 3 fois.' : G.mul100 ? 'Il reviendra jusqu’à ce que tu le réussisses.' : 'On le revoit dans un moment.'}</p>` + (G.cfg.kind === 'c60' ? '' : '<button class="btn btn-primary" type="button" id="contBtn">Question suivante</button>');
+    fb.innerHTML = `<p class="fb-title">Presque ! ${qText(q)} = ${fmtN(q.res)}</p><p class="fb-sub">${hint} ${G.sus ? 'Il reviendra : il faudra le réussir encore 3 fois.' : G.mul100 ? 'Il reviendra jusqu’à ce que tu le réussisses.' : 'On le revoit dans un moment.'}</p>` + (G.cfg.kind === 'c60' ? '' : '<button class="btn btn-primary" type="button" id="contBtn">Question suivante</button>');
     beep(SND.oops); touch(); renderSide(); renderGameBar(); renderStreak();
     if (G.cfg.kind === 'c60') G.pending = setTimeout(next, 1500);
     else { $('contBtn').addEventListener('click', next); setTimeout(() => { const c = $('contBtn'); if (c) c.focus(); }, 60); }
@@ -2484,7 +2487,7 @@ function renderResults(sess, newRec, medal, mk2, timeUp){
   ].concat(m100 || sus ? [[all, 'Questions en tout']] : []).map(t => `<div class="tile"><b>${t[0]}</b><span>${t[1]}</span></div>`).join('');
   const seen = {}, mist = G.mistakes.filter(m => seen[m.f] ? false : (seen[m.f] = true));
   $('resMistakesCard').hidden = !mist.length;
-  $('resMistakes').innerHTML = mist.map(m => `<li${m100 || sus ? ' class="done"' : ''}><span class="f">${m.f} = ${m.res}</span><span class="muted">tu avais répondu ${m.given}</span></li>`).join('');
+  $('resMistakes').innerHTML = mist.map(m => `<li${m100 || sus ? ' class="done"' : ''}><span class="f">${m.f} = ${fmtN(m.res)}</span><span class="muted">tu avais répondu ${m.given}</span></li>`).join('');
 }
 
 /* ----- Apprendre ----- */
@@ -2674,7 +2677,7 @@ $('helpBtn').addEventListener('click', () => {
   G.hl++; if (!G.usedHelp){ G.usedHelp = true; G.help++; }
   renderHelp();
 });
-$('listenBtn').addEventListener('click', () => { if (G && G.q) speak(G.q.op === 'dbl' && G.q.fmt === 'mot' ? `Quel est le double de ${G.q.n} ?` : `Combien font ${G.q.a} ${SIGN[G.q.op]} ${G.q.b} ?`); });
+$('listenBtn').addEventListener('click', () => { if (G && G.q) speak(G.q.op === 'dbl' ? `Le double de ${G.q.n}. ${G.q.n} + ${G.q.n}, égale combien ?` : `Combien font ${G.q.a} ${SIGN[G.q.op]} ${G.q.b} ?`); });
 if (!canSpeak) $('listenBtn').hidden = true;
 $('stopBtn').addEventListener('click', () => { $('stopConfirm').hidden = false; hold('confirm'); $('stopNo').focus(); });
 $('stopNo').addEventListener('click', () => { $('stopConfirm').hidden = true; release('confirm'); });
