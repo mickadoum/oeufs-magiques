@@ -1,8 +1,8 @@
 /* Le Cahier Magique : fonctionnement hors ligne.
    Les fichiers sont servis depuis l'appareil, puis mis à jour en arrière-plan quand internet est là. */
-const CACHE = 'cahier-magique-v1';
+const CACHE = 'cahier-magique-v2';
 const FILES = [
-  './', 'index.html', 'manifest.webmanifest',
+  './', 'index.html', 'fiches-maths.js', 'fiches-francais.js', 'fiches-monde.js', 'manifest.webmanifest',
   'icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png',
   'fonts/andika-latin-400-normal.woff2', 'fonts/andika-latin-700-normal.woff2',
   'fonts/grandstander-latin-700-normal.woff2', 'fonts/grandstander-latin-800-normal.woff2', 'fonts/grandstander-latin-900-normal.woff2'

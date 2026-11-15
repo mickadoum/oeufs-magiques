@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Le Cahier Magique</title>
-<meta name="description" content="Fiches de révision du programme de CE1 : géométrie, calcul, temps et mesures.">
+<meta name="description" content="Tout le programme de CE1 en fiches et en leçons animées : mathématiques, français, questionner le monde, vivre ensemble, anglais, arts.">
 <meta name="theme-color" content="#D3ECFF">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -269,7 +269,66 @@ button:focus-visible,input:focus-visible{outline:4px solid var(--sun);outline-of
   .key{padding:8px 0;font-size:1.65rem}
   .type-input{font-size:2.2rem;padding:6px 12px}
 }
-@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ---------- Matières ---------- */
+:root{--fra:#B8327E;--mon:#1E8C52;--emc:#B5650A;--ang:#0E7F96;--art:#7151D8;--hl-o:#C26A00;--hl-r:#CF2B2B}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--fra:#FF8FC8;--mon:#5BD892;--emc:#FFB45C;--ang:#5FD3E8;--art:#A98CF2;--hl-o:#FFC43D;--hl-r:#FF7A7A}}
+:root[data-theme="dark"]{--fra:#FF8FC8;--mon:#5BD892;--emc:#FFB45C;--ang:#5FD3E8;--art:#A98CF2;--hl-o:#FFC43D;--hl-r:#FF7A7A}
+.pick.fra .pick-sign,.intro-sign.fra{color:var(--fra)}
+.pick.mon .pick-sign,.intro-sign.mon{color:var(--mon)}
+.pick.emc .pick-sign,.intro-sign.emc{color:var(--emc)}
+.pick.ang .pick-sign,.intro-sign.ang{color:var(--ang)}
+.pick.art .pick-sign,.intro-sign.art{color:var(--art)}
+.intro-sign.geo{color:var(--geo)}.intro-sign.cal{color:var(--cal)}.intro-sign.mes{color:var(--mes)}
+.pick-sign.long{font-size:1.3rem}
+.groupe{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.groupe-titre{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 10px}
+.groupe-titre h2{font-weight:900;font-size:1.4rem}
+.groupe-titre span{font-family:var(--font-display);font-weight:800;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft)}
+@media (min-width:640px){.picks.deux{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---------- Écritures et figures ---------- */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 .12em;font-variant-numeric:tabular-nums}
+.frac>span:first-child{border-bottom:.09em solid currentColor;padding:0 .2em .08em}
+.frac>span:last-child{padding:.08em .2em 0}
+.mot{display:inline-block;background:var(--sun-soft);border-radius:10px;padding:0 .35em}
+.ans.petit{font-family:var(--font-body);font-weight:700;font-size:1.1rem;line-height:1.25}
+.figure svg.large,.lv-figs svg.large{width:100%}
+.posee{border-collapse:collapse;font-family:var(--font-display);font-weight:900;font-size:2.2rem;line-height:1.1;font-variant-numeric:tabular-nums;margin:0 auto}
+.posee td{min-width:1.1em;text-align:center;padding:2px 5px}
+.posee .signe{color:var(--coral)}
+.posee .total td{border-top:4px solid var(--edge);color:var(--ink-soft)}
+.tab2{border-collapse:collapse;font-size:1.05rem;margin:0 auto}
+.tab2 th,.tab2 td{border:2.5px solid var(--edge);padding:6px 12px;text-align:center}
+.tab2 th{background:var(--paper-2);font-family:var(--font-display);font-weight:800}
+.tab2 td{font-family:var(--font-display);font-weight:900;font-size:1.3rem;font-variant-numeric:tabular-nums}
+.tab2 tr:first-child th:first-child{border:0;background:none}
+
+/* ---------- Présentation d'une fiche ---------- */
+.intro{align-items:center;text-align:center;border:4px solid var(--edge);box-shadow:0 8px 0 var(--edge);padding:22px 18px;gap:12px}
+.intro-sign{font-family:var(--font-display);font-weight:900;font-size:3.2rem;line-height:1}
+
+/* ---------- Leçon animée ---------- */
+.stage{min-height:250px;background:var(--paper-2);border:3px solid var(--line);border-radius:22px;padding:18px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;overflow:hidden}
+.lv{width:100%;font-family:var(--font-display);font-weight:900;font-size:clamp(1.35rem,5.2vw,2.1rem);line-height:1.25}
+.lv-petit{font-family:var(--font-body);font-weight:700;font-size:.62em;color:var(--ink-soft)}
+.lv-figs{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap}
+.lv-figs svg{width:118px;height:auto;display:block}
+.lv .posee,.lv .tab2{font-size:1.6rem}
+.lv .tab2 th{font-size:1rem}
+.hl{color:var(--coral)}.hl.b{color:var(--mes)}.hl.v{color:var(--leaf)}.hl.o{color:var(--hl-o)}.hl.g{color:var(--geo)}.hl.r{color:var(--hl-r)}
+.ap{opacity:0;animation:apparait .6s cubic-bezier(.2,1.4,.4,1) forwards}
+@keyframes apparait{from{opacity:0;transform:translateY(14px) scale(.92)}to{opacity:1;transform:none}}
+.caption{font-size:1.15rem;text-align:center;min-height:3em}
+.dots{display:flex;gap:8px;justify-content:center}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--line);border:2px solid var(--edge)}
+.dot.on{background:var(--sun)}
+.drapeau{display:inline-flex;border:3px solid var(--edge);border-radius:8px;overflow:hidden}
+.drapeau i{display:block;width:40px;height:68px}
+.drapeau i:nth-child(1){background:#1F3FA8}.drapeau i:nth-child(2){background:#FFFFFF}.drapeau i:nth-child(3){background:#D8262C}
+.pastilles{display:inline-flex;align-items:center;gap:10px}
+.pastilles i{display:block;width:46px;height:46px;border-radius:50%;border:3px solid var(--edge)}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ap{opacity:1}}
 </style>
 </head>
 <body>
@@ -286,7 +345,7 @@ button:focus-visible,input:focus-visible{outline:4px solid var(--sun);outline-of
         </svg>
         <div>
           <h1>Le Cahier Magique</h1>
-          <p class="sub">Les fiches du CE1</p>
+          <p class="sub">Tout le programme du CE1</p>
         </div>
       </div>
       <button class="icon-btn" id="themeBtn" type="button" aria-label="Changer le fond">
@@ -374,6 +433,63 @@ function qNombre(enonce, rep, aide, opts){
     rep: String(rep), aide: aide, fig: opts.fig || "", calc: !!opts.calc
   };
 }
+
+/* Raccourcis pour écrire les fiches. */
+function un(t){ return t[Math.floor(Math.random() * t.length)]; }
+function qc(enonce, bonne, fausses, aide, opts){
+  var vus = {}, o = [{ h: String(bonne), ok: true }];
+  vus[String(bonne)] = 1;
+  fausses.forEach(function(f){
+    f = String(f);
+    if (!vus[f]){ vus[f] = 1; o.push({ h: f, ok: false }); }
+  });
+  return qChoix(enonce, o, aide, opts);
+}
+function vf(enonce, vrai, aide){
+  return qChoix(enonce, [{ h: "Vrai", ok: !!vrai }, { h: "Faux", ok: !vrai }], aide, { consigne: "Vrai ou faux ?", gros: true });
+}
+function frac(n, d){ return '<span class="frac"><span>' + n + '</span><span>' + d + '</span></span>'; }
+function mot(m){ return '<span class="mot">' + m + '</span>'; }
+
+/* Nombres en lettres jusqu'à 1 000 (orthographe du programme : traits d'union partout). */
+var UNITES = ["zéro","un","deux","trois","quatre","cinq","six","sept","huit","neuf","dix","onze","douze","treize","quatorze","quinze","seize"];
+var DIZAINES = { 2:"vingt", 3:"trente", 4:"quarante", 5:"cinquante", 6:"soixante", 8:"quatre-vingt" };
+function enLettres(n){
+  var d, r, c, pre;
+  if (n === 1000) return "mille";
+  if (n >= 100){
+    c = Math.floor(n / 100); r = n % 100;
+    pre = c === 1 ? "cent" : UNITES[c] + "-cent";
+    if (r === 0) return c === 1 ? "cent" : pre + "s";
+    return pre + "-" + enLettres(r);
+  }
+  if (n < 17) return UNITES[n];
+  if (n < 20) return "dix-" + UNITES[n - 10];
+  d = Math.floor(n / 10); r = n % 10;
+  if (d === 7) return r === 1 ? "soixante-et-onze" : "soixante-" + enLettres(10 + r);
+  if (d === 9) return "quatre-vingt-" + enLettres(10 + r);
+  if (r === 0) return d === 8 ? "quatre-vingts" : DIZAINES[d];
+  if (r === 1 && d !== 8) return DIZAINES[d] + "-et-un";
+  return DIZAINES[d] + "-" + UNITES[r];
+}
+
+/* ---------- Leçons animées ----------
+   Une leçon est une suite de scènes [texte lu à voix haute, dessin].
+   Les éléments du dessin apparaissent l'un après l'autre. */
+function V(){
+  var h = "", i;
+  for (i = 0; i < arguments.length; i++){
+    h += '<div class="lv ap" style="animation-delay:' + (0.25 + i * 0.75).toFixed(2) + 's">' + arguments[i] + '</div>';
+  }
+  return h;
+}
+function figs(){
+  var h = '<span class="lv-figs">', i;
+  for (i = 0; i < arguments.length; i++) h += arguments[i];
+  return h + '</span>';
+}
+function hl(t, c){ return '<b class="hl' + (c ? " " + c : "") + '">' + t + '</b>'; }
+function petit(t){ return '<span class="lv-petit">' + t + '</span>'; }
 
 /* ---------- Dessins ---------- */
 var FORMES = {
@@ -671,26 +787,83 @@ function fabTemps(){
   return b;
 }
 
-/* ---------- Les fiches ---------- */
+/* ---------- Les fiches ----------
+   Chaque fiche : un groupe (matière), une couleur, une leçon animée et un générateur de questions.
+   Les fichiers fiches-*.js ajoutent les leurs avec ajouterFiche(). */
+var GROUPES = [
+  { id:"nombres", titre:"Nombres et calculs", sous:"Mathématiques" },
+  { id:"mesures", titre:"Grandeurs et mesures", sous:"Mathématiques" },
+  { id:"espace",  titre:"Espace et géométrie", sous:"Mathématiques" },
+  { id:"donnees", titre:"Tableaux et diagrammes", sous:"Mathématiques" },
+  { id:"grammaire", titre:"Grammaire", sous:"Français" },
+  { id:"conjugaison", titre:"Conjugaison", sous:"Français" },
+  { id:"mots", titre:"Orthographe et vocabulaire", sous:"Français" },
+  { id:"monde", titre:"Questionner le monde", sous:"Sciences, espace, temps" },
+  { id:"ensemble", titre:"Vivre ensemble", sous:"Enseignement moral et civique" },
+  { id:"anglais", titre:"Anglais", sous:"Langue vivante" },
+  { id:"arts", titre:"Arts et musique", sous:"Enseignements artistiques" }
+];
 var FICHES = [
   { id:"jour", classe:"jour", sign:"★", titre:"Le défi du jour", matiere:"Un peu de tout",
     detail:"6 questions, nouvelles chaque jour", n:6, fab:function(){
       var rnd = graineDuJour();
-      var tout = piocher(fabGeo(), 2, rnd).concat(piocher(fabCalcul(), 2, rnd), piocher(fabTemps(), 2, rnd));
-      return melange(tout, rnd);
-    } },
-  { id:"geo", classe:"geo", sign:"▲", titre:"Les polygones", matiere:"Géométrie",
-    detail:"Côtés, sommets, carré, rectangle, triangle", n:10, fab:fabGeo },
-  { id:"calcul", classe:"cal", sign:"+", titre:"Calcul malin", matiere:"Nombres et calculs",
-    detail:"Additions, doubles, tables, problèmes", n:10, fab:fabCalcul },
-  { id:"temps", classe:"mes", sign:"◷", titre:"Le temps et les unités", matiere:"Grandeurs et mesures",
-    detail:"Lire l'heure, durées, longueurs, masses", n:10, fab:fabTemps }
+      var choisies = piocher(FICHES.filter(function(f){ return f.id !== "jour"; }), 6, rnd);
+      return choisies.map(function(f){ return piocher(f.fab(), 1, rnd)[0]; });
+    } }
 ];
+function ajouterFiche(f){
+  f.n = f.n || 10;
+  FICHES.push(f);
+}
+ajouterFiche({ id:"calcul", groupe:"nombres", classe:"cal", sign:"+", titre:"Calcul malin", matiere:"Nombres et calculs",
+  detail:"Additions, doubles, tables, problèmes", fab:fabCalcul,
+  lecon:[
+    ["Pour calculer vite dans ta tête, tu peux couper les nombres en dizaines et en unités.",
+      V(hl("34") + " + " + hl("25", "b"), "30 + 20 = " + hl("50"), "4 + 5 = " + hl("9", "b"), "50 + 9 = " + hl("59", "v"))],
+    ["Les amis de dix font toujours dix : un et neuf, deux et huit, trois et sept, quatre et six, cinq et cinq.",
+      V("1 + 9 &nbsp; 2 + 8", "3 + 7 &nbsp; 4 + 6", "5 + 5", "= " + hl("10", "v"))],
+    ["Le double, c'est deux fois le même nombre. La moitié, c'est le partage en deux parts égales.",
+      V("Le double de 6", "6 + 6 = " + hl("12"), "La moitié de 12", "12 = 6 + 6 → " + hl("6", "b"))],
+    ["Pour multiplier par dix, chaque unité devient une dizaine. Sept fois dix, soixante-dix.",
+      V("7 × 10", "7 unités → 7 dizaines", "= " + hl("70", "v"))]
+  ] });
+ajouterFiche({ id:"temps", groupe:"mesures", classe:"mes", sign:"◷", titre:"L'heure et les unités", matiere:"Grandeurs et mesures",
+  detail:"Lire l'heure, durées, choisir la bonne unité", fab:fabTemps,
+  lecon:[
+    ["Sur une horloge, la petite aiguille montre les heures. La grande aiguille montre les minutes.",
+      V(figs(svgHorloge(3, 0)), "Il est " + hl("3 heures") + ".")],
+    ["Quand la grande aiguille est en bas, sur le six, il est et demie.",
+      V(figs(svgHorloge(3, 30)), "Il est " + hl("3 heures et demie") + ".")],
+    ["Sur le trois, il est et quart. Sur le neuf, il est moins le quart.",
+      V(figs(svgHorloge(4, 15), svgHorloge(4, 45)), "4 h 15 &nbsp;&nbsp; 4 h 45")],
+    ["Une heure, c'est soixante minutes. Une demi-heure, trente minutes. Un quart d'heure, quinze minutes.",
+      V("1 heure = " + hl("60 minutes"), "une demi-heure = " + hl("30 min", "b"), "un quart d'heure = " + hl("15 min", "v"))]
+  ] });
+ajouterFiche({ id:"geo", groupe:"espace", classe:"geo", sign:"▲", titre:"Les polygones", matiere:"Espace et géométrie",
+  detail:"Côtés, sommets, carré, rectangle, triangle", fab:fabGeo,
+  lecon:[
+    ["Un polygone est une figure fermée. Tous ses côtés sont des traits droits.",
+      V(figs(svgForme("triangle", "var(--leaf)"), svgForme("carre", "var(--geo)"), svgForme("pentagone", "var(--cal)")), "Ce sont des " + hl("polygones") + ".")],
+    ["Les côtés sont les traits. Les sommets sont les coins, là où deux côtés se rejoignent.",
+      V(figs(svgForme("quad", "var(--mes)", { sommets: true })), hl("4 côtés") + " et " + hl("4 sommets", "b"))],
+    ["Le carré a quatre côtés égaux et quatre angles droits. Le rectangle a quatre angles droits et ses côtés opposés sont égaux.",
+      V(figs(svgForme("carre", "var(--leaf)"), svgForme("rectangle", "var(--mes)")), "le carré &nbsp; le rectangle")],
+    ["Le triangle rectangle a un angle droit. On le reconnaît au petit carré dessiné dans le coin.",
+      V(figs(svgForme("triRect", "var(--cal)")), "le " + hl("triangle rectangle"))],
+    ["Attention : le cercle n'est pas un polygone. C'est une ligne courbe, sans côté ni sommet.",
+      V(figs(svgCercle("var(--geo)")), "le cercle : " + hl("pas un polygone", "r"))]
+  ] });
 function fichePar(id){
   for (var i = 0; i < FICHES.length; i++) if (FICHES[i].id === id) return FICHES[i];
   return null;
 }
 
+</script>
+<script src="fiches-maths.js"></script>
+<script src="fiches-francais.js"></script>
+<script src="fiches-monde.js"></script>
+<script>
+"use strict";
 /* ---------- Partie en cours ---------- */
 var P = null;
 
@@ -727,7 +900,7 @@ function rendreAccueil(){
       + '<path class="logo-ring" d="M12 7v7M20 7v7M28 7v7M36 7v7"/>'
       + '<path class="logo-star" d="M31 29l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z"/></svg></div>'
       + '<h2>Bonjour !</h2>'
-      + '<p class="lead">Ici, on révise les fiches du CE1 : les formes, le calcul, le temps et les mesures.</p>'
+      + '<p class="lead">Ici, on révise tout le programme du CE1 : les maths, le français, le monde, l\'anglais... avec des leçons animées et des exercices.</p>'
       + '<form class="name-form" id="formPrenom">'
       + '<input class="name-input" id="inPrenom" type="text" maxlength="14" autocomplete="off" placeholder="Ton prénom" aria-label="Ton prénom">'
       + '<button class="btn btn-primary" type="submit">C\'est parti</button></form></div>';
@@ -756,32 +929,156 @@ function rendreAccueil(){
     + '<div class="sstat" id="statEtoiles"><svg viewBox="0 0 24 24" class="i-star" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.6l-5.4 2.9 1.1-6.1L3.2 9.2l6.1-.8z"/></svg>'
     + '<b>' + DB.etoiles + '</b><span>étoiles</span></div>'
     + '<div class="sstat"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="i-line" cx="12" cy="12" r="8"/><path class="i-line" d="M8.5 12.2l2.4 2.4 4.6-5"/></svg>'
-    + '<b>' + tampons + '/3</b><span>tampons</span></div>'
+    + '<b>' + tampons + '/' + (FICHES.length - 1) + '</b><span>tampons</span></div>'
     + '<div class="sstat"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-line" d="M5 4.5h11l3 3V19.5H5z"/><path class="i-line" d="M8.5 10h7M8.5 14h5"/></svg>'
     + '<b>' + faites + '</b><span>fiches faites</span></div></div>';
 
-  h += '<div class="picks">';
-  FICHES.forEach(function(f){
+  function carte(f){
     var d = DB.fiches[f.id] || {};
     var tampon = f.id === "jour" ? "" : '<span class="stamp">' + svgTampon(d.tampon) + '</span>';
     var det = f.detail;
     if (d.record) det = "Record : " + d.record + "/" + f.n + " du premier coup";
-    h += '<button class="pick ' + f.classe + '" type="button" data-fiche="' + f.id + '">'
-      + '<span class="pick-sign">' + f.sign + '</span>'
-      + '<span class="pick-txt"><b>' + f.titre + '</b><span>' + f.matiere + ' · ' + det + '</span></span>'
+    if (f.id === "jour") det = f.matiere + " · " + det;
+    return '<button class="pick ' + f.classe + '" type="button" data-fiche="' + f.id + '">'
+      + '<span class="pick-sign' + (f.sign.length > 1 ? " long" : "") + '">' + f.sign + '</span>'
+      + '<span class="pick-txt"><b>' + f.titre + '</b><span>' + det + '</span></span>'
       + tampon + '</button>';
+  }
+  h += '<div class="picks">' + carte(fichePar("jour")) + '</div>';
+  GROUPES.forEach(function(g){
+    var fs = FICHES.filter(function(f){ return f.groupe === g.id; });
+    if (!fs.length) return;
+    h += '<div class="groupe"><div class="groupe-titre"><h2>' + g.titre + '</h2><span>' + g.sous + '</span></div>'
+      + '<div class="picks deux">' + fs.map(carte).join("") + '</div></div>';
   });
-  h += '</div>';
 
   h += '<div class="card"><h3>Comment ça marche</h3>'
-    + '<p class="muted">Chaque fiche pose 10 questions, 6 pour le défi du jour. Quand une réponse est fausse, la question revient en rattrapage à la fin : la fiche se termine toujours à 100 %. Le score affiché est celui du premier coup.</p>'
-    + '<p class="muted">Programme officiel du CE1 — cycle 2, BO du 31 octobre 2024.</p></div>';
+    + '<p class="muted">Chaque fiche commence par une petite leçon animée, que l\'on peut écouter, puis pose 10 questions. Quand une réponse est fausse, la question revient en rattrapage à la fin : la fiche se termine toujours à 100 %. Le score affiché est celui du premier coup.</p>'
+    + '<p class="muted">Programmes officiels du CE1 (cycle 2) : français et mathématiques, BO du 31 octobre 2024 ; enseignement moral et civique, BO du 13 juin 2024 ; questionner le monde, langues vivantes et arts, BO du 30 juillet 2020.</p></div>';
 
   $("vAccueil").innerHTML = h;
   $("btnChanger").onclick = function(){ DB.prenom = ""; sauver(); rendreAccueil(); };
   Array.prototype.forEach.call(document.querySelectorAll("[data-fiche]"), function(btn){
-    btn.onclick = function(){ lancer(btn.getAttribute("data-fiche")); };
+    btn.onclick = function(){
+      var id = btn.getAttribute("data-fiche");
+      if (id === "jour") lancer(id); else rendreIntro(id);
+    };
   });
+}
+
+/* ---------- Présentation d'une fiche : la leçon ou les exercices ---------- */
+var ICONE_RETOUR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-line" d="M14 6l-6 6 6 6"/></svg>';
+function barreFiche(titre, sous){
+  return '<div class="game-bar"><div class="gb-left"><span class="ex-label">' + titre + '</span><span class="qcount">' + sous + '</span></div>'
+    + '<button class="chip-btn" type="button" id="btnQuitter">' + ICONE_RETOUR + 'Les fiches</button></div>';
+}
+function retourAccueil(){
+  arreterVoix(); P = null; L = null;
+  montrer("accueil"); rendreAccueil();
+}
+function rendreIntro(id){
+  var f = fichePar(id), d = DB.fiches[id] || {};
+  var h = barreFiche(f.titre, f.matiere)
+    + '<div class="card intro"><p class="eyebrow">' + f.matiere + '</p>'
+    + '<span class="intro-sign ' + f.classe + '">' + f.sign + '</span>'
+    + '<h2>' + f.titre + '</h2><p class="lead">' + f.detail + '</p>'
+    + (d.record ? '<p class="record">Ton record : ' + d.record + '/' + f.n + ' du premier coup</p>' : '')
+    + '<div class="actions">'
+    + (f.lecon ? '<button class="btn btn-help btn-big" type="button" id="btnLecon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>La leçon animée</button>' : '')
+    + '<button class="btn btn-primary btn-big" type="button" id="btnExos">Les exercices</button></div>'
+    + (f.lecon ? '<p class="muted">La leçon dure environ une minute. Monte le son pour l\'écouter.</p>' : '')
+    + '</div>';
+  $("vFiche").innerHTML = h;
+  montrer("fiche");
+  $("btnQuitter").onclick = retourAccueil;
+  $("btnExos").onclick = function(){ lancer(id); };
+  if (f.lecon) $("btnLecon").onclick = function(){ lancerLecon(id); };
+}
+
+/* ---------- Leçon animée ----------
+   Les scènes défilent toutes seules, lues par la voix de l'appareil.
+   Sans voix (ou son coupé), elles avancent au rythme de la lecture. */
+var L = null, minuterie = null;
+var SON_KEY = "cahier-magique-son", SON = true;
+try { SON = localStorage.getItem(SON_KEY) !== "non"; } catch (e) {}
+function voixPossible(){ return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window; }
+function arreterVoix(){
+  if (L) L.jeton++;
+  clearTimeout(minuterie);
+  if (voixPossible()) { try { window.speechSynthesis.cancel(); } catch (e) {} }
+}
+function choisirVoix(langue){
+  var voix = [], i;
+  try { voix = window.speechSynthesis.getVoices() || []; } catch (e) {}
+  for (i = 0; i < voix.length; i++) if (voix[i].lang && voix[i].lang.replace("_", "-") === langue) return voix[i];
+  for (i = 0; i < voix.length; i++) if (voix[i].lang && voix[i].lang.slice(0, 2) === langue.slice(0, 2)) return voix[i];
+  return null;
+}
+function enoncer(texte, langue, vitesse){
+  var u = new SpeechSynthesisUtterance(texte), v = choisirVoix(langue);
+  u.lang = langue; u.rate = vitesse;
+  if (v) u.voice = v;
+  return u;
+}
+function lancerLecon(id){
+  L = { fiche: fichePar(id), i: 0, jeton: 0, pause: false, voix: [] };
+  montrer("fiche");
+  rendreLecon();
+}
+function jouerScene(){
+  var sc = L.fiche.lecon[L.i], dernier = L.i === L.fiche.lecon.length - 1;
+  var jeton, fait = false, duree = 2600 + sc[0].length * 70 + (sc[2] ? sc[2].length * 110 : 0), u, e;
+  arreterVoix();
+  jeton = L.jeton;
+  function fin(){
+    if (fait || !L || L.jeton !== jeton) return;
+    fait = true;
+    clearTimeout(minuterie);
+    if (dernier || L.pause) return;
+    minuterie = setTimeout(function(){
+      if (L && L.jeton === jeton){ L.i++; rendreLecon(); }
+    }, 900);
+  }
+  if (!SON || !voixPossible()){ minuterie = setTimeout(fin, duree); return; }
+  try {
+    u = enoncer(sc[0], "fr-FR", 0.92);
+    L.voix = [u];
+    if (sc[2]){ e = enoncer(sc[2], "en-GB", 0.8); L.voix.push(e); e.onend = fin; e.onerror = fin; }
+    else { u.onend = fin; u.onerror = fin; }
+    window.speechSynthesis.speak(u);
+    if (e) window.speechSynthesis.speak(e);
+    minuterie = setTimeout(fin, duree * 2 + 4000); // au cas où la voix ne répond pas
+  } catch (err) { minuterie = setTimeout(fin, duree); }
+}
+function rendreLecon(){
+  var f = L.fiche, n = f.lecon.length, sc = f.lecon[L.i], dernier = L.i === n - 1, h, i, points = "";
+  for (i = 0; i < n; i++) points += '<span class="dot' + (i <= L.i ? " on" : "") + '"></span>';
+  h = barreFiche("La leçon : " + f.titre, "Image " + (L.i + 1) + " sur " + n)
+    + '<div class="q-card lesson">'
+    + '<div class="stage">' + sc[1] + '</div>'
+    + '<p class="caption" aria-live="polite">' + sc[0] + '</p>'
+    + '<div class="dots">' + points + '</div>'
+    + '<div class="actions">'
+    + '<button class="btn btn-small" type="button" id="btnAvant"' + (L.i === 0 ? " disabled" : "") + '>Avant</button>'
+    + '<button class="btn btn-small" type="button" id="btnSon">' + (SON ? "Couper le son" : "Mettre le son") + '</button>'
+    + '<button class="btn btn-small" type="button" id="btnRedire">Réécouter</button>'
+    + (dernier ? "" : '<button class="btn btn-small btn-help" type="button" id="btnApres">Suivant</button>')
+    + '</div>'
+    + (dernier ? '<div class="actions"><button class="btn btn-primary btn-big" type="button" id="btnExos">À toi de jouer !</button></div>' : "")
+    + '</div>';
+  $("vFiche").innerHTML = h;
+  $("btnQuitter").onclick = retourAccueil;
+  $("btnAvant").onclick = function(){ if (L.i > 0){ L.i--; rendreLecon(); } };
+  $("btnSon").onclick = function(){
+    SON = !SON;
+    try { localStorage.setItem(SON_KEY, SON ? "oui" : "non"); } catch (e) {}
+    rendreLecon();
+  };
+  $("btnRedire").onclick = function(){ rendreLecon(); };
+  if (!dernier) $("btnApres").onclick = function(){ L.i++; rendreLecon(); };
+  else $("btnExos").onclick = function(){ var id = f.id; arreterVoix(); L = null; lancer(id); };
+  window.scrollTo(0, 0);
+  jouerScene();
 }
 
 /* ---------- Fiche en cours ---------- */
@@ -816,12 +1113,14 @@ function rendreFiche(){
 
   if (q.type === "choix"){
     var graphique = q.opts[0].h.indexOf("<svg") === 0;
+    var longue = 0;
+    q.opts.forEach(function(o){ longue = Math.max(longue, o.h.replace(/<[^>]*>/g, "").length); });
     var cls = "answers" + (graphique
       ? (q.opts.length >= 3 ? " trio" : "")
-      : (q.opts.length === 4 ? " quatre" : ""));
+      : (q.opts.length === 4 && longue <= 7 ? " quatre" : ""));
     h += '<div class="' + cls + '">';
     q.opts.forEach(function(o, idx){
-      h += '<button class="ans' + (graphique ? " fig" : (q.gros ? " gros" : "")) + '" type="button" data-rep="' + idx + '">' + o.h + '</button>';
+      h += '<button class="ans' + (graphique ? " fig" : (longue > 16 ? " petit" : (q.gros && longue <= 6 ? " gros" : ""))) + '" type="button" data-rep="' + idx + '">' + o.h + '</button>';
     });
     h += '</div>';
   } else {
@@ -841,7 +1140,7 @@ function rendreFiche(){
 
   $("vFiche").innerHTML = h;
 
-  $("btnQuitter").onclick = function(){ P = null; montrer("accueil"); rendreAccueil(); };
+  $("btnQuitter").onclick = retourAccueil;
   $("btnAide").onclick = function(){ P.aide = !P.aide; rendreFiche(); };
   Array.prototype.forEach.call(document.querySelectorAll("[data-rep]"), function(btn){
     btn.onclick = function(){ repondre(parseInt(btn.getAttribute("data-rep"), 10)); };
@@ -1001,13 +1300,15 @@ function terminer(){
 
   h += '<div class="actions">'
     + '<button class="btn btn-primary btn-big" type="button" id="btnRejouer">Refaire la fiche</button>'
+    + (f.lecon ? '<button class="btn" type="button" id="btnLecon">Revoir la leçon</button>' : '')
     + '<button class="btn" type="button" id="btnRetour">Les fiches</button>'
     + '</div></div>';
 
   $("vResultats").innerHTML = h;
   montrer("resultats");
   $("btnRejouer").onclick = function(){ lancer(f.id); };
-  $("btnRetour").onclick = function(){ P = null; montrer("accueil"); rendreAccueil(); };
+  $("btnRetour").onclick = retourAccueil;
+  if (f.lecon) $("btnLecon").onclick = function(){ P = null; lancerLecon(f.id); };
 }
 
 /* ---------- Fond jour / nuit ---------- */
